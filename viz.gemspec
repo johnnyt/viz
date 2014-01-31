@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 require File.expand_path '../lib/viz/version', __FILE__
 
-Gem::Specification.new do |gem|
+$VIZ = Gem::Specification.new do |gem|
   gem.authors       = ['JohnnyT']
   gem.email         = ['ubergeek3141@gmail.com']
   gem.description   = 'Vizualize MagLev'
@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = Viz::VERSION
 
-  gem.add_dependency 'sinatra'
-
-  gem.add_development_dependency 'rake'
+  gem.add_dependency 'sinatra', '~> 0'
+  gem.add_development_dependency 'rake', '~> 0'
 end
