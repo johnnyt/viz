@@ -8,9 +8,9 @@ SimpleCov.formatter = SimpleCov::Formatter::MultiFormatter[
 
 SimpleCov.maximum_coverage_drop 3
 
-SimpleCov.adapters.define 'minitest' do
+SimpleCov.start do
   command_name 'minitest'
-  add_group 'Applications', 'app'
+  add_group 'Application', 'app'
   add_filter 'test'
 end
 

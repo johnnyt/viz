@@ -9,6 +9,7 @@ class TestVizApp < Minitest::Test
 
   def test_hello_world
     get '/'
+    File.open('resp.html', 'w+'){|f| f.write last_response.body }
     assert last_response.ok?
   end
 end
