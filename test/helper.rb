@@ -1,10 +1,19 @@
 ENV['RACK_ENV'] = 'test'
 require 'rubygems'
+require 'minitest'
 require 'minitest/autorun'
 require 'rack/test'
 
-require File.expand_path '../../viz_app', __FILE__
-
-def app
-  VizApp
+# Only run coverage in MRI
+unless defined? Maglev
+  if ENV['CI']
+    require 'coveralls'
+    Coveralls.wear!
+  else
+    require 'simplecov'
+    SimpleCov.start
+  end
 end
+
+Dir[File.expand_path('../support/*.rb', __FILE__)].each { |file| require file }
+require File.expand_path '../../app', __FILE__

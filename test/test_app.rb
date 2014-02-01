@@ -1,6 +1,6 @@
 require File.expand_path '../helper', __FILE__
 
-class TestVizApp < MiniTest::Test
+class TestVizApp < Minitest::Test
   include Rack::Test::Methods
 
   def app

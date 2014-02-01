@@ -1,2 +1,2 @@
-require File.expand_path '../viz_app', __FILE__
-run VizApp
+require File.expand_path '../app', __FILE__
+run App
