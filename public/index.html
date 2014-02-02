@@ -12,6 +12,20 @@
   <link href="bs3/css/bootstrap-theme.css" rel="stylesheet">
   <link href="css/viz.css" rel="stylesheet">
 
+
+
+  <link href="css/dbe/jquery-ui.min.css" rel="stylesheet">
+  <!--
+  <link href="css/bootstrap-combined.no-icons.min.css" rel="stylesheet">
+  <link href="libs/font-awesome/css/font-awesome.css" rel="stylesheet">
+  <link href="css/bootstrap.css" rel="stylesheet">
+  <link href="libs/codemirror/lib/codemirror.css" rel="stylesheet">
+  -->
+  <link href="css/dbe/smalltalk_code.css" rel="stylesheet">
+  <link href="css/dbe/style.css" rel="stylesheet" />
+
+
+
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
@@ -20,7 +34,62 @@
   <![endif]-->
 </head>
 <body>
-  <div id="viz"></div>
+  <!-- navbar top -->
+  <div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+      <div class="container">
+        <a class="brand" href="/" style="padding: 5px 20px 5px;"><img src="images/maglev-logo.gif" style="height: 40px;">  MagLev Database Explorer</a>
+        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <div class="nav-collapse collapse">
+          <ul class="nav">
+            <li><a href="/ClassExplorer/index/146177"><b class="icon-list-alt"></b>Class Explorer</a></li>
+            <li><a href="/ObjectExplorer/graph/125144321"><b class="icon-search"></b>PERSISTENT_ROOT</a></li>
+            <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="#"><b class="icon-question-sign"></b>Help<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="http://maglev.github.io/">MagLev website</a></li>
+                <li><a href="/LICENSE">License</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- thread bar bottom -->
+  <div class="navbar-fixed-bottom stackable-navbar" id="halted-threads-navbar" style="height: 38px; bottom: 43px;">
+    <div class="navbar-inner">
+      <div class="container" style="margin: 0px 0px 0px 0px; width: 100%">
+        <div class="nav" id="halted-threads-navigation">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- navbar bottom -->
+  <div class="navbar navbar-fixed-bottom stackable-navbar" style="height: 38px;">
+    <div class="navbar-inner">
+      <div class="container" style="margin: 0px 0px 0px 0px; width: 100%">
+        <div class="nav">
+          <ul id="windows-navigation" class="nav">
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="width:95%" class="container">
+    <div style="position:absolute">
+      <div id="workspace"></div>
+    </div>
+  </div>
+
+  <div style="display: none;" id="temporary-rendering-area"></div>
+
   <div id="includes">
     <script src="bower_components/amber/support/requirejs/require.min.js"></script>
     <script src="bower_components/amber/support/amber.js"></script>

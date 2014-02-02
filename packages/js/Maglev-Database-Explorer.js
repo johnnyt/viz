@@ -9007,4 +9007,56 @@ referencedClasses: []
 }),
 globals.MaglevWebBrowserWindow.klass);
 
+smalltalk.addMethod(
+smalltalk.method({
+selector: "b",
+protocol: '*Maglev-Database-Explorer',
+fn: function (){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+var $1;
+$1=self._tag_("b");
+return $1;
+}, function($ctx1) {$ctx1.fill(self,"b",{},globals.HTMLCanvas)})},
+args: [],
+source: "b\x0a\x09^ self tag: 'b'",
+messageSends: ["tag:"],
+referencedClasses: []
+}),
+globals.HTMLCanvas);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "data:",
+protocol: '*Maglev-Database-Explorer',
+fn: function (attribute){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+var $1;
+$1=_st(self._asJQuery())._data_(attribute);
+return $1;
+}, function($ctx1) {$ctx1.fill(self,"data:",{attribute:attribute},globals.TagBrush)})},
+args: ["attribute"],
+source: "data: attribute\x0a\x09^ self asJQuery data: attribute",
+messageSends: ["data:", "asJQuery"],
+referencedClasses: []
+}),
+globals.TagBrush);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "data:with:",
+protocol: '*Maglev-Database-Explorer',
+fn: function (attribute,aString){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+self._at_put_("data-".__comma(attribute),aString);
+return self}, function($ctx1) {$ctx1.fill(self,"data:with:",{attribute:attribute,aString:aString},globals.TagBrush)})},
+args: ["attribute", "aString"],
+source: "data: attribute with: aString\x0a\x09self at: 'data-', attribute put: aString",
+messageSends: ["at:put:", ","],
+referencedClasses: []
+}),
+globals.TagBrush);
+
 });

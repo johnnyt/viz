@@ -3088,3 +3088,19 @@ showNew
 		url: self defaultUrl.
 ! !
 
+!HTMLCanvas methodsFor: '*Maglev-Database-Explorer'!
+
+b
+	^ self tag: 'b'
+! !
+
+!TagBrush methodsFor: '*Maglev-Database-Explorer'!
+
+data: attribute
+	^ self asJQuery data: attribute
+!
+
+data: attribute with: aString
+	self at: 'data-', attribute put: aString
+! !
+
