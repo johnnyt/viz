@@ -1,2 +1,2 @@
-RUBY.global 'AbstractException', 'AbstractException'
+RUBY.global 'AbstractException', 'AbstractException' if defined? RUBY
 

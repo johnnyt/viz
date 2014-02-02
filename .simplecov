@@ -14,6 +14,7 @@ SimpleCov.profiles.define 'Gem' do
   add_group 'Application', 'app'
   add_group 'Helpers', 'helpers'
 
+  add_filter 'lib/maglev-database-explorer'
   add_filter 'environment.rb'
   add_filter 'test'
 end
