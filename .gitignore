@@ -20,6 +20,7 @@ doc
 log
 pkg
 rdoc
+tmp
 
 ## BUNDLER
 *.gem
