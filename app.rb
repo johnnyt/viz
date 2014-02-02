@@ -2,6 +2,7 @@ require File.expand_path '../environment', __FILE__
 
 class VizApp < ::Sinatra::Base
   helpers Sinatra::JSON
+  #register Sinatra::Namespace
 
   configure do
     enable :raise_errors, :logging, :show_exceptions
@@ -20,3 +21,5 @@ class VizApp < ::Sinatra::Base
     'success'
   end
 end
+
+require './routes/object_routes'
