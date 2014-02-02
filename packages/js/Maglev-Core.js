@@ -309,7 +309,7 @@ referencedClasses: ["MaglevWaitingWindow"]
 globals.Maglev);
 
 
-globals.Maglev.klass.iVarNames = ['instance','defaultWorkspaceId','persistentRootId','maglevSystemId','evalObjectId','swatchDesign'];
+globals.Maglev.klass.iVarNames = ['instance','defaultWorkspaceId','persistentRootId','maglevSystemId','evalObjectId'];
 smalltalk.addMethod(
 smalltalk.method({
 selector: "defaultWorkspaceId",
@@ -510,40 +510,6 @@ referencedClasses: ["MaglevObjectSpace", "MaglevHaltedThreadListener", "MaglevWe
 }),
 globals.Maglev.klass);
 
-smalltalk.addMethod(
-smalltalk.method({
-selector: "swatchDesign",
-protocol: 'rendering',
-fn: function (){
-var self=this;
-function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
-return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4;
-$1=self["@swatchDesign"];
-if(($receiver = $1) == nil || $receiver == null){
-var html;
-$2="head"._asJQuery();
-$ctx1.sendIdx["asJQuery"]=1;
-html=_st($HTMLCanvas())._onJQuery_($2);
-html;
-$3=_st(html)._link();
-_st($3)._href_("themes/geo-bootstrap/swatch/bootstrap.css");
-$4=_st($3)._rel_("stylesheet");
-self["@swatchDesign"]=$4;
-self["@swatchDesign"];
-} else {
-_st(_st(self["@swatchDesign"])._asJQuery())._remove();
-self["@swatchDesign"]=nil;
-self["@swatchDesign"];
-};
-return self}, function($ctx1) {$ctx1.fill(self,"swatchDesign",{},globals.Maglev.klass)})},
-args: [],
-source: "swatchDesign\x0a\x09swatchDesign \x0a\x09\x09ifNil: [ |html|\x0a\x09\x09\x09html := HTMLCanvas onJQuery: 'head' asJQuery.\x0a\x09\x09\x09swatchDesign := html link \x0a\x09\x09\x09\x09href: 'themes/geo-bootstrap/swatch/bootstrap.css';\x0a\x09\x09\x09\x09rel: 'stylesheet']\x0a\x09\x09ifNotNil: [\x0a\x09\x09\x09swatchDesign asJQuery remove.\x0a\x09\x09\x09swatchDesign := nil].",
-messageSends: ["ifNil:ifNotNil:", "onJQuery:", "asJQuery", "href:", "link", "rel:", "remove"],
-referencedClasses: ["HTMLCanvas"]
-}),
-globals.Maglev.klass);
-
 
 smalltalk.addClass('MaglevObject', globals.Object, ['oop', 'instVars', 'instVarsSize', 'virtualClassObject', 'classObject', 'inspection', 'isLoaded', 'isException', 'windows', 'customTabs'], 'Maglev-Core');
 smalltalk.addMethod(
@@ -738,6 +704,8 @@ fn: function (code,aString,aBlock){
 var self=this;
 var params;
 function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
+function $MaglevAjax(){return globals.MaglevAjax||(typeof MaglevAjax=="undefined"?nil:MaglevAjax)}
+function $MaglevObject(){return globals.MaglevObject||(typeof MaglevObject=="undefined"?nil:MaglevObject)}
 return smalltalk.withContext(function($ctx1) { 
 var $1,$2;
 $1=_st($Dictionary())._new();
@@ -746,11 +714,21 @@ $ctx1.sendIdx["at:put:"]=1;
 _st($1)._at_put_("code",code);
 $2=_st($1)._yourself();
 params=$2;
+_st($MaglevAjax())._ajax_data_withCallback_("object/evaluate/".__comma(_st(self["@oop"])._asString()),params,(function(obj){
+var isError,parsedObj;
+return smalltalk.withContext(function($ctx2) {
+isError=_st(obj)._at_((1));
+$ctx2.sendIdx["at:"]=1;
+isError;
+parsedObj=_st($MaglevObject())._newObject_(_st(obj)._at_((2)));
+parsedObj;
+return _st(aBlock)._value_value_(_st(isError)._not(),parsedObj);
+}, function($ctx2) {$ctx2.fillBlock({obj:obj,isError:isError,parsedObj:parsedObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"evaluate:language:withCallback:",{code:code,aString:aString,aBlock:aBlock,params:params},globals.MaglevObject)})},
 args: ["code", "aString", "aBlock"],
-source: "evaluate: code language: aString withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09yourself.\x0a\x09\x22MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isException parsedObj|\x0a\x09\x09\x09isException := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObject: (obj at: 2).\x0a\x09\x09\x09aBlock value: isException not value: parsedObj].\x22",
-messageSends: ["at:put:", "new", "yourself"],
-referencedClasses: ["Dictionary"]
+source: "evaluate: code language: aString withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09yourself.\x0a\x09MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isError parsedObj|\x0a\x09\x09\x09isError := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObject: (obj at: 2).\x0a\x09\x09\x09aBlock value: isError not value: parsedObj].",
+messageSends: ["at:put:", "new", "yourself", "ajax:data:withCallback:", ",", "asString", "at:", "newObject:", "value:value:", "not"],
+referencedClasses: ["Dictionary", "MaglevAjax", "MaglevObject"]
 }),
 globals.MaglevObject);
 
@@ -762,6 +740,8 @@ fn: function (code,aString,additionalParams,aBlock){
 var self=this;
 var params;
 function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
+function $MaglevAjax(){return globals.MaglevAjax||(typeof MaglevAjax=="undefined"?nil:MaglevAjax)}
+function $MaglevObject(){return globals.MaglevObject||(typeof MaglevObject=="undefined"?nil:MaglevObject)}
 return smalltalk.withContext(function($ctx1) { 
 var $1,$2;
 $1=_st($Dictionary())._new();
@@ -771,11 +751,21 @@ _st($1)._at_put_("code",code);
 _st($1)._addAll_(additionalParams);
 $2=_st($1)._yourself();
 params=$2;
+_st($MaglevAjax())._ajax_data_withCallback_("object/evaluate/".__comma(_st(self["@oop"])._asString()),params,(function(obj){
+var isError,parsedObj;
+return smalltalk.withContext(function($ctx2) {
+isError=_st(obj)._at_((1));
+$ctx2.sendIdx["at:"]=1;
+isError;
+parsedObj=_st($MaglevObject())._newObjectWithoutUpdate_(_st(obj)._at_((2)));
+parsedObj;
+return _st(aBlock)._value_value_(_st(isError)._not(),parsedObj);
+}, function($ctx2) {$ctx2.fillBlock({obj:obj,isError:isError,parsedObj:parsedObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"evaluateWithoutUpdate:language:with:withCallback:",{code:code,aString:aString,additionalParams:additionalParams,aBlock:aBlock,params:params},globals.MaglevObject)})},
 args: ["code", "aString", "additionalParams", "aBlock"],
-source: "evaluateWithoutUpdate: code language: aString with: additionalParams withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09addAll: additionalParams;\x0a\x09\x09yourself.\x0a\x09\x22MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isException parsedObj|\x0a\x09\x09\x09isException := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObjectWithoutUpdate: (obj at: 2).\x0a\x09\x09\x09aBlock value: isException not value: parsedObj].\x22",
-messageSends: ["at:put:", "new", "addAll:", "yourself"],
-referencedClasses: ["Dictionary"]
+source: "evaluateWithoutUpdate: code language: aString with: additionalParams withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09addAll: additionalParams;\x0a\x09\x09yourself.\x0a\x09MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isError parsedObj|\x0a\x09\x09\x09isError := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObjectWithoutUpdate: (obj at: 2).\x0a\x09\x09\x09aBlock value: isError not value: parsedObj].",
+messageSends: ["at:put:", "new", "addAll:", "yourself", "ajax:data:withCallback:", ",", "asString", "at:", "newObjectWithoutUpdate:", "value:value:", "not"],
+referencedClasses: ["Dictionary", "MaglevAjax", "MaglevObject"]
 }),
 globals.MaglevObject);
 
@@ -787,6 +777,8 @@ fn: function (code,aString,aBlock){
 var self=this;
 var params;
 function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
+function $MaglevAjax(){return globals.MaglevAjax||(typeof MaglevAjax=="undefined"?nil:MaglevAjax)}
+function $MaglevObject(){return globals.MaglevObject||(typeof MaglevObject=="undefined"?nil:MaglevObject)}
 return smalltalk.withContext(function($ctx1) { 
 var $1,$2;
 $1=_st($Dictionary())._new();
@@ -795,11 +787,21 @@ $ctx1.sendIdx["at:put:"]=1;
 _st($1)._at_put_("code",code);
 $2=_st($1)._yourself();
 params=$2;
+_st($MaglevAjax())._ajax_data_withCallback_("object/evaluate/".__comma(_st(self["@oop"])._asString()),params,(function(obj){
+var isError,parsedObj;
+return smalltalk.withContext(function($ctx2) {
+isError=_st(obj)._at_((1));
+$ctx2.sendIdx["at:"]=1;
+isError;
+parsedObj=_st($MaglevObject())._newObject_(_st(obj)._at_((2)));
+parsedObj;
+return _st(aBlock)._value_value_(_st(isError)._not(),parsedObj);
+}, function($ctx2) {$ctx2.fillBlock({obj:obj,isError:isError,parsedObj:parsedObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"evaluateWithoutUpdate:language:withCallback:",{code:code,aString:aString,aBlock:aBlock,params:params},globals.MaglevObject)})},
 args: ["code", "aString", "aBlock"],
-source: "evaluateWithoutUpdate: code language: aString withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09yourself.\x0a\x09\x22MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isException parsedObj|\x0a\x09\x09\x09isException := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObject: (obj at: 2).\x0a\x09\x09\x09aBlock value: isException not value: parsedObj].\x22",
-messageSends: ["at:put:", "new", "yourself"],
-referencedClasses: ["Dictionary"]
+source: "evaluateWithoutUpdate: code language: aString withCallback: aBlock\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'language' put: aString;\x0a\x09\x09at: 'code' put: code;\x0a\x09\x09yourself.\x0a\x09MaglevAjax \x0a\x09\x09ajax: 'object/evaluate/', oop asString\x0a\x09\x09data: params\x0a\x09\x09withCallback: [:obj | |isError parsedObj|\x0a\x09\x09\x09isError := obj at: 1.\x0a\x09\x09\x09parsedObj := MaglevObject newObject: (obj at: 2).\x0a\x09\x09\x09aBlock value: isError not value: parsedObj].",
+messageSends: ["at:put:", "new", "yourself", "ajax:data:withCallback:", ",", "asString", "at:", "newObject:", "value:value:", "not"],
+referencedClasses: ["Dictionary", "MaglevAjax", "MaglevObject"]
 }),
 globals.MaglevObject);
 
@@ -3318,43 +3320,6 @@ args: ["aBlock"],
 source: "allSelectorsWithCallback: aBlock\x0a\x09MaglevAjax \x0a\x09\x09ajax: 'code/selectors/', oop asString\x0a\x09\x09data: Dictionary new\x0a\x09\x09withCallback: aBlock.",
 messageSends: ["ajax:data:withCallback:", ",", "asString", "new"],
 referencedClasses: ["MaglevAjax", "Dictionary"]
-}),
-globals.MaglevModule);
-
-smalltalk.addMethod(
-smalltalk.method({
-selector: "compileRubySourceCode:withCallback:",
-protocol: 'interactions',
-fn: function (sourceCode,aBlock){
-var self=this;
-function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
-return smalltalk.withContext(function($ctx1) { 
-self._evaluateWithoutUpdate_language_with_withCallback_(sourceCode,"rubyClass",_st($Dictionary())._new(),aBlock);
-return self}, function($ctx1) {$ctx1.fill(self,"compileRubySourceCode:withCallback:",{sourceCode:sourceCode,aBlock:aBlock},globals.MaglevModule)})},
-args: ["sourceCode", "aBlock"],
-source: "compileRubySourceCode: sourceCode withCallback: aBlock\x0a\x09self \x0a\x09\x09evaluateWithoutUpdate: sourceCode\x0a\x09\x09language: 'rubyClass'\x0a\x09\x09with: Dictionary new\x0a\x09\x09withCallback: aBlock.",
-messageSends: ["evaluateWithoutUpdate:language:with:withCallback:", "new"],
-referencedClasses: ["Dictionary"]
-}),
-globals.MaglevModule);
-
-smalltalk.addMethod(
-smalltalk.method({
-selector: "compileSmalltalkSourceCode:withCallback:",
-protocol: 'interactions',
-fn: function (sourceCode,aBlock){
-var self=this;
-function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined"?nil:Dictionary)}
-return smalltalk.withContext(function($ctx1) { 
-var $1;
-$1=_st("self compile: '".__comma(_st(sourceCode)._escapedString())).__comma("'.");
-$ctx1.sendIdx[","]=1;
-self._evaluateWithoutUpdate_language_with_withCallback_($1,"smalltalk",_st($Dictionary())._new(),aBlock);
-return self}, function($ctx1) {$ctx1.fill(self,"compileSmalltalkSourceCode:withCallback:",{sourceCode:sourceCode,aBlock:aBlock},globals.MaglevModule)})},
-args: ["sourceCode", "aBlock"],
-source: "compileSmalltalkSourceCode: sourceCode withCallback: aBlock\x0a\x09self \x0a\x09\x09evaluateWithoutUpdate: 'self compile: ''', sourceCode escapedString, '''.'\x0a\x09\x09language: 'smalltalk'\x0a\x09\x09with: Dictionary new\x0a\x09\x09withCallback: aBlock.",
-messageSends: ["evaluateWithoutUpdate:language:with:withCallback:", ",", "escapedString", "new"],
-referencedClasses: ["Dictionary"]
 }),
 globals.MaglevModule);
 

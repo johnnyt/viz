@@ -1,4 +1,4 @@
-Smalltalk current createPackage: 'Maglev-Core' properties: #{}!
+Smalltalk createPackage: 'Maglev-Core'!
 Object subclass: #Maglev
 	instanceVariableNames: 'objectSpace windows bottomNavHtml'
 	package: 'Maglev-Core'!
@@ -299,10 +299,10 @@ evaluate: code language: aString withCallback: aBlock
 	MaglevAjax 
 		ajax: 'object/evaluate/', oop asString
 		data: params
-		withCallback: [:obj | |isException parsedObj|
-			isException := obj at: 1.
+		withCallback: [:obj | |isError parsedObj|
+			isError := obj at: 1.
 			parsedObj := MaglevObject newObject: (obj at: 2).
-			aBlock value: isException not value: parsedObj].
+			aBlock value: isError not value: parsedObj].
 !
 
 evaluateWithoutUpdate: code language: aString with: additionalParams withCallback: aBlock
@@ -315,10 +315,10 @@ evaluateWithoutUpdate: code language: aString with: additionalParams withCallbac
 	MaglevAjax 
 		ajax: 'object/evaluate/', oop asString
 		data: params
-		withCallback: [:obj | |isException parsedObj|
-			isException := obj at: 1.
+		withCallback: [:obj | |isError parsedObj|
+			isError := obj at: 1.
 			parsedObj := MaglevObject newObjectWithoutUpdate: (obj at: 2).
-			aBlock value: isException not value: parsedObj].
+			aBlock value: isError not value: parsedObj].
 !
 
 evaluateWithoutUpdate: code language: aString withCallback: aBlock
@@ -330,10 +330,10 @@ evaluateWithoutUpdate: code language: aString withCallback: aBlock
 	MaglevAjax 
 		ajax: 'object/evaluate/', oop asString
 		data: params
-		withCallback: [:obj | |isException parsedObj|
-			isException := obj at: 1.
+		withCallback: [:obj | |isError parsedObj|
+			isError := obj at: 1.
 			parsedObj := MaglevObject newObject: (obj at: 2).
-			aBlock value: isException not value: parsedObj].
+			aBlock value: isError not value: parsedObj].
 !
 
 fullReloadWithCallback: aBlock
