@@ -1,6 +1,7 @@
 ENV['RACK_ENV'] ||= 'development'
 RACK_ROOT = File.expand_path '..', __FILE__
 require 'sinatra/base'
+require 'sinatra/json'
 require 'multi_json'
 
 Dir['./helpers/*.rb'].each{ |file| require file }

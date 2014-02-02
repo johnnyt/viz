@@ -16,9 +16,12 @@ $VIZ = Gem::Specification.new do |gem|
   gem.require_paths = ['lib']
   gem.version       = Viz::VERSION
 
-  gem.add_dependency 'sinatra', '~> 0'
+  gem.add_dependency 'sinatra', '~> 1.4.4'
+  gem.add_dependency 'sinatra-contrib', '~> 1.4.2'
   gem.add_dependency 'multi_json', '= 1.3.6'
 
-  gem.add_development_dependency 'rake', '~> 0'
-  gem.add_development_dependency 'rack-test', '~> 0.6.1'
+  gem.add_development_dependency 'rake', '~> 10.1.1'
+  gem.add_development_dependency 'minitest', '~> 5.2.2'
+  gem.add_development_dependency 'rack-test', '~> 0.6.2'
+  gem.add_development_dependency 'simplecov', '~> 0.8.2'
 end
