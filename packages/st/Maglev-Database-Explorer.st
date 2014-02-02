@@ -1,4 +1,4 @@
-Smalltalk current createPackage: 'Maglev-Database-Explorer' properties: #{}!
+Smalltalk createPackage: 'Maglev-Database-Explorer'!
 Widget subclass: #MaglevDraggableObject
 	instanceVariableNames: 'content'
 	package: 'Maglev-Database-Explorer'!
@@ -314,9 +314,10 @@ renderArgsOn: html
 renderMethodObject
 	|rangeFrom rangeTo|
 	super renderMethodObject.
-	< self['@editor'].setSelection(
+	console log: 'fixme MaglevGsNMethodDebugEditor>>#renderMethodObject'.
+	"< self['@editor'].setSelection(
 		{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}, 
-		{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}); >.
+		{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}); >."
 	editor replaceSelection: '⚡'.
 !
 
@@ -340,7 +341,8 @@ interval
 
 interval: aNumber
 	interval := aNumber.
-	< clearInterval(self['@timer']); >.
+	window clearInterval: timer.
+	"< clearInterval(self['@timer']); >."
 	self startPolling.
 ! !
 
@@ -732,7 +734,8 @@ filterResults
 	|text|
 	text := searchInput asJQuery val.
 	(list asJQuery find: 'li') each: [:idx :htmlEl | |el|
-		< el = $(htmlEl); >.
+		el := window jQuery: htmlEl.
+		"< el = $(htmlEl); >."
 		(el text includesSubString: text)
 			ifTrue: [el show]
 			ifFalse: [el hide]].
@@ -1633,12 +1636,12 @@ renderInstVarTable
 						ivNames do: [:ivName | 
 							html th with: ivName]]].
 					html tbody with: [
-						object instances do: [:obj |
+						object instances do: [:obi |
 							html tr with: [
-								html td with: obj oop.
-								html td with: obj inlineViewComponent.
+								html td with: obi oop.
+								html td with: obi inlineViewComponent.
 								ivNames do: [:ivName |
-									html td with: (obj instVarAt: ivName ifAbsent: MaglevInvalidObject instance) inlineViewComponent]]]]].
+									html td with: (obi instVarAt: ivName ifAbsent: MaglevInvalidObject instance) inlineViewComponent]]]]].
 			self renderPaginationOn: html.
 			instancesWaitBox hide].
 !
@@ -2003,12 +2006,12 @@ newReplace: aWindow
 highestZIndex
 	< var indexHighest = 0;
 	$('.window').each(function(){
-		var indexCurrent = parseInt($(this).css("z-index"), 10);
-		if(indexCurrent >> indexHighest) {
+		var indexCurrent = parseInt($(this).css('z-index'), 10);
+		if(indexCurrent.__gt(indexHighest)) {
 			indexHighest = indexCurrent;
 		}
 	});
-	return indexHighest; >.
+	return indexHighest; >
 ! !
 
 MaglevWindow subclass: #MaglevObjectWindow
@@ -2286,21 +2289,21 @@ MaglevObjectWindow subclass: #MaglevModuleWindow
 	instanceVariableNames: 'categoryNamesSelect selectorsSelect selectors rubySelectors methodContainer waitingScreen hierarchyContainer'
 	package: 'Maglev-Database-Explorer'!
 
-!MaglevModuleWindow methodsFor: 'initializing'!
+!MaglevModuleWindow methodsFor: 'initialization'!
 
-initializeTree: container
-	< container.jstree({
-		plugins: ["crrm", "html_data", "themes"],
-		core: {
-			animation: 0,
-			open_parents: true}});
-	// setTimout: jstree fix
-	setTimeout(function(){
-		container.find('.treeview-replace-me').each(function(index, el) {
-			var jqEl = $(el);
-			self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);
-			jqEl.removeClass('treeview-replace-me');
-		});}, 0); >
+initialize
+< container.jstree({
+  plugins: ['crrm', 'html_data', 'themes'],
+  core: {
+    animation: 0,
+    open_parents: true}});
+// setTimout: jstree fix
+setTimeout(function(){
+  container.find('.treeview-replace-me').each(function(index, el) {
+    var jqEl = $(el);
+    self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);
+    jqEl.removeClass('treeview-replace-me');
+  });}, 0); >
 ! !
 
 !MaglevModuleWindow methodsFor: 'interactions'!
@@ -2407,11 +2410,11 @@ renderHierarchyOn: htmlIn
 					lastUl with: [
 						html li
 							data: 'oop' with: cls oop asString;
-							with: [|container|
-								container := html span 
+							with: [|cont|
+								cont := html span 
 									data: 'oop' with: cls oop asString;
 									class: 'treeview-replace-me'.
-								renderedInlines add: container];
+								renderedInlines add: cont];
 							with: [lastUl := html ul]]]].
 		self initializeTree: hierarchyContainer asJQuery.
 		hcContainer asJQuery resizable.
@@ -2492,7 +2495,7 @@ renderSmalltalkSourceCodeFor: selectorString
 sortList: aListBox
 	|box children|
 	box := aListBox asJQuery.
-	< children = box.children('option').sort(function (a, b) {return a.innerHTML >> b.innerHTML ? 1 : -1}); >.
+	"< children = box.children('option').sort(function (a, b) {return a.innerHTML >> b.innerHTML ? 1 : -1}); >."
 	box empty.
 	children appendTo: box.
 ! !
@@ -2773,7 +2776,7 @@ reloadStackWithCallback: aBlock
 		obj do: [:method | |isUnimportant|
 			isUnimportant := self isMethodUnimportant: method.
 			methodSelect
-				with: [:html | 
+				with: [ 
 					(method includesSubString: '(envId 0)')
 						ifTrue: [html with: MaglevIconImage smalltalk].
 					(method includesSubString: '(envId 1)')
@@ -2787,8 +2790,10 @@ reloadStackWithCallback: aBlock
 !
 
 selectStackFrame: anInteger
-	< self['@methodSelect']._asJQuery()[0].selectedIndex = anInteger - 1; >.
-	self renderFrame.
+	<
+	self['@methodSelect']._asJQuery()[0].selectedIndex = anInteger - 1;
+	self._renderFrame();
+	>
 !
 
 stepInto
@@ -2989,7 +2994,7 @@ renderWindowContentOn: html
 !
 
 searchSelectorsAndClasses
-	|input maglev selectors|
+	|input selectors|
 	input := '.search-input' asJQuery val.
 	selectors := Array new.
 	waitForResult show.

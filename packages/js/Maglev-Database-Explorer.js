@@ -104,41 +104,7 @@ referencedClasses: []
 globals.MaglevDraggableObject.klass);
 
 
-smalltalk.addClass('MaglevGsNMethodEditor', globals.Widget, ['object', 'editorContainer', 'errorBox', 'rubyIcon', 'stIcon', 'envIdContainer', 'sourceLocationContainer', 'editor', 'editorHeight', 'editorWidth', 'classObject'], 'Maglev-Database-Explorer');
-smalltalk.addMethod(
-smalltalk.method({
-selector: "classObject",
-protocol: 'accessing',
-fn: function (){
-var self=this;
-function $MaglevObject(){return globals.MaglevObject||(typeof MaglevObject=="undefined"?nil:MaglevObject)}
-return smalltalk.withContext(function($ctx1) { 
-var $1;
-$1=_st($MaglevObject())._newObjectWithoutUpdate_(_st(self._methodObject())._at_((5)));
-return $1;
-}, function($ctx1) {$ctx1.fill(self,"classObject",{},globals.MaglevGsNMethodEditor)})},
-args: [],
-source: "classObject\x0a\x09^ MaglevObject newObjectWithoutUpdate: (self methodObject at: 5)",
-messageSends: ["newObjectWithoutUpdate:", "at:", "methodObject"],
-referencedClasses: ["MaglevObject"]
-}),
-globals.MaglevGsNMethodEditor);
-
-smalltalk.addMethod(
-smalltalk.method({
-selector: "classObject:",
-protocol: 'accessing',
-fn: function (anObject){
-var self=this;
-self["@classObject"]=anObject;
-return self},
-args: ["anObject"],
-source: "classObject: anObject\x0a\x09classObject := anObject.",
-messageSends: [],
-referencedClasses: []
-}),
-globals.MaglevGsNMethodEditor);
-
+smalltalk.addClass('MaglevGsNMethodEditor', globals.Widget, ['object', 'editorContainer', 'errorBox', 'rubyIcon', 'stIcon', 'envIdContainer', 'sourceLocationContainer', 'editor', 'editorHeight', 'editorWidth'], 'Maglev-Database-Explorer');
 smalltalk.addMethod(
 smalltalk.method({
 selector: "commandSave",
@@ -147,41 +113,41 @@ fn: function (){
 var self=this;
 var selectedCategory;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$4,$3;
+var $1,$2,$3,$4,$5;
 _st(self["@errorBox"])._hide();
 _st(_st(self["@errorBox"])._asJQuery())._empty();
-$1=_st(self._envId()).__eq((1));
+$1=_st(_st(self["@object"])._environmentId()).__eq((1));
 if(smalltalk.assert($1)){
-$2=self._classObject();
-$ctx1.sendIdx["classObject"]=1;
-$4=_st(self["@editor"])._getValue();
+$2=self["@object"];
+$3=_st(self["@editor"])._getValue();
 $ctx1.sendIdx["getValue"]=1;
-$3=_st($4)._replace_with_("⚡","");
-$ctx1.sendIdx["replace:with:"]=1;
 _st($2)._compileRubySourceCode_withCallback_($3,(function(success,obj){
 return smalltalk.withContext(function($ctx2) {
-if(smalltalk.assert(success)){
-return self._signalSuccess();
-$ctx2.sendIdx["signalSuccess"]=1;
-} else {
+$4=_st(obj)._isException();
+$ctx2.sendIdx["isException"]=1;
+if(smalltalk.assert($4)){
 return self._signalFailure_(obj);
 $ctx2.sendIdx["signalFailure:"]=1;
+} else {
+return self._signalSuccess();
+$ctx2.sendIdx["signalSuccess"]=1;
 };
 }, function($ctx2) {$ctx2.fillBlock({success:success,obj:obj},$ctx1,2)})}));
 } else {
-_st(self._classObject())._compileSmalltalkSourceCode_withCallback_(_st(_st(self["@editor"])._getValue())._replace_with_("⚡",""),(function(success,obj){
+_st(self["@object"])._compileSmalltalkSourceCode_withCallback_(_st(self["@editor"])._getValue(),(function(success,obj){
 return smalltalk.withContext(function($ctx2) {
-if(smalltalk.assert(success)){
-return self._signalSuccess();
-} else {
+$5=_st(obj)._isException();
+if(smalltalk.assert($5)){
 return self._signalFailure_(obj);
+} else {
+return self._signalSuccess();
 };
 }, function($ctx2) {$ctx2.fillBlock({success:success,obj:obj},$ctx1,6)})}));
 };
 return self}, function($ctx1) {$ctx1.fill(self,"commandSave",{selectedCategory:selectedCategory},globals.MaglevGsNMethodEditor)})},
 args: [],
-source: "commandSave\x0a\x09|selectedCategory|\x0a\x09errorBox hide.\x0a\x09errorBox asJQuery empty.\x0a\x09self envId = 1\x0a\x09\x09ifTrue: [self classObject\x0a\x09\x09\x09compileRubySourceCode: (editor getValue replace: '⚡' with: '')\x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09success\x0a\x09\x09\x09\x09\x09ifTrue: [self signalSuccess]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalFailure: obj]]]\x0a\x09\x09ifFalse: [self classObject\x0a\x09\x09\x09compileSmalltalkSourceCode: (editor getValue replace: '⚡' with: '')\x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09success\x0a\x09\x09\x09\x09\x09ifTrue: [self signalSuccess]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalFailure: obj]]].",
-messageSends: ["hide", "empty", "asJQuery", "ifTrue:ifFalse:", "=", "envId", "compileRubySourceCode:withCallback:", "classObject", "replace:with:", "getValue", "signalSuccess", "signalFailure:", "compileSmalltalkSourceCode:withCallback:"],
+source: "commandSave\x0a\x09|selectedCategory|\x0a\x09errorBox hide.\x0a\x09errorBox asJQuery empty.\x0a\x09object environmentId = 1\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09compileRubySourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]]\x0a\x09\x09ifFalse: [object \x0a\x09\x09\x09compileSmalltalkSourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]].",
+messageSends: ["hide", "empty", "asJQuery", "ifTrue:ifFalse:", "=", "environmentId", "compileRubySourceCode:withCallback:", "getValue", "isException", "signalFailure:", "signalSuccess", "compileSmalltalkSourceCode:withCallback:"],
 referencedClasses: []
 }),
 globals.MaglevGsNMethodEditor);
@@ -262,7 +228,7 @@ self._mouseFix();
 self._makeEditorResizable();
 return self}, function($ctx1) {$ctx1.fill(self,"initializeEditor",{params:params,extraKeys:extraKeys},globals.MaglevGsNMethodEditor)})},
 args: [],
-source: "initializeEditor\x0a\x09|params extraKeys|\x0a\x09extraKeys := Object new\x0a\x09\x09basicAt: 'Ctrl-S' put: [self commandSave];\x0a\x09\x09yourself.\x0a\x09params := Object new\x0a\x09\x09basicAt: 'mode' put: 'text/x-ruby';\x0a\x09\x09basicAt: 'styleActiveLine' put: true;\x0a\x09\x09basicAt: 'lineNumbers' put: true;\x0a\x09\x09basicAt: 'matchBrackets' put: true;\x0a\x09\x09basicAt: 'extraKeys' put: extraKeys;\x0a\x09\x09yourself.\x0a\x09editor := CodeMirror value: (editorContainer asJQuery at: 0) value: params.\x0a\x09editor setValue: ''.\x0a\x09self mouseFix.\x0a\x09self makeEditorResizable.",
+source: "initializeEditor\x0a\x09|params extraKeys|\x0a\x09extraKeys := Object new\x0a\x09\x09basicAt: 'Ctrl-S' put: [self commandSave];\x0a\x09\x09yourself.\x0a\x09params := Object new\x0a\x09\x09basicAt: 'mode' put: 'text/x-ruby';\x0a\x09\x09basicAt: 'styleActiveLine' put: true;\x0a\x09\x09basicAt: 'lineNumbers' put: true;\x0a\x09\x09basicAt: 'matchBrackets' put: true;\x0a\x09\x09basicAt: 'extraKeys' put: extraKeys;\x0a\x09\x09yourself. \x0a\x09editor := CodeMirror value: (editorContainer asJQuery at: 0) value: params.\x0a\x09editor setValue: ''.\x0a\x09self mouseFix.\x0a\x09self makeEditorResizable.",
 messageSends: ["basicAt:put:", "new", "commandSave", "yourself", "value:value:", "at:", "asJQuery", "setValue:", "mouseFix", "makeEditorResizable"],
 referencedClasses: ["Object", "CodeMirror"]
 }),
@@ -451,7 +417,7 @@ _st(self["@rubyIcon"])._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject",{envId:envId},globals.MaglevGsNMethodEditor)})},
 args: [],
-source: "renderMethodObject\x0a\x09|envId|\x0a\x09editor setValue: self sourceString.\x0a\x09editorContainer show.\x0a\x09envId := self envId.\x0a\x09envIdContainer asJQuery empty.\x0a\x09envIdContainer with: envId.\x0a\x09sourceLocationContainer empty.\x0a\x09envId = 1\x0a\x09\x09ifTrue: [\x0a\x09\x09\x09sourceLocationContainer with: self filename.\x0a\x09\x09\x09stIcon hide. rubyIcon show.\x0a\x09\x09\x09editor setOption: 'mode' data: 'text/x-ruby'.]\x0a\x09\x09ifFalse: [sourceLocationContainer with: 'n/a'].\x0a\x09envId = 0 ifTrue: [\x0a\x09\x09stIcon show. rubyIcon hide.\x0a\x09\x09editor setOption: 'mode' data: 'text/x-stsrc'].\x0a\x09envId > 1\x0a\x09\x09ifTrue: [stIcon hide. rubyIcon hide].",
+source: "renderMethodObject\x0a\x09|envId|\x0a\x09editor setValue: self sourceString. \x0a\x09editorContainer show.\x0a\x09envId := self envId.\x0a\x09envIdContainer asJQuery empty.\x0a\x09envIdContainer with: envId.\x0a\x09sourceLocationContainer empty.\x0a\x09envId = 1 \x0a\x09\x09ifTrue: [\x0a\x09\x09\x09sourceLocationContainer with: self filename.\x0a\x09\x09\x09stIcon hide. rubyIcon show.\x0a\x09\x09\x09editor setOption: 'mode' data: 'text/x-ruby'.]\x0a\x09\x09ifFalse: [sourceLocationContainer with: 'n/a'].\x0a\x09envId = 0 ifTrue: [\x0a\x09\x09stIcon show. rubyIcon hide.\x0a\x09\x09editor setOption: 'mode' data: 'text/x-stsrc'].\x0a\x09envId > 1\x0a\x09\x09ifTrue: [stIcon hide. rubyIcon hide].",
 messageSends: ["setValue:", "sourceString", "show", "envId", "empty", "asJQuery", "with:", "ifTrue:ifFalse:", "=", "filename", "hide", "setOption:data:", "ifTrue:", ">"],
 referencedClasses: []
 }),
@@ -656,7 +622,7 @@ globals.MaglevGsNMethodEditor.klass);
 
 
 smalltalk.addClass('MaglevGsNMethodDebugEditor', globals.MaglevGsNMethodEditor, ['argValueBox', 'argSelect'], 'Maglev-Database-Explorer');
-globals.MaglevGsNMethodDebugEditor.comment="Copied from _frameContentsAt:\x0a\x0a\x22Private.  Returns an Array describing the specified level in the receiver.\x0a aLevel == 1 is top of stack.  If aLevel is less than 1 or greater than\x0a stackDepth, returns nil.\x0a\x0a The result Array contains:\x0a offset item\x0a -----  -----\x0a   1    gsMethod  (a GsNMethod)\x0a   2    ipOffset    (zero-based relative to first named instance variable in portable code;\x0a                     negative means a stack breakpoint is present)\x0a   3    frameOffset (zero-based)\x0a   4    varContext\x0a   5    saveProtectedMode\x0a   6    markerOrException\x0a   7    nil    (not used)\x0a   8    self   (possibly nil in a ComplexBlock)\x0a   9    argAndTempNames   (an Array of Symbols or Strings)\x0a  10    receiver\x0a  11    arguments and temps, if any\x22";
+globals.MaglevGsNMethodDebugEditor.comment="Copied from _frameContentsAt:\x0a\x0a\x22Private.  Returns an Array describing the specified level in the receiver. \x0a aLevel == 1 is top of stack.  If aLevel is less than 1 or greater than\x0a stackDepth, returns nil.  \x0a\x0a The result Array contains:\x0a offset item\x0a -----  -----\x0a   1    gsMethod  (a GsNMethod)\x0a   2    ipOffset    (zero-based relative to first named instance variable in portable code;\x0a                     negative means a stack breakpoint is present)\x0a   3    frameOffset (zero-based)\x0a   4    varContext\x0a   5    saveProtectedMode\x0a   6    markerOrException\x0a   7    nil    (not used)\x0a   8    self   (possibly nil in a ComplexBlock)\x0a   9    argAndTempNames   (an Array of Symbols or Strings)\x0a  10    receiver\x0a  11    arguments and temps, if any\x22";
 smalltalk.addMethod(
 smalltalk.method({
 selector: "argAndTempNames",
@@ -786,7 +752,7 @@ _st(_st(self["@argValueBox"])._asJQuery())._empty();
 _st(self["@argValueBox"])._with_(_st(argValue)._inlineViewComponent());
 return self}, function($ctx1) {$ctx1.fill(self,"renderArg",{argIndex:argIndex,argValue:argValue},globals.MaglevGsNMethodDebugEditor)})},
 args: [],
-source: "renderArg\x0a\x09|argIndex argValue|\x0a\x09argIndex := (argSelect asJQuery at: 0) selectedIndex - 1.\x0a\x09argIndex = -1\x0a\x09\x09ifTrue: [argValue := self ownerSelf].\x0a\x09argIndex = 0\x0a\x09\x09ifTrue: [argValue := self receiver].\x0a\x09argIndex  > 0\x0a\x09\x09ifTrue: [argValue := self argOrTempValue: argIndex].\x0a\x09argValueBox asJQuery empty.\x0a\x09argValueBox with: argValue inlineViewComponent.",
+source: "renderArg\x0a\x09|argIndex argValue|\x0a\x09argIndex := (argSelect asJQuery at: 0) selectedIndex - 1.\x0a\x09argIndex = -1 \x0a\x09\x09ifTrue: [argValue := self ownerSelf].\x0a\x09argIndex = 0\x0a\x09\x09ifTrue: [argValue := self receiver].\x0a\x09argIndex  > 0\x0a\x09\x09ifTrue: [argValue := self argOrTempValue: argIndex].\x0a\x09argValueBox asJQuery empty.\x0a\x09argValueBox with: argValue inlineViewComponent.",
 messageSends: ["-", "selectedIndex", "at:", "asJQuery", "ifTrue:", "=", "ownerSelf", "receiver", ">", "argOrTempValue:", "empty", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -870,7 +836,7 @@ $9=_st($1)._style_("margin-top: 5px;");
 self._renderArg();
 return self}, function($ctx1) {$ctx1.fill(self,"renderArgsOn:",{html:html},globals.MaglevGsNMethodDebugEditor)})},
 args: ["html"],
-source: "renderArgsOn: html\x0a\x09html table with: [\x0a\x09\x09html tbody with: [\x0a\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09argSelect := html select\x0a\x09\x09\x09\x09\x09\x09with: [html option with: '(self)'];\x0a\x09\x09\x09\x09\x09\x09with: [html option with: '(receiver)'];\x0a\x09\x09\x09\x09\x09\x09with: [self argAndTempNames do: [:arg |\x0a\x09\x09\x09\x09\x09\x09\x09html option with: arg]];\x0a\x09\x09\x09\x09\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09\x09onChange: [self renderArg].\x0a\x09\x09\x09\x09\x09argValueBox := html div].\x0a\x09\x09\x09\x09html td\x0a\x09\x09\x09\x09\x09with: [argValueBox := html div];\x0a\x09\x09\x09\x09\x09style: 'padding-left: 5px;']]];\x0a\x09style: 'margin-top: 5px;'.\x0a\x09self renderArg.",
+source: "renderArgsOn: html\x0a\x09html table with: [\x0a\x09\x09html tbody with: [\x0a\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09argSelect := html select\x0a\x09\x09\x09\x09\x09\x09with: [html option with: '(self)'];\x0a\x09\x09\x09\x09\x09\x09with: [html option with: '(receiver)'];\x0a\x09\x09\x09\x09\x09\x09with: [self argAndTempNames do: [:arg |\x0a\x09\x09\x09\x09\x09\x09\x09html option with: arg]];\x0a\x09\x09\x09\x09\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09\x09onChange: [self renderArg].\x0a\x09\x09\x09\x09\x09argValueBox := html div].\x0a\x09\x09\x09\x09html td \x0a\x09\x09\x09\x09\x09with: [argValueBox := html div];\x0a\x09\x09\x09\x09\x09style: 'padding-left: 5px;']]];\x0a\x09style: 'margin-top: 5px;'.\x0a\x09self renderArg.",
 messageSends: ["with:", "table", "tbody", "tr", "td", "select", "option", "do:", "argAndTempNames", "style:", "onChange:", "renderArg", "div"],
 referencedClasses: []
 }),
@@ -885,11 +851,12 @@ var self=this;
 var rangeFrom,rangeTo;
 return smalltalk.withContext(function($ctx1) { 
 globals.MaglevGsNMethodDebugEditor.superclass.fn.prototype._renderMethodObject.apply(_st(self), []);
+_st(console)._log_("fixme MaglevGsNMethodDebugEditor>>#renderMethodObject");
 _st(self["@editor"])._replaceSelection_("⚡");
 return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject",{rangeFrom:rangeFrom,rangeTo:rangeTo},globals.MaglevGsNMethodDebugEditor)})},
 args: [],
-source: "renderMethodObject\x0a\x09|rangeFrom rangeTo|\x0a\x09super renderMethodObject.\x0a\x09\x22< self['@editor'].setSelection(\x0a\x09\x09{line: self._sourceOffsetY(), ch: self._sourceOffsetX()},\x0a\x09\x09{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}); >.\x22\x0a\x09editor replaceSelection: '⚡'.",
-messageSends: ["renderMethodObject", "replaceSelection:"],
+source: "renderMethodObject\x0a\x09|rangeFrom rangeTo|\x0a\x09super renderMethodObject.\x0a\x09console log: 'fixme MaglevGsNMethodDebugEditor>>#renderMethodObject'.\x0a\x09\x22< self['@editor'].setSelection(\x0a\x09\x09{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}, \x0a\x09\x09{line: self._sourceOffsetY(), ch: self._sourceOffsetX()}); >.\x22\x0a\x09editor replaceSelection: '⚡'.",
+messageSends: ["renderMethodObject", "log:", "replaceSelection:"],
 referencedClasses: []
 }),
 globals.MaglevGsNMethodDebugEditor);
@@ -1028,11 +995,12 @@ fn: function (aNumber){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
 self["@interval"]=aNumber;
+_st(window)._clearInterval_(self["@timer"]);
 self._startPolling();
 return self}, function($ctx1) {$ctx1.fill(self,"interval:",{aNumber:aNumber},globals.MaglevHaltedThreadListener)})},
 args: ["aNumber"],
-source: "interval: aNumber\x0a\x09interval := aNumber.\x0a\x09\x22< clearInterval(self['@timer']); >.\x22\x0a\x09self startPolling.",
-messageSends: ["startPolling"],
+source: "interval: aNumber\x0a\x09interval := aNumber.\x0a\x09window clearInterval: timer.\x0a\x09\x22< clearInterval(self['@timer']); >.\x22\x0a\x09self startPolling.",
+messageSends: ["clearInterval:", "startPolling"],
 referencedClasses: []
 }),
 globals.MaglevHaltedThreadListener);
@@ -1092,7 +1060,7 @@ return _st(self["@navbar"])._show();
 }, function($ctx2) {$ctx2.fillBlock({success:success,obj:obj,currentOops:currentOops},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"refresh",{params:params},globals.MaglevHaltedThreadListener)})},
 args: [],
-source: "refresh\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'allElements' put: true;\x0a\x09\x09at: 'noBehavior' put: true;\x0a\x09\x09yourself.\x0a\x09MaglevObjectSpace instance evalObject\x0a\x09\x09evaluateWithoutUpdate: 'MaglevDatabaseExplorer.halted_threads'\x0a\x09\x09language: 'ruby'\x0a\x09\x09with: params\x0a\x09\x09withCallback: [:success :obj | |currentOops|\x0a\x09\x09\x09success ifTrue:[\x0a\x09\x09\x09currentOops := Set new.\x0a\x09\x09\x09obj do: [:el |\x0a\x09\x09\x09\x09(renderedOops includesKey: el oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self renderObject: el oop with: el inlineViewComponent].\x0a\x09\x09\x09\x09currentOops add: el oop].\x0a\x09\x09\x09renderedOops keysAndValuesDo: [:oop :comp |\x0a\x09\x09\x09\x09(currentOops includes: oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self removeObject: oop with: comp]].\x0a\x09\x09\x09renderedOops size = 0\x0a\x09\x09\x09\x09ifTrue: [navbar hide]\x0a\x09\x09\x09\x09ifFalse: [navbar show]]].",
+source: "refresh\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'allElements' put: true;\x0a\x09\x09at: 'noBehavior' put: true;\x0a\x09\x09yourself.\x0a\x09MaglevObjectSpace instance evalObject \x0a\x09\x09evaluateWithoutUpdate: 'MaglevDatabaseExplorer.halted_threads' \x0a\x09\x09language: 'ruby'\x0a\x09\x09with: params \x0a\x09\x09withCallback: [:success :obj | |currentOops|\x0a\x09\x09\x09success ifTrue:[\x0a\x09\x09\x09currentOops := Set new.\x0a\x09\x09\x09obj do: [:el | \x0a\x09\x09\x09\x09(renderedOops includesKey: el oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self renderObject: el oop with: el inlineViewComponent].\x0a\x09\x09\x09\x09currentOops add: el oop].\x0a\x09\x09\x09renderedOops keysAndValuesDo: [:oop :comp |\x0a\x09\x09\x09\x09(currentOops includes: oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self removeObject: oop with: comp]].\x0a\x09\x09\x09renderedOops size = 0\x0a\x09\x09\x09\x09ifTrue: [navbar hide]\x0a\x09\x09\x09\x09ifFalse: [navbar show]]].",
 messageSends: ["at:put:", "new", "yourself", "evaluateWithoutUpdate:language:with:withCallback:", "evalObject", "instance", "ifTrue:", "do:", "ifFalse:", "includesKey:", "oop", "renderObject:with:", "inlineViewComponent", "add:", "keysAndValuesDo:", "includes:", "removeObject:with:", "ifTrue:ifFalse:", "=", "size", "hide", "show"],
 referencedClasses: ["Dictionary", "MaglevObjectSpace", "Set"]
 }),
@@ -1131,7 +1099,7 @@ inlineContainer=$2;
 _st(self["@renderedOops"])._at_put_(oop,inlineContainer);
 return self}, function($ctx1) {$ctx1.fill(self,"renderObject:with:",{oop:oop,component:component,inlineContainer:inlineContainer},globals.MaglevHaltedThreadListener)})},
 args: ["oop", "component"],
-source: "renderObject: oop with: component\x0a\x09|inlineContainer|\x0a\x09inlineContainer := html span\x0a\x09\x09style: 'padding: 4px 2px 2px 4px;';\x0a\x09\x09with: component.\x0a\x09renderedOops at: oop put: inlineContainer.",
+source: "renderObject: oop with: component\x0a\x09|inlineContainer|\x0a\x09inlineContainer := html span \x0a\x09\x09style: 'padding: 4px 2px 2px 4px;';\x0a\x09\x09with: component.\x0a\x09renderedOops at: oop put: inlineContainer.",
 messageSends: ["style:", "span", "with:", "at:put:"],
 referencedClasses: []
 }),
@@ -1359,7 +1327,7 @@ _st(_st(self["@b"])._asJQuery())._tooltip();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderOn:",{html:html,cssClass:cssClass},globals.MaglevIcon)})},
 args: ["html"],
-source: "renderOn: html\x0a\x09|cssClass|\x0a\x09cssClass := 'icon-', self icon.\x0a\x09self spin\x0a\x09\x09ifTrue: [cssClass := cssClass, ' icon-spin'].\x0a\x09caption\x0a\x09\x09ifNil: [b := html b\x0a\x09\x09\x09\x09class: cssClass;\x0a\x09\x09\x09\x09yourself]\x0a\x09\x09ifNotNil: [b := html b\x0a\x09\x09\x09\x09class: cssClass;\x0a\x09\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09\x09data: 'original-title' with: caption;\x0a\x09\x09\x09\x09yourself.\x0a\x09\x09\x09b asJQuery tooltip].",
+source: "renderOn: html\x0a\x09|cssClass|\x0a\x09cssClass := 'icon-', self icon.\x0a\x09self spin \x0a\x09\x09ifTrue: [cssClass := cssClass, ' icon-spin'].\x0a\x09caption \x0a\x09\x09ifNil: [b := html b\x0a\x09\x09\x09\x09class: cssClass;\x0a\x09\x09\x09\x09yourself]\x0a\x09\x09ifNotNil: [b := html b\x0a\x09\x09\x09\x09class: cssClass;\x0a\x09\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09\x09data: 'original-title' with: caption;\x0a\x09\x09\x09\x09yourself.\x0a\x09\x09\x09b asJQuery tooltip].",
 messageSends: [",", "icon", "ifTrue:", "spin", "ifNil:ifNotNil:", "class:", "b", "yourself", "data:with:", "tooltip", "asJQuery"],
 referencedClasses: []
 }),
@@ -2103,6 +2071,8 @@ text=_st($1)._val();
 _st(_st(_st(self["@list"])._asJQuery())._find_("li"))._each_((function(idx,htmlEl){
 var el;
 return smalltalk.withContext(function($ctx2) {
+el=_st(window)._jQuery_(htmlEl);
+el;
 $2=_st(_st(el)._text())._includesSubString_(text);
 if(smalltalk.assert($2)){
 return _st(el)._show();
@@ -2113,8 +2083,8 @@ return _st(el)._hide();
 self._hideSearchBox();
 return self}, function($ctx1) {$ctx1.fill(self,"filterResults",{text:text},globals.MaglevListBox)})},
 args: [],
-source: "filterResults\x0a\x09|text|\x0a\x09text := searchInput asJQuery val.\x0a\x09(list asJQuery find: 'li') each: [:idx :htmlEl | |el|\x0a\x09\x09\x22< el = $(htmlEl); >.\x22\x0a\x09\x09(el text includesSubString: text)\x0a\x09\x09\x09ifTrue: [el show]\x0a\x09\x09\x09ifFalse: [el hide]].\x0a\x09self hideSearchBox.",
-messageSends: ["val", "asJQuery", "each:", "find:", "ifTrue:ifFalse:", "includesSubString:", "text", "show", "hide", "hideSearchBox"],
+source: "filterResults\x0a\x09|text|\x0a\x09text := searchInput asJQuery val.\x0a\x09(list asJQuery find: 'li') each: [:idx :htmlEl | |el|\x0a\x09\x09el := window jQuery: htmlEl.\x0a\x09\x09\x22< el = $(htmlEl); >.\x22\x0a\x09\x09(el text includesSubString: text)\x0a\x09\x09\x09ifTrue: [el show]\x0a\x09\x09\x09ifFalse: [el hide]].\x0a\x09self hideSearchBox.",
+messageSends: ["val", "asJQuery", "each:", "find:", "jQuery:", "ifTrue:ifFalse:", "includesSubString:", "text", "show", "hide", "hideSearchBox"],
 referencedClasses: []
 }),
 globals.MaglevListBox);
@@ -2361,7 +2331,7 @@ $ctx1.sendIdx["with:"]=1;
 self._bindEvents();
 return self}, function($ctx1) {$ctx1.fill(self,"renderOn:",{html:html},globals.MaglevListBox)})},
 args: ["html"],
-source: "renderOn: html\x0a\x09divContainer := html div with: [\x0a\x09\x09self renderSearchBoxOn: html.\x0a\x09\x09olContainer := html div\x0a\x09\x09\x09style: 'overflow: hidden; border: 1px solid #aaaaaa';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09list := html ol\x0a\x09\x09\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto; border: none; outline: none;';\x0a\x09\x09\x09\x09\x09at: 'tabindex' put: '1';\x0a\x09\x09\x09\x09\x09onKeyDown: [:e |\x0a\x09\x09\x09\x09\x09\x09e preventDefault.\x0a\x09\x09\x09\x09\x09\x09e keyCode = 40 ifTrue: [self moveSelectionDown].\x0a\x09\x09\x09\x09\x09\x09e keyCode = 38 ifTrue: [self moveSelectionUp].\x0a\x09\x09\x09\x09\x09\x09(e keyCode = 70 and: [e ctrlKey]) ifTrue: [self commandFind]];\x0a\x09\x09\x09\x09\x09onClick: [self focus]].\x0a\x09\x09self makeResizable.\x0a\x09\x09htmlIv := html].\x0a\x09self bindEvents.",
+source: "renderOn: html\x0a\x09divContainer := html div with: [\x0a\x09\x09self renderSearchBoxOn: html.\x0a\x09\x09olContainer := html div \x0a\x09\x09\x09style: 'overflow: hidden; border: 1px solid #aaaaaa';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09list := html ol\x0a\x09\x09\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto; border: none; outline: none;';\x0a\x09\x09\x09\x09\x09at: 'tabindex' put: '1';\x0a\x09\x09\x09\x09\x09onKeyDown: [:e | \x0a\x09\x09\x09\x09\x09\x09e preventDefault. \x0a\x09\x09\x09\x09\x09\x09e keyCode = 40 ifTrue: [self moveSelectionDown].\x0a\x09\x09\x09\x09\x09\x09e keyCode = 38 ifTrue: [self moveSelectionUp].\x0a\x09\x09\x09\x09\x09\x09(e keyCode = 70 and: [e ctrlKey]) ifTrue: [self commandFind]];\x0a\x09\x09\x09\x09\x09onClick: [self focus]].\x0a\x09\x09self makeResizable.\x0a\x09\x09htmlIv := html].\x0a\x09self bindEvents.",
 messageSends: ["with:", "div", "renderSearchBoxOn:", "style:", "ol", "at:put:", "onKeyDown:", "preventDefault", "ifTrue:", "=", "keyCode", "moveSelectionDown", "moveSelectionUp", "and:", "ctrlKey", "commandFind", "onClick:", "focus", "makeResizable", "bindEvents"],
 referencedClasses: []
 }),
@@ -2407,7 +2377,7 @@ $6=_st($1)._hide();
 self["@searchbox"]=$6;
 return self}, function($ctx1) {$ctx1.fill(self,"renderSearchBoxOn:",{html:html},globals.MaglevListBox)})},
 args: ["html"],
-source: "renderSearchBoxOn: html\x0a\x09searchbox := html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span\x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09 with: 'find'.\x0a\x09\x09\x09searchInput := html input\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09class: 'span2';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onChange: [self filterResults];\x0a\x09\x09\x09\x09onFocusOut: [self hideSearchBox]];\x0a\x09\x09hide.",
+source: "renderSearchBoxOn: html\x0a\x09searchbox := html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09 with: 'find'.\x0a\x09\x09\x09searchInput := html input\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09class: 'span2';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onChange: [self filterResults];\x0a\x09\x09\x09\x09onFocusOut: [self hideSearchBox]];\x0a\x09\x09hide.",
 messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onChange:", "filterResults", "onFocusOut:", "hideSearchBox", "hide"],
 referencedClasses: []
 }),
@@ -2757,7 +2727,7 @@ return _st(self["@resultContainer"])._with_(_st(resultObj)._inlineViewComponent(
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"evalPrintIt",{},globals.MaglevObjectDropdown)})},
 args: [],
-source: "evalPrintIt\x0a\x09self executeWithCallback: [:success :resultObj |\x0a\x09\x09success\x0a\x09\x09\x09ifTrue: [resultContainer with: resultObj inlineViewComponent]\x0a\x09\x09\x09ifFalse: [resultContainer with: resultObj inlineViewComponent]].",
+source: "evalPrintIt\x0a\x09self executeWithCallback: [:success :resultObj | \x0a\x09\x09success\x0a\x09\x09\x09ifTrue: [resultContainer with: resultObj inlineViewComponent]\x0a\x09\x09\x09ifFalse: [resultContainer with: resultObj inlineViewComponent]].",
 messageSends: ["executeWithCallback:", "ifTrue:ifFalse:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -2802,7 +2772,7 @@ return _st(aBlock)._value_value_(success,resultObj);
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"executeWithCallback:",{aBlock:aBlock},globals.MaglevObjectDropdown)})},
 args: ["aBlock"],
-source: "executeWithCallback: aBlock\x0a\x09resultContainer\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error'.\x0a\x09resultContainer asJQuery empty.\x0a\x09resultContainer\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.\x0a\x09object\x0a\x09\x09evaluate: self code\x0a\x09\x09language: self language\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09resultContainer asJQuery empty.\x0a\x09\x09\x09resultContainer removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [resultContainer addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [resultContainer addClass: 'alert-error'].\x0a\x09\x09\x09aBlock value: success value: resultObj]",
+source: "executeWithCallback: aBlock\x0a\x09resultContainer\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error'.\x0a\x09resultContainer asJQuery empty.\x0a\x09resultContainer\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.\x0a\x09object \x0a\x09\x09evaluate: self code \x0a\x09\x09language: self language \x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09resultContainer asJQuery empty.\x0a\x09\x09\x09resultContainer removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [resultContainer addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [resultContainer addClass: 'alert-error'].\x0a\x09\x09\x09aBlock value: success value: resultObj]",
 messageSends: ["addClass:", "removeClass:", "empty", "asJQuery", "with:", "wait", "show", "evaluate:language:withCallback:", "code", "language", "ifTrue:ifFalse:", "value:value:"],
 referencedClasses: ["MaglevIcon"]
 }),
@@ -2814,51 +2784,27 @@ selector: "initializeEditor",
 protocol: 'initializing',
 fn: function (){
 var self=this;
-var params,extraKeys;
+var params;
 function $Object(){return globals.Object||(typeof Object=="undefined"?nil:Object)}
 function $CodeMirror(){return globals.CodeMirror||(typeof CodeMirror=="undefined"?nil:CodeMirror)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4;
+var $1,$2;
 $1=_st($Object())._new();
-$ctx1.sendIdx["new"]=1;
-_st($1)._basicAt_put_("Ctrl-D",(function(){
-return smalltalk.withContext(function($ctx2) {
-return self._evalPrintIt();
-$ctx2.sendIdx["evalPrintIt"]=1;
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
+_st($1)._basicAt_put_("mode","text/x-ruby");
 $ctx1.sendIdx["basicAt:put:"]=1;
-_st($1)._basicAt_put_("Ctrl-P",(function(){
-return smalltalk.withContext(function($ctx2) {
-return self._evalPrintIt();
-$ctx2.sendIdx["evalPrintIt"]=2;
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)})}));
+_st($1)._basicAt_put_("styleActiveLine",true);
 $ctx1.sendIdx["basicAt:put:"]=2;
-_st($1)._basicAt_put_("Ctrl-S",(function(){
-return smalltalk.withContext(function($ctx2) {
-return self._evalPrintIt();
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,3)})}));
+_st($1)._basicAt_put_("lineNumbers",true);
 $ctx1.sendIdx["basicAt:put:"]=3;
+_st($1)._basicAt_put_("matchBrackets",true);
 $2=_st($1)._yourself();
-$ctx1.sendIdx["yourself"]=1;
-extraKeys=$2;
-$3=_st($Object())._new();
-_st($3)._basicAt_put_("mode","text/x-ruby");
-$ctx1.sendIdx["basicAt:put:"]=4;
-_st($3)._basicAt_put_("styleActiveLine",true);
-$ctx1.sendIdx["basicAt:put:"]=5;
-_st($3)._basicAt_put_("lineNumbers",true);
-$ctx1.sendIdx["basicAt:put:"]=6;
-_st($3)._basicAt_put_("matchBrackets",true);
-$ctx1.sendIdx["basicAt:put:"]=7;
-_st($3)._basicAt_put_("extraKeys",extraKeys);
-$4=_st($3)._yourself();
-params=$4;
+params=$2;
 self["@editor"]=_st($CodeMirror())._value_value_(_st(_st(self["@editorElement"])._asJQuery())._at_((0)),params);
 _st(self["@editor"])._setValue_("");
-return self}, function($ctx1) {$ctx1.fill(self,"initializeEditor",{params:params,extraKeys:extraKeys},globals.MaglevObjectDropdown)})},
+return self}, function($ctx1) {$ctx1.fill(self,"initializeEditor",{params:params},globals.MaglevObjectDropdown)})},
 args: [],
-source: "initializeEditor\x0a\x09|params extraKeys|\x0a\x09extraKeys := Object new\x0a\x09\x09basicAt: 'Ctrl-D' put: [self evalPrintIt];\x0a\x09\x09basicAt: 'Ctrl-P' put: [self evalPrintIt];\x0a\x09\x09basicAt: 'Ctrl-S' put: [self evalPrintIt];\x0a\x09\x09yourself.\x0a\x09params := Object new\x0a\x09\x09basicAt: 'mode' put: 'text/x-ruby';\x0a\x09\x09basicAt: 'styleActiveLine' put: true;\x0a\x09\x09basicAt: 'lineNumbers' put: true;\x0a\x09\x09basicAt: 'matchBrackets' put: true;\x0a\x09\x09basicAt: 'extraKeys' put: extraKeys;\x0a\x09\x09yourself.\x0a\x09editor := CodeMirror value: (editorElement asJQuery at: 0) value: params.\x0a\x09editor setValue: ''.",
-messageSends: ["basicAt:put:", "new", "evalPrintIt", "yourself", "value:value:", "at:", "asJQuery", "setValue:"],
+source: "initializeEditor\x0a\x09|params|\x0a\x09params := Object new\x0a\x09\x09basicAt: 'mode' put: 'text/x-ruby';\x0a\x09\x09basicAt: 'styleActiveLine' put: true;\x0a\x09\x09basicAt: 'lineNumbers' put: true;\x0a\x09\x09basicAt: 'matchBrackets' put: true;\x0a\x09\x09yourself. \x0a\x09editor := CodeMirror value: (editorElement asJQuery at: 0) value: params.\x0a\x09editor setValue: ''.",
+messageSends: ["basicAt:put:", "new", "yourself", "value:value:", "at:", "asJQuery", "setValue:"],
 referencedClasses: ["Object", "CodeMirror"]
 }),
 globals.MaglevObjectDropdown);
@@ -2976,65 +2922,89 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$5,$6,$7,$8,$4;
+var $1,$2,$3,$4,$5,$6,$7,$9,$10,$11,$12,$8;
 $1=_st(html)._button();
 $ctx1.sendIdx["button"]=1;
 _st($1)._class_("btn btn-primary");
 $ctx1.sendIdx["class:"]=1;
 _st($1)._type_("button");
 $ctx1.sendIdx["type:"]=1;
-_st($1)._style_("margin-right: 10px;");
-$ctx1.sendIdx["style:"]=1;
-_st($1)._with_("Print it");
+_st($1)._with_("Do it");
 $ctx1.sendIdx["with:"]=1;
 $2=_st($1)._onClick_((function(){
 return smalltalk.withContext(function($ctx2) {
-return self._evalPrintIt();
+return self._evalDoIt();
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 $ctx1.sendIdx["onClick:"]=1;
-$3=_st(html)._div();
-_st($3)._class_("btn-group");
+$3=_st(html)._button();
+$ctx1.sendIdx["button"]=2;
+_st($3)._class_("btn btn-primary");
 $ctx1.sendIdx["class:"]=2;
-_st($3)._style_("float: right;");
-_st($3)._data_with_("toggle","buttons-radio");
-$ctx1.sendIdx["data:with:"]=1;
-$4=_st($3)._with_((function(){
+_st($3)._type_("button");
+$ctx1.sendIdx["type:"]=2;
+_st($3)._with_("Print it");
+$ctx1.sendIdx["with:"]=2;
+$4=_st($3)._onClick_((function(){
 return smalltalk.withContext(function($ctx2) {
+return self._evalPrintIt();
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)})}));
+$ctx1.sendIdx["onClick:"]=2;
 $5=_st(html)._button();
-$ctx2.sendIdx["button"]=2;
-_st($5)._class_("btn active");
-$ctx2.sendIdx["class:"]=3;
-_st($5)._data_with_("toggle","buttons-checkbox");
+$ctx1.sendIdx["button"]=3;
+_st($5)._class_("btn btn-primary");
+$ctx1.sendIdx["class:"]=3;
+_st($5)._type_("button");
+$ctx1.sendIdx["type:"]=3;
+_st($5)._with_("Inspect it");
+$ctx1.sendIdx["with:"]=3;
+$6=_st($5)._onClick_((function(){
+return smalltalk.withContext(function($ctx2) {
+return self._evalInspectIt();
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,3)})}));
+$ctx1.sendIdx["onClick:"]=3;
+$7=_st(html)._div();
+_st($7)._class_("btn-group");
+$ctx1.sendIdx["class:"]=4;
+_st($7)._style_("float: right;");
+_st($7)._data_with_("toggle","buttons-radio");
+$ctx1.sendIdx["data:with:"]=1;
+$8=_st($7)._with_((function(){
+return smalltalk.withContext(function($ctx2) {
+$9=_st(html)._button();
+$ctx2.sendIdx["button"]=4;
+_st($9)._class_("btn active");
+$ctx2.sendIdx["class:"]=5;
+_st($9)._data_with_("toggle","buttons-checkbox");
 $ctx2.sendIdx["data:with:"]=2;
-_st($5)._onClick_((function(){
+_st($9)._onClick_((function(){
 return smalltalk.withContext(function($ctx3) {
 return self._languageChanged();
 $ctx3.sendIdx["languageChanged"]=1;
-}, function($ctx3) {$ctx3.fillBlock({},$ctx2,3)})}));
-$ctx2.sendIdx["onClick:"]=2;
-_st($5)._type_("button");
-$ctx2.sendIdx["type:"]=2;
-$6=_st($5)._with_("Ruby");
-$ctx2.sendIdx["with:"]=3;
-self["@rubyButton"]=$6;
+}, function($ctx3) {$ctx3.fillBlock({},$ctx2,5)})}));
+$ctx2.sendIdx["onClick:"]=4;
+_st($9)._type_("button");
+$ctx2.sendIdx["type:"]=4;
+$10=_st($9)._with_("Ruby");
+$ctx2.sendIdx["with:"]=5;
+self["@rubyButton"]=$10;
 self["@rubyButton"];
-$7=_st(html)._button();
-_st($7)._class_("btn");
-_st($7)._data_with_("toggle","buttons-checkbox");
-_st($7)._onClick_((function(){
+$11=_st(html)._button();
+_st($11)._class_("btn");
+_st($11)._data_with_("toggle","buttons-checkbox");
+_st($11)._onClick_((function(){
 return smalltalk.withContext(function($ctx3) {
 return self._languageChanged();
-}, function($ctx3) {$ctx3.fillBlock({},$ctx2,4)})}));
-_st($7)._type_("button");
-$8=_st($7)._with_("Smalltalk");
-self["@smalltalkButton"]=$8;
+}, function($ctx3) {$ctx3.fillBlock({},$ctx2,6)})}));
+_st($11)._type_("button");
+$12=_st($11)._with_("Smalltalk");
+self["@smalltalkButton"]=$12;
 return self["@smalltalkButton"];
-}, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)})}));
-$ctx1.sendIdx["with:"]=2;
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,4)})}));
+$ctx1.sendIdx["with:"]=4;
 return self}, function($ctx1) {$ctx1.fill(self,"renderButtonsOn:",{html:html},globals.MaglevObjectDropdown)})},
 args: ["html"],
-source: "renderButtonsOn: html\x0a\x09\x22html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09with: 'Do it';\x0a\x09\x09onClick: [self evalDoIt].\x22\x0a\x09html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09style: 'margin-right: 10px;';\x0a\x09\x09with: 'Print it';\x0a\x09\x09onClick: [self evalPrintIt].\x0a\x09\x22html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09with: 'Inspect it';\x0a\x09\x09onClick: [self evalInspectIt].\x22\x0a\x09html div\x0a\x09\x09class: 'btn-group';\x0a\x09\x09style: 'float: right;';\x0a\x09\x09data: 'toggle' with: 'buttons-radio';\x0a\x09\x09with: [\x0a\x09\x09\x09rubyButton := html button\x0a\x09\x09\x09\x09class: 'btn active';\x0a\x09\x09\x09\x09data: 'toggle' with: 'buttons-checkbox';\x0a\x09\x09\x09\x09onClick: [self languageChanged];\x0a\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09with: 'Ruby'.\x0a\x09\x09\x09smalltalkButton := html button\x0a\x09\x09\x09\x09class: 'btn';\x0a\x09\x09\x09\x09data: 'toggle' with: 'buttons-checkbox';\x0a\x09\x09\x09\x09onClick: [self languageChanged];\x0a\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09with: 'Smalltalk'].",
-messageSends: ["class:", "button", "type:", "style:", "with:", "onClick:", "evalPrintIt", "div", "data:with:", "languageChanged"],
+source: "renderButtonsOn: html\x0a\x09html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09with: 'Do it';\x0a\x09\x09onClick: [self evalDoIt].\x0a\x09html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09with: 'Print it';\x0a\x09\x09onClick: [self evalPrintIt].\x0a\x09html button\x0a\x09\x09class: 'btn btn-primary';\x0a\x09\x09type: 'button';\x0a\x09\x09with: 'Inspect it';\x0a\x09\x09onClick: [self evalInspectIt].\x0a\x09html div\x0a\x09\x09class: 'btn-group';\x0a\x09\x09style: 'float: right;';\x0a\x09\x09data: 'toggle' with: 'buttons-radio';\x0a\x09\x09with: [\x0a\x09\x09\x09rubyButton := html button\x0a\x09\x09\x09\x09class: 'btn active';\x0a\x09\x09\x09\x09data: 'toggle' with: 'buttons-checkbox';\x0a\x09\x09\x09\x09onClick: [self languageChanged];\x0a\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09with: 'Ruby'.\x0a\x09\x09\x09smalltalkButton := html button\x0a\x09\x09\x09\x09class: 'btn';\x0a\x09\x09\x09\x09data: 'toggle' with: 'buttons-checkbox';\x0a\x09\x09\x09\x09onClick: [self languageChanged];\x0a\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09with: 'Smalltalk'].",
+messageSends: ["class:", "button", "type:", "with:", "onClick:", "evalDoIt", "evalPrintIt", "evalInspectIt", "div", "style:", "data:with:", "languageChanged"],
 referencedClasses: []
 }),
 globals.MaglevObjectDropdown);
@@ -3653,7 +3623,7 @@ return _st(_st(tooltip)._asJQuery())._tooltip();
 $ctx1.sendIdx["with:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderLoadedObjectOn:",{html:html,text:text,shorted:shorted},globals.MaglevObjectInline)})},
 args: ["html"],
-source: "renderLoadedObjectOn: html\x0a\x09|text shorted|\x0a\x09shorted := false.\x0a\x09text := object inspection copyFrom: 1 to: self maxInspection.\x0a\x09text size < object inspection size ifTrue: [\x0a\x09\x09text := text, '...'.\x0a\x09\x09shorted := true.\x0a\x09\x09(text at: 2) = '<' ifTrue: [text := text, '>']].\x0a\x09html with: [|tooltip|\x0a\x09\x09tooltip := html span\x0a\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09data: 'original-title' with: object inspection;\x0a\x09\x09\x09with: text.\x0a\x09\x09shorted ifTrue: [tooltip asJQuery tooltip]].",
+source: "renderLoadedObjectOn: html\x0a\x09|text shorted|\x0a\x09shorted := false.\x0a\x09text := object inspection copyFrom: 1 to: self maxInspection.\x0a\x09text size < object inspection size ifTrue: [\x0a\x09\x09text := text, '...'. \x0a\x09\x09shorted := true.\x0a\x09\x09(text at: 2) = '<' ifTrue: [text := text, '>']].\x0a\x09html with: [|tooltip|\x0a\x09\x09tooltip := html span\x0a\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09data: 'original-title' with: object inspection;\x0a\x09\x09\x09with: text.\x0a\x09\x09shorted ifTrue: [tooltip asJQuery tooltip]].",
 messageSends: ["copyFrom:to:", "inspection", "maxInspection", "ifTrue:", "<", "size", ",", "=", "at:", "with:", "data:with:", "span", "tooltip", "asJQuery"],
 referencedClasses: []
 }),
@@ -3891,7 +3861,7 @@ return _st(_st(tooltip)._asJQuery())._tooltip();
 $ctx1.sendIdx["with:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderUnloadedObjectOn:",{html:html,text:text,shorted:shorted},globals.MaglevObjectInline)})},
 args: ["html"],
-source: "renderUnloadedObjectOn: html\x0a\x09|text shorted|\x0a\x09shorted := false.\x0a\x09text := object inspection copyFrom: 1 to: self maxInspection.\x0a\x09text size < object inspection size ifTrue: [\x0a\x09\x09text := text, '...'.\x0a\x09\x09shorted := true.\x0a\x09\x09(text at: 2) = '<' ifTrue: [text := text, '>']].\x0a\x09html with: [|tooltip|\x0a\x09\x09tooltip := html span\x0a\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09data: 'original-title' with: object inspection;\x0a\x09\x09\x09with: text.\x0a\x09\x09shorted ifTrue: [tooltip asJQuery tooltip]].",
+source: "renderUnloadedObjectOn: html\x0a\x09|text shorted|\x0a\x09shorted := false.\x0a\x09text := object inspection copyFrom: 1 to: self maxInspection.\x0a\x09text size < object inspection size ifTrue: [\x0a\x09\x09text := text, '...'. \x0a\x09\x09shorted := true.\x0a\x09\x09(text at: 2) = '<' ifTrue: [text := text, '>']].\x0a\x09html with: [|tooltip|\x0a\x09\x09tooltip := html span\x0a\x09\x09\x09data: 'toggle' with: 'tooltip';\x0a\x09\x09\x09data: 'placement' with: 'top';\x0a\x09\x09\x09data: 'original-title' with: object inspection;\x0a\x09\x09\x09with: text.\x0a\x09\x09shorted ifTrue: [tooltip asJQuery tooltip]].",
 messageSends: ["copyFrom:to:", "inspection", "maxInspection", "ifTrue:", "<", "size", ",", "=", "at:", "with:", "data:with:", "span", "tooltip", "asJQuery"],
 referencedClasses: []
 }),
@@ -4342,7 +4312,7 @@ _st(html)._with_(" ");
 self._renderText_withDropDownOn_("}",html);
 return self}, function($ctx1) {$ctx1.fill(self,"renderLoadedObjectOn:",{html:html,showElements:showElements,maxElements:maxElements},globals.MaglevHashInline)})},
 args: ["html"],
-source: "renderLoadedObjectOn: html\x0a\x09|showElements maxElements|\x0a\x09maxElements := self maxElements.\x0a\x09showElements := maxElements min: self object elementsSize.\x0a\x09self renderText: '{' withDropDownOn: html.\x0a\x09html with: ' '.\x0a\x09self isShort\x0a\x09\x09ifTrue: [html with: ' ... ']\x0a\x09\x09ifFalse: [\x0a\x09\x09\x09(1 to: showElements) do: [:idx | |key value|\x0a\x09\x09\x09\x09key := (self object at: idx) key.\x0a\x09\x09\x09\x09value := (self object at: idx) value.\x0a\x09\x09\x09\x09html\x0a\x09\x09\x09\x09\x09with: (key inlineViewComponentWithDepth: self depth + 1);\x0a\x09\x09\x09\x09\x09with: '=>';\x0a\x09\x09\x09\x09\x09with: (value inlineViewComponentWithDepth: self depth + 1).\x0a\x09\x09\x09\x09(idx < showElements or: [self object elementsSize > maxElements])\x0a\x09\x09\x09\x09\x09ifTrue: [html with: ' , ']].\x0a\x09\x09\x09self object elementsSize > maxElements\x0a\x09\x09\x09\x09ifTrue: [html with: ' ... ']].\x0a\x09html with: ' '.\x0a\x09self renderText: '}' withDropDownOn: html.",
+source: "renderLoadedObjectOn: html\x0a\x09|showElements maxElements|\x0a\x09maxElements := self maxElements.\x0a\x09showElements := maxElements min: self object elementsSize.\x0a\x09self renderText: '{' withDropDownOn: html.\x0a\x09html with: ' '.\x0a\x09self isShort\x0a\x09\x09ifTrue: [html with: ' ... ']\x0a\x09\x09ifFalse: [\x0a\x09\x09\x09(1 to: showElements) do: [:idx | |key value|\x0a\x09\x09\x09\x09key := (self object at: idx) key.\x0a\x09\x09\x09\x09value := (self object at: idx) value.\x0a\x09\x09\x09\x09html \x0a\x09\x09\x09\x09\x09with: (key inlineViewComponentWithDepth: self depth + 1);\x0a\x09\x09\x09\x09\x09with: '=>';\x0a\x09\x09\x09\x09\x09with: (value inlineViewComponentWithDepth: self depth + 1).\x0a\x09\x09\x09\x09(idx < showElements or: [self object elementsSize > maxElements])\x0a\x09\x09\x09\x09\x09ifTrue: [html with: ' , ']].\x0a\x09\x09\x09self object elementsSize > maxElements\x0a\x09\x09\x09\x09ifTrue: [html with: ' ... ']].\x0a\x09html with: ' '.\x0a\x09self renderText: '}' withDropDownOn: html.",
 messageSends: ["maxElements", "min:", "elementsSize", "object", "renderText:withDropDownOn:", "with:", "ifTrue:ifFalse:", "isShort", "do:", "to:", "key", "at:", "value", "inlineViewComponentWithDepth:", "+", "depth", "ifTrue:", "or:", "<", ">"],
 referencedClasses: []
 }),
@@ -4874,11 +4844,91 @@ selector: "renderInstVarTable",
 protocol: 'rendering',
 fn: function (){
 var self=this;
-return self},
+var html;
+function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
+function $MaglevInvalidObject(){return globals.MaglevInvalidObject||(typeof MaglevInvalidObject=="undefined"?nil:MaglevInvalidObject)}
+return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$4,$5,$6,$7,$8,$9,$3;
+$1=_st(self["@contentBox"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+html=_st($HTMLCanvas())._onJQuery_($1);
+_st(_st(self["@contentBox"])._asJQuery())._empty();
+_st(self["@instancesWaitBox"])._show();
+_st(self["@object"])._loadInstancesFrom_to_withCallback_(self._rangeFrom(),self._rangeTo(),(function(obj){
+var ivNames;
+return smalltalk.withContext(function($ctx2) {
+_st(self["@instancesWaitBox"])._hide();
+$ctx2.sendIdx["hide"]=1;
+self["@object"]=obj;
+self["@object"];
+ivNames=self._currentInstVarNames();
+ivNames;
+$2=_st(html)._table();
+_st($2)._class_("table table-bordered");
+_st($2)._style_("margin-bottom: 0px;");
+$3=_st($2)._with_((function(){
+return smalltalk.withContext(function($ctx3) {
+_st(_st(html)._thead())._with_((function(){
+return smalltalk.withContext(function($ctx4) {
+$4=_st(html)._tr();
+$ctx4.sendIdx["tr"]=1;
+return _st($4)._with_((function(){
+return smalltalk.withContext(function($ctx5) {
+$5=_st(html)._th();
+$ctx5.sendIdx["th"]=1;
+_st($5)._with_("oop");
+$ctx5.sendIdx["with:"]=4;
+$6=_st(html)._th();
+$ctx5.sendIdx["th"]=2;
+_st($6)._with_("Object");
+$ctx5.sendIdx["with:"]=5;
+return _st(ivNames)._do_((function(ivName){
+return smalltalk.withContext(function($ctx6) {
+return _st(_st(html)._th())._with_(ivName);
+$ctx6.sendIdx["with:"]=6;
+}, function($ctx6) {$ctx6.fillBlock({ivName:ivName},$ctx5,5)})}));
+$ctx5.sendIdx["do:"]=1;
+}, function($ctx5) {$ctx5.fillBlock({},$ctx4,4)})}));
+$ctx4.sendIdx["with:"]=3;
+}, function($ctx4) {$ctx4.fillBlock({},$ctx3,3)})}));
+$ctx3.sendIdx["with:"]=2;
+return _st(_st(html)._tbody())._with_((function(){
+return smalltalk.withContext(function($ctx4) {
+return _st(_st(self["@object"])._instances())._do_((function(obi){
+return smalltalk.withContext(function($ctx5) {
+return _st(_st(html)._tr())._with_((function(){
+return smalltalk.withContext(function($ctx6) {
+$7=_st(html)._td();
+$ctx6.sendIdx["td"]=1;
+_st($7)._with_(_st(obi)._oop());
+$ctx6.sendIdx["with:"]=9;
+$8=_st(html)._td();
+$ctx6.sendIdx["td"]=2;
+$9=_st(obi)._inlineViewComponent();
+$ctx6.sendIdx["inlineViewComponent"]=1;
+_st($8)._with_($9);
+$ctx6.sendIdx["with:"]=10;
+return _st(ivNames)._do_((function(ivName){
+return smalltalk.withContext(function($ctx7) {
+return _st(_st(html)._td())._with_(_st(_st(obi)._instVarAt_ifAbsent_(ivName,_st($MaglevInvalidObject())._instance()))._inlineViewComponent());
+}, function($ctx7) {$ctx7.fillBlock({ivName:ivName},$ctx6,9)})}));
+}, function($ctx6) {$ctx6.fillBlock({},$ctx5,8)})}));
+$ctx5.sendIdx["with:"]=8;
+}, function($ctx5) {$ctx5.fillBlock({obi:obi},$ctx4,7)})}));
+$ctx4.sendIdx["do:"]=2;
+}, function($ctx4) {$ctx4.fillBlock({},$ctx3,6)})}));
+$ctx3.sendIdx["with:"]=7;
+}, function($ctx3) {$ctx3.fillBlock({},$ctx2,2)})}));
+$ctx2.sendIdx["with:"]=1;
+$3;
+self._renderPaginationOn_(html);
+return _st(self["@instancesWaitBox"])._hide();
+}, function($ctx2) {$ctx2.fillBlock({obj:obj,ivNames:ivNames},$ctx1,1)})}));
+return self}, function($ctx1) {$ctx1.fill(self,"renderInstVarTable",{html:html},globals.MaglevObjectInstancesView)})},
 args: [],
-source: "renderInstVarTable\x0a\x09\x22|html|\x0a\x09html := HTMLCanvas onJQuery: contentBox asJQuery.\x0a\x09contentBox asJQuery empty.\x0a\x09instancesWaitBox show.\x0a\x09object\x0a\x09\x09loadInstancesFrom: self rangeFrom\x0a\x09\x09to: self rangeTo\x0a\x09\x09withCallback: [:obj | |ivNames|\x0a\x09\x09\x09instancesWaitBox hide.\x0a\x09\x09\x09object := obj.\x0a\x09\x09\x09ivNames := self currentInstVarNames.\x0a\x09\x09\x09html table\x0a\x09\x09\x09\x09class: 'table table-bordered';\x0a\x09\x09\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09\x09\x09with: [html thead with: [\x0a\x09\x09\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09\x09\x09html th with: 'oop'.\x0a\x09\x09\x09\x09\x09\x09html th with: 'Object'.\x0a\x09\x09\x09\x09\x09\x09ivNames do: [:ivName |\x0a\x09\x09\x09\x09\x09\x09\x09html th with: ivName]]].\x0a\x09\x09\x09\x09\x09html tbody with: [\x0a\x09\x09\x09\x09\x09\x09object instances do: [:obj |\x0a\x09\x09\x09\x09\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09\x09\x09\x09\x09html td with: obj oop.\x0a\x09\x09\x09\x09\x09\x09\x09\x09html td with: obj inlineViewComponent.\x0a\x09\x09\x09\x09\x09\x09\x09\x09ivNames do: [:ivName |\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09html td with: (obj instVarAt: ivName ifAbsent: MaglevInvalidObject instance) inlineViewComponent]]]]].\x0a\x09\x09\x09self renderPaginationOn: html.\x0a\x09\x09\x09instancesWaitBox hide].\x22",
-messageSends: [],
-referencedClasses: []
+source: "renderInstVarTable\x0a\x09|html|\x0a\x09html := HTMLCanvas onJQuery: contentBox asJQuery.\x0a\x09contentBox asJQuery empty.\x0a\x09instancesWaitBox show.\x0a\x09object \x0a\x09\x09loadInstancesFrom: self rangeFrom \x0a\x09\x09to: self rangeTo \x0a\x09\x09withCallback: [:obj | |ivNames|\x0a\x09\x09\x09instancesWaitBox hide.\x0a\x09\x09\x09object := obj.\x0a\x09\x09\x09ivNames := self currentInstVarNames.\x0a\x09\x09\x09html table\x0a\x09\x09\x09\x09class: 'table table-bordered';\x0a\x09\x09\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09\x09\x09with: [html thead with: [\x0a\x09\x09\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09\x09\x09html th with: 'oop'.\x0a\x09\x09\x09\x09\x09\x09html th with: 'Object'.\x0a\x09\x09\x09\x09\x09\x09ivNames do: [:ivName | \x0a\x09\x09\x09\x09\x09\x09\x09html th with: ivName]]].\x0a\x09\x09\x09\x09\x09html tbody with: [\x0a\x09\x09\x09\x09\x09\x09object instances do: [:obi |\x0a\x09\x09\x09\x09\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09\x09\x09\x09\x09html td with: obi oop.\x0a\x09\x09\x09\x09\x09\x09\x09\x09html td with: obi inlineViewComponent.\x0a\x09\x09\x09\x09\x09\x09\x09\x09ivNames do: [:ivName |\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09html td with: (obi instVarAt: ivName ifAbsent: MaglevInvalidObject instance) inlineViewComponent]]]]].\x0a\x09\x09\x09self renderPaginationOn: html.\x0a\x09\x09\x09instancesWaitBox hide].",
+messageSends: ["onJQuery:", "asJQuery", "empty", "show", "loadInstancesFrom:to:withCallback:", "rangeFrom", "rangeTo", "hide", "currentInstVarNames", "class:", "table", "style:", "with:", "thead", "tr", "th", "do:", "tbody", "instances", "td", "oop", "inlineViewComponent", "instVarAt:ifAbsent:", "instance", "renderPaginationOn:"],
+referencedClasses: ["HTMLCanvas", "MaglevInvalidObject"]
 }),
 globals.MaglevObjectInstancesView);
 
@@ -5383,7 +5433,7 @@ self._renderPagination();
 self._renderPage_((1));
 return self}, function($ctx1) {$ctx1.fill(self,"renderOn:",{html:html,pagClass:pagClass},globals.MaglevTable)})},
 args: ["html"],
-source: "renderOn: html\x0a\x09|pagClass|\x0a\x09self pages = 1\x0a\x09\x09ifTrue: [pagClass := 'display: none;']\x0a\x09\x09ifFalse: [pagClass := ''].\x0a\x09html table\x0a\x09\x09class: 'table table-bordered';\x0a\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09with: [tableBody := html tbody].\x0a\x09html div\x0a\x09\x09style: 'text-align: center;';\x0a\x09\x09with: [pagination := html span\x0a\x09\x09\x09class: 'pagination';\x0a\x09\x09\x09style: pagClass].\x0a\x09self renderPagination.\x0a\x09self renderPage: 1.",
+source: "renderOn: html\x0a\x09|pagClass|\x0a\x09self pages = 1 \x0a\x09\x09ifTrue: [pagClass := 'display: none;']\x0a\x09\x09ifFalse: [pagClass := ''].\x0a\x09html table\x0a\x09\x09class: 'table table-bordered';\x0a\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09with: [tableBody := html tbody].\x0a\x09html div\x0a\x09\x09style: 'text-align: center;';\x0a\x09\x09with: [pagination := html span\x0a\x09\x09\x09class: 'pagination';\x0a\x09\x09\x09style: pagClass].\x0a\x09self renderPagination.\x0a\x09self renderPage: 1.",
 messageSends: ["ifTrue:ifFalse:", "=", "pages", "class:", "table", "style:", "with:", "tbody", "div", "span", "renderPagination", "renderPage:"],
 referencedClasses: []
 }),
@@ -5424,7 +5474,7 @@ return self._renderTableBodyOn_(_st($HTMLCanvas())._onJQuery_(_st(self["@tableBo
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderPage:",{anInteger:anInteger,html:html},globals.MaglevTable)})},
 args: ["anInteger"],
-source: "renderPage: anInteger\x0a\x09|html|\x0a\x09currentPage := anInteger.\x0a\x09html := HTMLCanvas onJQuery: tableBody asJQuery.\x0a\x09rangeFrom := anInteger - 1 * self pageSize + 1.\x0a\x09tableBody asJQuery empty.\x0a\x09html\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...'.\x0a\x09self renderPagination.\x0a\x09object\x0a\x09\x09ensureIsLoaded: collectionName\x0a\x09\x09from: rangeFrom\x0a\x09\x09to: self rangeTo\x0a\x09\x09withCallback: [\x0a\x09\x09\x09tableBody asJQuery empty.\x0a\x09\x09\x09self renderTableBodyOn: (HTMLCanvas onJQuery: tableBody asJQuery)].",
+source: "renderPage: anInteger\x0a\x09|html|\x0a\x09currentPage := anInteger.\x0a\x09html := HTMLCanvas onJQuery: tableBody asJQuery.\x0a\x09rangeFrom := anInteger - 1 * self pageSize + 1.\x0a\x09tableBody asJQuery empty.\x0a\x09html \x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...'.\x0a\x09self renderPagination.\x0a\x09object \x0a\x09\x09ensureIsLoaded: collectionName \x0a\x09\x09from: rangeFrom \x0a\x09\x09to: self rangeTo \x0a\x09\x09withCallback: [\x0a\x09\x09\x09tableBody asJQuery empty.\x0a\x09\x09\x09self renderTableBodyOn: (HTMLCanvas onJQuery: tableBody asJQuery)].",
 messageSends: ["onJQuery:", "asJQuery", "+", "*", "-", "pageSize", "empty", "with:", "wait", "renderPagination", "ensureIsLoaded:from:to:withCallback:", "rangeTo", "renderTableBodyOn:"],
 referencedClasses: ["HTMLCanvas", "MaglevIcon"]
 }),
@@ -5511,7 +5561,7 @@ return self;
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderTableBodyOn:",{html:html},globals.MaglevTable)})},
 args: ["html"],
-source: "renderTableBodyOn: html\x0a\x09self isAssociationDictionary\x0a\x09\x09\x09ifTrue: [self renderAssociationDictionaryBodyOn: html. ^ self]\x0a\x09\x09\x09ifFalse: [self renderDictionaryBodyOn: html. ^ self].",
+source: "renderTableBodyOn: html\x0a\x09self isAssociationDictionary \x0a\x09\x09\x09ifTrue: [self renderAssociationDictionaryBodyOn: html. ^ self]\x0a\x09\x09\x09ifFalse: [self renderDictionaryBodyOn: html. ^ self].",
 messageSends: ["ifTrue:ifFalse:", "isAssociationDictionary", "renderAssociationDictionaryBodyOn:", "renderDictionaryBodyOn:"],
 referencedClasses: []
 }),
@@ -6035,9 +6085,18 @@ selector: "highestZIndex",
 protocol: 'interactions',
 fn: function (){
 var self=this;
-return self},
+return smalltalk.withContext(function($ctx1) { 
+ var indexHighest = 0;
+	$('.window').each(function(){
+		var indexCurrent = parseInt($(this).css('z-index'), 10);
+		if(indexCurrent.__gt(indexHighest)) {
+			indexHighest = indexCurrent;
+		}
+	});
+	return indexHighest; ;
+return self}, function($ctx1) {$ctx1.fill(self,"highestZIndex",{},globals.MaglevWindow.klass)})},
 args: [],
-source: "highestZIndex\x0a\x09\x22< var indexHighest = 0;\x0a\x09$('.window').each(function(){\x0a\x09\x09var indexCurrent = parseInt($(this).css('z-index'), 10);\x0a\x09\x09if(indexCurrent >> indexHighest) {\x0a\x09\x09\x09indexHighest = indexCurrent;\x0a\x09\x09}\x0a\x09});\x0a\x09return indexHighest; >.\x22",
+source: "highestZIndex\x0a\x09< var indexHighest = 0;\x0a\x09$('.window').each(function(){\x0a\x09\x09var indexCurrent = parseInt($(this).css('z-index'), 10);\x0a\x09\x09if(indexCurrent.__gt(indexHighest)) {\x0a\x09\x09\x09indexHighest = indexCurrent;\x0a\x09\x09}\x0a\x09});\x0a\x09return indexHighest; >",
 messageSends: [],
 referencedClasses: []
 }),
@@ -6134,7 +6193,7 @@ self._connectTo_as_with_(aWindow,"virtualClass",nil);
 };
 return self}, function($ctx1) {$ctx1.fill(self,"checkAddConnectionTo:",{aWindow:aWindow},globals.MaglevObjectWindow)})},
 args: ["aWindow"],
-source: "checkAddConnectionTo: aWindow\x0a\x09object instVarsDo: [:ivName :ivValue |\x0a\x09\x09ivValue == aWindow object ifTrue: [self connectTo: aWindow as: #iv with: ivName inspection]].\x0a\x09(object classObject == aWindow object and: [object virtualClassObject ~~ aWindow object])\x0a\x09\x09ifTrue: [self connectTo: aWindow as: #class with: nil].\x0a\x09object virtualClassObject == aWindow object\x0a\x09\x09ifTrue: [self connectTo: aWindow as: #virtualClass with: nil].",
+source: "checkAddConnectionTo: aWindow\x0a\x09object instVarsDo: [:ivName :ivValue |\x0a\x09\x09ivValue == aWindow object ifTrue: [self connectTo: aWindow as: #iv with: ivName inspection]].\x0a\x09(object classObject == aWindow object and: [object virtualClassObject ~~ aWindow object]) \x0a\x09\x09ifTrue: [self connectTo: aWindow as: #class with: nil].\x0a\x09object virtualClassObject == aWindow object \x0a\x09\x09ifTrue: [self connectTo: aWindow as: #virtualClass with: nil].",
 messageSends: ["instVarsDo:", "ifTrue:", "==", "object", "connectTo:as:with:", "inspection", "and:", "classObject", "~~", "virtualClassObject"],
 referencedClasses: []
 }),
@@ -6214,7 +6273,7 @@ $8=result;
 return $8;
 }, function($ctx1) {$ctx1.fill(self,"contentTabs",{result:result},globals.MaglevObjectWindow)})},
 args: [],
-source: "contentTabs\x0a\x09|result|\x0a\x09result := Dictionary new.\x0a\x09self object hasInstVars\x0a\x09\x09ifTrue: [result at: 'Instance Variables' put: #renderInstanceVariablesOn:].\x0a\x09object customTabs do: [:customTab | |selector|\x0a\x09\x09selector := 'renderCustom', (customTab at: 2), 'On:'.\x0a\x09\x09self class compile: selector, 'html    ', (customTab at: 3).\x0a\x09\x09result at: (customTab at: 1) put: selector asSymbol].\x0a\x09^ result",
+source: "contentTabs\x0a\x09|result|\x0a\x09result := Dictionary new.\x0a\x09self object hasInstVars \x0a\x09\x09ifTrue: [result at: 'Instance Variables' put: #renderInstanceVariablesOn:].\x0a\x09object customTabs do: [:customTab | |selector|\x0a\x09\x09selector := 'renderCustom', (customTab at: 2), 'On:'.\x0a\x09\x09self class compile: selector, 'html    ', (customTab at: 3).\x0a\x09\x09result at: (customTab at: 1) put: selector asSymbol].\x0a\x09^ result",
 messageSends: ["new", "ifTrue:", "hasInstVars", "object", "at:put:", "do:", "customTabs", ",", "at:", "compile:", "class", "asSymbol"],
 referencedClasses: ["Dictionary"]
 }),
@@ -6252,7 +6311,7 @@ _st($1)._attr_with_("style","width: 100%; height: 100%; overflow: auto;");
 _st(_st(self["@currentTab"])._asJQuery())._resizable();
 return self}, function($ctx1) {$ctx1.fill(self,"makeCurrentTabResizable",{},globals.MaglevObjectWindow)})},
 args: [],
-source: "makeCurrentTabResizable\x0a\x09currentTab\x0a\x09\x09style: 'overflow: hidden;'.\x0a\x09currentTab asJQuery children first\x0a\x09\x09attr: 'style' with: 'width: 100%; height: 100%; overflow: auto;'.\x0a\x09currentTab asJQuery resizable.",
+source: "makeCurrentTabResizable\x0a\x09currentTab\x0a\x09\x09style: 'overflow: hidden;'.\x0a\x09currentTab asJQuery children first \x0a\x09\x09attr: 'style' with: 'width: 100%; height: 100%; overflow: auto;'.\x0a\x09currentTab asJQuery resizable.",
 messageSends: ["style:", "attr:with:", "first", "children", "asJQuery", "resizable"],
 referencedClasses: []
 }),
@@ -6367,7 +6426,7 @@ $ctx1.sendIdx["with:"]=3;
 $6=_st(html)._with_(_st(self["@classObject"])._inlineViewComponent());
 return self}, function($ctx1) {$ctx1.fill(self,"renderVirtualClassAndClassOn:",{html:html},globals.MaglevObjectWindow)})},
 args: ["html"],
-source: "renderVirtualClassAndClassOn: html\x0a\x09classObject = object virtualClassObject ifFalse: [\x0a\x09\x09html\x0a\x09\x09\x09with: ' : ';\x0a\x09\x09\x09with: object virtualClassObject inlineViewComponent].\x0a\x09html\x0a\x09\x09with: ' :: ';\x0a\x09\x09with: classObject inlineViewComponent.",
+source: "renderVirtualClassAndClassOn: html\x0a\x09classObject = object virtualClassObject ifFalse: [\x0a\x09\x09html\x0a\x09\x09\x09with: ' : ';\x0a\x09\x09\x09with: object virtualClassObject inlineViewComponent].\x0a\x09html \x0a\x09\x09with: ' :: ';\x0a\x09\x09with: classObject inlineViewComponent.",
 messageSends: ["ifFalse:", "=", "virtualClassObject", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -6465,7 +6524,7 @@ self._showTab_(defaultTab);
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowContentOn:",{html:html,allTabs:allTabs,firstCaption:firstCaption,defaultTab:defaultTab},globals.MaglevObjectWindow)})},
 args: ["html"],
-source: "renderWindowContentOn: html\x0a\x09|allTabs firstCaption defaultTab|\x0a\x09allTabs := self contentTabs.\x0a\x09allTabs size > 0 ifTrue: [\x0a\x09\x09html ul\x0a\x09\x09\x09class: 'nav nav-tabs';\x0a\x09\x09\x09style: 'display: inline-block; margin-bottom: 0px; margin-top: 5px; width: 100%;';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09style: 'float: right;';\x0a\x09\x09\x09\x09\x09onClick: [self makeCurrentTabResizable];\x0a\x09\x09\x09\x09\x09with: [\x0a\x09\x09\x09\x09\x09\x09html a\x0a\x09\x09\x09\x09\x09\x09\x09href: '#';\x0a\x09\x09\x09\x09\x09\x09\x09onClick: [self makeCurrentTabResizable];\x0a\x09\x09\x09\x09\x09\x09\x09with: MaglevIcon resizeSmall].\x0a\x09\x09\x09\x09self contentTabs keysAndValuesDo: [:caption :generator | |capEl|\x0a\x09\x09\x09\x09\x09firstCaption ifNil: [firstCaption := caption].\x0a\x09\x09\x09\x09\x09capEl := html li with: [\x0a\x09\x09\x09\x09\x09\x09html a\x0a\x09\x09\x09\x09\x09\x09\x09href: '#';\x0a\x09\x09\x09\x09\x09\x09\x09onClick: [self showTab: caption];\x0a\x09\x09\x09\x09\x09\x09\x09with: caption].\x0a\x09\x09\x09\x09self captions at: caption put: capEl]]].\x0a\x09tabsContainer := html div.\x0a\x09defaultTab := self defaultTab.\x0a\x09defaultTab\x0a\x09\x09ifNil: [firstCaption ifNotNil: [self showTab: firstCaption]]\x0a\x09\x09ifNotNil: [self showTab: defaultTab].",
+source: "renderWindowContentOn: html\x0a\x09|allTabs firstCaption defaultTab|\x0a\x09allTabs := self contentTabs.\x0a\x09allTabs size > 0 ifTrue: [\x0a\x09\x09html ul\x0a\x09\x09\x09class: 'nav nav-tabs';\x0a\x09\x09\x09style: 'display: inline-block; margin-bottom: 0px; margin-top: 5px; width: 100%;';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09style: 'float: right;';\x0a\x09\x09\x09\x09\x09onClick: [self makeCurrentTabResizable];\x0a\x09\x09\x09\x09\x09with: [\x0a\x09\x09\x09\x09\x09\x09html a\x0a\x09\x09\x09\x09\x09\x09\x09href: '#';\x0a\x09\x09\x09\x09\x09\x09\x09onClick: [self makeCurrentTabResizable];\x0a\x09\x09\x09\x09\x09\x09\x09with: MaglevIcon resizeSmall].\x0a\x09\x09\x09\x09self contentTabs keysAndValuesDo: [:caption :generator | |capEl|\x0a\x09\x09\x09\x09\x09firstCaption ifNil: [firstCaption := caption].\x0a\x09\x09\x09\x09\x09capEl := html li with: [\x0a\x09\x09\x09\x09\x09\x09html a\x0a\x09\x09\x09\x09\x09\x09\x09href: '#';\x0a\x09\x09\x09\x09\x09\x09\x09onClick: [self showTab: caption];\x0a\x09\x09\x09\x09\x09\x09\x09with: caption].\x0a\x09\x09\x09\x09self captions at: caption put: capEl]]].\x0a\x09tabsContainer := html div.\x0a\x09defaultTab := self defaultTab.\x0a\x09defaultTab \x0a\x09\x09ifNil: [firstCaption ifNotNil: [self showTab: firstCaption]]\x0a\x09\x09ifNotNil: [self showTab: defaultTab].",
 messageSends: ["contentTabs", "ifTrue:", ">", "size", "class:", "ul", "style:", "with:", "li", "onClick:", "makeCurrentTabResizable", "href:", "a", "resizeSmall", "keysAndValuesDo:", "ifNil:", "showTab:", "at:put:", "captions", "div", "defaultTab", "ifNil:ifNotNil:", "ifNotNil:"],
 referencedClasses: ["MaglevIcon"]
 }),
@@ -6693,7 +6752,7 @@ $2=result;
 return $2;
 }, function($ctx1) {$ctx1.fill(self,"contentTabs",{result:result},globals.MaglevArrayWindow)})},
 args: [],
-source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasElements\x0a\x09\x09ifTrue: [result at: 'Elements' put: #renderArrayElementsOn:].\x0a\x09^ result",
+source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasElements \x0a\x09\x09ifTrue: [result at: 'Elements' put: #renderArrayElementsOn:].\x0a\x09^ result",
 messageSends: ["contentTabs", "ifTrue:", "hasElements", "object", "at:put:"],
 referencedClasses: []
 }),
@@ -6799,7 +6858,7 @@ $2=result;
 return $2;
 }, function($ctx1) {$ctx1.fill(self,"contentTabs",{result:result},globals.MaglevHashWindow)})},
 args: [],
-source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasElements\x0a\x09\x09ifTrue: [result at: 'Associations' put: #renderHashElementsOn:].\x0a\x09^ result",
+source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasElements \x0a\x09\x09ifTrue: [result at: 'Associations' put: #renderHashElementsOn:].\x0a\x09^ result",
 messageSends: ["contentTabs", "ifTrue:", "hasElements", "object", "at:put:"],
 referencedClasses: []
 }),
@@ -6881,7 +6940,6 @@ globals.MaglevMaglevRecordBaseWindow);
 
 
 smalltalk.addClass('MaglevModuleWindow', globals.MaglevObjectWindow, ['categoryNamesSelect', 'selectorsSelect', 'selectors', 'rubySelectors', 'methodContainer', 'waitingScreen', 'hierarchyContainer'], 'Maglev-Database-Explorer');
-globals.MaglevModuleWindow.comment="\x22initializeTree: container\x0a\x09< container.jstree({\x0a\x09\x09plugins: ['crrm', 'html_data', 'themes'],\x0a\x09\x09core: {\x0a\x09\x09\x09animation: 0,\x0a\x09\x09\x09open_parents: true}});\x0a\x09// setTimout: jstree fix\x0a\x09setTimeout(function(){\x0a\x09\x09container.find('.treeview-replace-me').each(function(index, el) {\x0a\x09\x09\x09var jqEl = $(el);\x0a\x09\x09\x09self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);\x0a\x09\x09\x09jqEl.removeClass('treeview-replace-me');\x0a\x09\x09});}, 0); >\x22";
 smalltalk.addMethod(
 smalltalk.method({
 selector: "contentTabs",
@@ -6911,7 +6969,7 @@ $4=result;
 return $4;
 }, function($ctx1) {$ctx1.fill(self,"contentTabs",{result:result},globals.MaglevModuleWindow)})},
 args: [],
-source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasConstants\x0a\x09\x09ifTrue: [result at: 'Constants' put: #renderConstantsOn:].\x0a\x09self object hasIncludedModules\x0a\x09\x09ifTrue: [result at: 'Included Modules' put: #renderIncludedModulesOn:].\x0a\x09result at: 'Code' put: #renderCodeTabOn:.\x0a\x09result at: 'Hierarchy' put: #renderHierarchyOn:.\x0a\x09^ result",
+source: "contentTabs\x0a\x09|result|\x0a\x09result := super contentTabs.\x0a\x09self object hasConstants \x0a\x09\x09ifTrue: [result at: 'Constants' put: #renderConstantsOn:].\x0a\x09self object hasIncludedModules\x0a\x09\x09ifTrue: [result at: 'Included Modules' put: #renderIncludedModulesOn:].\x0a\x09result at: 'Code' put: #renderCodeTabOn:.\x0a\x09result at: 'Hierarchy' put: #renderHierarchyOn:.\x0a\x09^ result",
 messageSends: ["contentTabs", "ifTrue:", "hasConstants", "object", "at:put:", "hasIncludedModules"],
 referencedClasses: []
 }),
@@ -6927,6 +6985,33 @@ return "Code";
 },
 args: [],
 source: "defaultTab\x0a\x09^ 'Code'",
+messageSends: [],
+referencedClasses: []
+}),
+globals.MaglevModuleWindow);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "initialize",
+protocol: 'initialization',
+fn: function (){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+ container.jstree({
+  plugins: ['crrm', 'html_data', 'themes'],
+  core: {
+    animation: 0,
+    open_parents: true}});
+// setTimout: jstree fix
+setTimeout(function(){
+  container.find('.treeview-replace-me').each(function(index, el) {
+    var jqEl = $(el);
+    self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);
+    jqEl.removeClass('treeview-replace-me');
+  });}, 0); ;
+return self}, function($ctx1) {$ctx1.fill(self,"initialize",{},globals.MaglevModuleWindow)})},
+args: [],
+source: "initialize\x0a< container.jstree({\x0a  plugins: ['crrm', 'html_data', 'themes'],\x0a  core: {\x0a    animation: 0,\x0a    open_parents: true}});\x0a// setTimout: jstree fix\x0asetTimeout(function(){\x0a  container.find('.treeview-replace-me').each(function(index, el) {\x0a    var jqEl = $(el);\x0a    self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);\x0a    jqEl.removeClass('treeview-replace-me');\x0a  });}, 0); >",
 messageSends: [],
 referencedClasses: []
 }),
@@ -6996,11 +7081,91 @@ selector: "renderHierarchyOn:",
 protocol: 'rendering',
 fn: function (htmlIn){
 var self=this;
-return self},
+var waitingBox,hcContainer;
+function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
+function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
+function $Array(){return globals.Array||(typeof Array=="undefined"?nil:Array)}
+return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$3,$4,$5,$7,$8,$10,$9,$11,$12,$13,$6,$14;
+$1=_st(htmlIn)._div();
+$ctx1.sendIdx["div"]=1;
+hcContainer=_st($1)._style_("height: 300px; overflow: hidden;");
+$ctx1.sendIdx["style:"]=1;
+$2=_st(htmlIn)._div();
+$ctx1.sendIdx["div"]=2;
+waitingBox=_st($2)._with_((function(){
+return smalltalk.withContext(function($ctx2) {
+_st(htmlIn)._with_(_st($MaglevIcon())._wait());
+$ctx2.sendIdx["with:"]=2;
+$3=_st(htmlIn)._with_(" loading...");
+$ctx2.sendIdx["with:"]=3;
+return $3;
+}, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
+$ctx1.sendIdx["with:"]=1;
+_st(self["@object"])._ensureSuperListLoadedWithCallback_((function(){
+var renderedInlines,html;
+return smalltalk.withContext(function($ctx2) {
+$4=_st(hcContainer)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+html=_st($HTMLCanvas())._onJQuery_($4);
+html;
+renderedInlines=_st($Array())._new();
+renderedInlines;
+$5=_st(html)._div();
+_st($5)._style_("width: 100%; height: 100%; overflow: auto;");
+$6=_st($5)._with_((function(){
+var lastUl;
+return smalltalk.withContext(function($ctx3) {
+lastUl=_st(html)._ul();
+$ctx3.sendIdx["ul"]=1;
+lastUl;
+return _st(_st(self["@object"])._superList())._do_((function(cls){
+return smalltalk.withContext(function($ctx4) {
+return _st(lastUl)._with_((function(){
+return smalltalk.withContext(function($ctx5) {
+$7=_st(html)._li();
+$8=$7;
+$10=_st(cls)._oop();
+$ctx5.sendIdx["oop"]=1;
+$9=_st($10)._asString();
+$ctx5.sendIdx["asString"]=1;
+_st($8)._data_with_("oop",$9);
+$ctx5.sendIdx["data:with:"]=1;
+_st($7)._with_((function(){
+var cont;
+return smalltalk.withContext(function($ctx6) {
+$11=_st(html)._span();
+_st($11)._data_with_("oop",_st(_st(cls)._oop())._asString());
+$12=_st($11)._class_("treeview-replace-me");
+cont=$12;
+cont;
+return _st(renderedInlines)._add_(cont);
+}, function($ctx6) {$ctx6.fillBlock({cont:cont},$ctx5,6)})}));
+$ctx5.sendIdx["with:"]=6;
+$13=_st($7)._with_((function(){
+return smalltalk.withContext(function($ctx6) {
+lastUl=_st(html)._ul();
+return lastUl;
+}, function($ctx6) {$ctx6.fillBlock({},$ctx5,7)})}));
+return $13;
+}, function($ctx5) {$ctx5.fillBlock({},$ctx4,5)})}));
+$ctx4.sendIdx["with:"]=5;
+}, function($ctx4) {$ctx4.fillBlock({cls:cls},$ctx3,4)})}));
+}, function($ctx3) {$ctx3.fillBlock({lastUl:lastUl},$ctx2,3)})}));
+$ctx2.sendIdx["with:"]=4;
+self["@hierarchyContainer"]=$6;
+self["@hierarchyContainer"];
+$14=_st(self["@hierarchyContainer"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+self._initializeTree_($14);
+_st(_st(hcContainer)._asJQuery())._resizable();
+return _st(waitingBox)._hide();
+}, function($ctx2) {$ctx2.fillBlock({renderedInlines:renderedInlines,html:html},$ctx1,2)})}));
+return self}, function($ctx1) {$ctx1.fill(self,"renderHierarchyOn:",{htmlIn:htmlIn,waitingBox:waitingBox,hcContainer:hcContainer},globals.MaglevModuleWindow)})},
 args: ["htmlIn"],
-source: "renderHierarchyOn: htmlIn\x0a\x09\x22|waitingBox hcContainer|\x0a\x09hcContainer := htmlIn div\x0a\x09\x09style: 'height: 300px; overflow: hidden;'.\x0a\x09waitingBox := htmlIn div with: [\x0a\x09\x09htmlIn\x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09object ensureSuperListLoadedWithCallback: [ |renderedInlines html|\x0a\x09\x09html := HTMLCanvas onJQuery: hcContainer asJQuery.\x0a\x09\x09renderedInlines := Array new.\x0a\x09\x09hierarchyContainer := html div\x0a\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto;';\x0a\x09\x09\x09with: [ |lastUl|\x0a\x09\x09\x09\x09lastUl := html ul.\x0a\x09\x09\x09\x09object superList do: [:cls |\x0a\x09\x09\x09\x09\x09lastUl with: [\x0a\x09\x09\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09with: [|container|\x0a\x09\x09\x09\x09\x09\x09\x09\x09container := html span\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09class: 'treeview-replace-me'.\x0a\x09\x09\x09\x09\x09\x09\x09\x09renderedInlines add: container];\x0a\x09\x09\x09\x09\x09\x09\x09with: [lastUl := html ul]]]].\x0a\x09\x09self initializeTree: hierarchyContainer asJQuery.\x0a\x09\x09hcContainer asJQuery resizable.\x0a\x09\x09waitingBox hide].\x22",
-messageSends: [],
-referencedClasses: []
+source: "renderHierarchyOn: htmlIn\x0a\x09|waitingBox hcContainer|\x0a\x09hcContainer := htmlIn div\x0a\x09\x09style: 'height: 300px; overflow: hidden;'.\x0a\x09waitingBox := htmlIn div with: [\x0a\x09\x09htmlIn \x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09object ensureSuperListLoadedWithCallback: [ |renderedInlines html|\x0a\x09\x09html := HTMLCanvas onJQuery: hcContainer asJQuery.\x0a\x09\x09renderedInlines := Array new.\x0a\x09\x09hierarchyContainer := html div \x0a\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto;';\x0a\x09\x09\x09with: [ |lastUl|\x0a\x09\x09\x09\x09lastUl := html ul.\x0a\x09\x09\x09\x09object superList do: [:cls | \x22render superclasses\x22\x0a\x09\x09\x09\x09\x09lastUl with: [\x0a\x09\x09\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09with: [|cont|\x0a\x09\x09\x09\x09\x09\x09\x09\x09cont := html span \x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09class: 'treeview-replace-me'.\x0a\x09\x09\x09\x09\x09\x09\x09\x09renderedInlines add: cont];\x0a\x09\x09\x09\x09\x09\x09\x09with: [lastUl := html ul]]]].\x0a\x09\x09self initializeTree: hierarchyContainer asJQuery.\x0a\x09\x09hcContainer asJQuery resizable.\x0a\x09\x09waitingBox hide].",
+messageSends: ["style:", "div", "with:", "wait", "ensureSuperListLoadedWithCallback:", "onJQuery:", "asJQuery", "new", "ul", "do:", "superList", "data:with:", "li", "asString", "oop", "span", "class:", "add:", "initializeTree:", "resizable", "hide"],
+referencedClasses: ["MaglevIcon", "HTMLCanvas", "Array"]
 }),
 globals.MaglevModuleWindow);
 
@@ -7143,17 +7308,14 @@ selector: "renderMethodObject:",
 protocol: 'rendering',
 fn: function (obj){
 var self=this;
-var methodEditor;
 function $MaglevGsNMethodEditor(){return globals.MaglevGsNMethodEditor||(typeof MaglevGsNMethodEditor=="undefined"?nil:MaglevGsNMethodEditor)}
 return smalltalk.withContext(function($ctx1) { 
-methodEditor=_st($MaglevGsNMethodEditor())._for_(obj);
-_st(methodEditor)._classObject_(self["@object"]);
-_st(self["@methodContainer"])._with_(methodEditor);
+_st(self["@methodContainer"])._with_(_st($MaglevGsNMethodEditor())._for_(obj));
 _st(self["@waitingScreen"])._hide();
-return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject:",{obj:obj,methodEditor:methodEditor},globals.MaglevModuleWindow)})},
+return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject:",{obj:obj},globals.MaglevModuleWindow)})},
 args: ["obj"],
-source: "renderMethodObject: obj\x0a\x09|methodEditor|\x0a\x09methodEditor := MaglevGsNMethodEditor for: obj.\x0a\x09methodEditor classObject: object.\x0a\x09methodContainer with: methodEditor.\x0a\x09waitingScreen hide.",
-messageSends: ["for:", "classObject:", "with:", "hide"],
+source: "renderMethodObject: obj\x0a\x09methodContainer with: (MaglevGsNMethodEditor for: obj).\x0a\x09waitingScreen hide.",
+messageSends: ["with:", "for:", "hide"],
 referencedClasses: ["MaglevGsNMethodEditor"]
 }),
 globals.MaglevModuleWindow);
@@ -7171,7 +7333,7 @@ return self._renderMethodObject_(obj);
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderRubySourceCodeFor:",{selectorString:selectorString},globals.MaglevModuleWindow)})},
 args: ["selectorString"],
-source: "renderRubySourceCodeFor: selectorString\x0a\x09object\x0a\x09\x09sourceCodeFor: selectorString\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:obj | self renderMethodObject: obj].",
+source: "renderRubySourceCodeFor: selectorString\x0a\x09object \x0a\x09\x09sourceCodeFor: selectorString \x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:obj | self renderMethodObject: obj].",
 messageSends: ["sourceCodeFor:language:withCallback:", "renderMethodObject:"],
 referencedClasses: []
 }),
@@ -7204,7 +7366,7 @@ return _st(html)._with_(category);
 }, function($ctx2) {$ctx2.fillBlock({category:category,catSelectors:catSelectors},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderSelectorCategories",{},globals.MaglevModuleWindow)})},
 args: [],
-source: "renderSelectorCategories\x0a\x09categoryNamesSelect clear.\x0a\x09selectors keysAndValuesDo: [:category :catSelectors |\x0a\x09\x09categoryNamesSelect with: [:html |\x0a\x09\x09\x09category = '(all Ruby)'\x0a\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby]\x0a\x09\x09\x09\x09ifFalse: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09html with: category]\x0a\x09\x09\x09data: category].",
+source: "renderSelectorCategories\x0a\x09categoryNamesSelect clear.\x0a\x09selectors keysAndValuesDo: [:category :catSelectors |\x0a\x09\x09categoryNamesSelect with: [:html |\x0a\x09\x09\x09category = '(all Ruby)' \x0a\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby]\x0a\x09\x09\x09\x09ifFalse: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09html with: category]\x0a\x09\x09\x09data: category].",
 messageSends: ["clear", "keysAndValuesDo:", "with:data:", "ifTrue:ifFalse:", "=", "with:", "ruby", "smalltalk"],
 referencedClasses: ["MaglevIconImage"]
 }),
@@ -7236,7 +7398,7 @@ return _st(html)._with_(sel);
 }, function($ctx2) {$ctx2.fillBlock({sel:sel},$ctx1,2)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderSelectors:",{selectedCategory:selectedCategory,currentSelectors:currentSelectors},globals.MaglevModuleWindow)})},
 args: ["selectedCategory"],
-source: "renderSelectors: selectedCategory\x0a\x09|currentSelectors|\x0a\x09selectorsSelect clear.\x0a\x09currentSelectors := selectors at: selectedCategory.\x0a\x09currentSelectors ifNil: [^ self].\x0a\x09currentSelectors do: [:sel |\x0a\x09\x09selectorsSelect\x0a\x09\x09\x09with: [:html | html with: sel]\x0a\x09\x09\x09data: sel].",
+source: "renderSelectors: selectedCategory\x0a\x09|currentSelectors|\x0a\x09selectorsSelect clear.\x0a\x09currentSelectors := selectors at: selectedCategory.\x0a\x09currentSelectors ifNil: [^ self].\x0a\x09currentSelectors do: [:sel |\x0a\x09\x09selectorsSelect \x0a\x09\x09\x09with: [:html | html with: sel]\x0a\x09\x09\x09data: sel].",
 messageSends: ["clear", "at:", "ifNil:", "do:", "with:data:", "with:"],
 referencedClasses: []
 }),
@@ -7255,7 +7417,7 @@ return self._renderMethodObject_(obj);
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderSmalltalkSourceCodeFor:",{selectorString:selectorString},globals.MaglevModuleWindow)})},
 args: ["selectorString"],
-source: "renderSmalltalkSourceCodeFor: selectorString\x0a\x09object\x0a\x09\x09sourceCodeFor: selectorString\x0a\x09\x09language: 'smalltalk'\x0a\x09\x09withCallback: [:obj | self renderMethodObject: obj].",
+source: "renderSmalltalkSourceCodeFor: selectorString\x0a\x09object \x0a\x09\x09sourceCodeFor: selectorString \x0a\x09\x09language: 'smalltalk'\x0a\x09\x09withCallback: [:obj | self renderMethodObject: obj].",
 messageSends: ["sourceCodeFor:language:withCallback:", "renderMethodObject:"],
 referencedClasses: []
 }),
@@ -7448,7 +7610,7 @@ return self._renderCloseButtonOn_(html);
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowTitleContentOn:",{html:html},globals.MaglevClassWindow)})},
 args: ["html"],
-source: "renderWindowTitleContentOn: html\x0a\x09html\x0a\x09\x09with: object inlineViewComponentShort;\x0a\x09\x09with: ' < ';\x0a\x09\x09with: object superclassObject inlineViewComponent.\x0a\x09html with: [\x0a\x09\x09html span\x0a\x09\x09\x09style: 'margin-left: 5px;';\x0a\x09\x09\x09with: '<0x', object oop asHexString, '>'].\x0a\x09self renderHeightPlaceholderOn: html.\x0a\x09html div\x0a\x09\x09class: 'right-inline-block';\x0a\x09\x09with: [\x0a\x09\x09\x09self renderVirtualClassAndClassOn: html.\x0a\x09\x09\x09self renderCloseButtonOn: html].",
+source: "renderWindowTitleContentOn: html\x0a\x09html \x0a\x09\x09with: object inlineViewComponentShort;\x0a\x09\x09with: ' < ';\x0a\x09\x09with: object superclassObject inlineViewComponent.\x0a\x09html with: [\x0a\x09\x09html span\x0a\x09\x09\x09style: 'margin-left: 5px;';\x0a\x09\x09\x09with: '<0x', object oop asHexString, '>'].\x0a\x09self renderHeightPlaceholderOn: html.\x0a\x09html div\x0a\x09\x09class: 'right-inline-block';\x0a\x09\x09with: [\x0a\x09\x09\x09self renderVirtualClassAndClassOn: html.\x0a\x09\x09\x09self renderCloseButtonOn: html].",
 messageSends: ["with:", "inlineViewComponentShort", "inlineViewComponent", "superclassObject", "style:", "span", ",", "asHexString", "oop", "renderHeightPlaceholderOn:", "class:", "div", "renderVirtualClassAndClassOn:", "renderCloseButtonOn:"],
 referencedClasses: []
 }),
@@ -7456,7 +7618,7 @@ globals.MaglevClassWindow);
 
 
 
-smalltalk.addClass('MaglevSystemClassWindow', globals.MaglevClassWindow, ['transactionResultBox', 'persistenceModeButton'], 'Maglev-Database-Explorer');
+smalltalk.addClass('MaglevSystemClassWindow', globals.MaglevClassWindow, ['transactionResultBox'], 'Maglev-Database-Explorer');
 smalltalk.addMethod(
 smalltalk.method({
 selector: "abortTransaction",
@@ -7479,7 +7641,7 @@ return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewCompo
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"abortTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "abortTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object\x0a\x09\x09evaluate: 'self.__DBEAbortTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "abortTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEAbortTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7507,7 +7669,7 @@ return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewCompo
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"commitTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "commitTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object\x0a\x09\x09evaluate: 'self.__DBECommitTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "commitTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBECommitTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7560,7 +7722,7 @@ return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewCompo
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"continueTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "continueTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object\x0a\x09\x09evaluate: 'self.__DBEContinueTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "continueTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEContinueTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7588,7 +7750,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$2;
+var $1,$3,$4,$5,$6,$7,$8,$9,$10,$2;
 _st(html)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
 $1=_st(html)._div();
@@ -7605,7 +7767,7 @@ _st($3)._class_("btn btn-warning");
 $ctx3.sendIdx["class:"]=2;
 _st($3)._value_("Abort Transaction");
 $ctx3.sendIdx["value:"]=1;
-_st($3)._style_("width: 25%; margin-right: 1%;");
+_st($3)._style_("width: 32%; margin-right: 1%;");
 $ctx3.sendIdx["style:"]=1;
 $4=_st($3)._onClick_((function(){
 return smalltalk.withContext(function($ctx4) {
@@ -7621,7 +7783,7 @@ _st($5)._class_("btn btn-warning");
 $ctx3.sendIdx["class:"]=3;
 _st($5)._value_("Commit Transaction");
 $ctx3.sendIdx["value:"]=2;
-_st($5)._style_("width: 25%; margin-right: 1%;");
+_st($5)._style_("width: 32%; margin-right: 1%;");
 $ctx3.sendIdx["style:"]=2;
 $6=_st($5)._onClick_((function(){
 return smalltalk.withContext(function($ctx4) {
@@ -7630,49 +7792,31 @@ return self._commitTransaction();
 $ctx3.sendIdx["onClick:"]=2;
 $6;
 $7=_st(html)._input();
-$ctx3.sendIdx["input"]=3;
 _st($7)._type_("button");
-$ctx3.sendIdx["type:"]=3;
 _st($7)._class_("btn btn-warning");
 $ctx3.sendIdx["class:"]=4;
 _st($7)._value_("Continue Transaction");
-$ctx3.sendIdx["value:"]=3;
-_st($7)._style_("width: 25%; margin-right: 1%;");
+_st($7)._style_("width: 33%;");
 $ctx3.sendIdx["style:"]=3;
 $8=_st($7)._onClick_((function(){
 return smalltalk.withContext(function($ctx4) {
 return self._continueTransaction();
 }, function($ctx4) {$ctx4.fillBlock({},$ctx3,5)})}));
-$ctx3.sendIdx["onClick:"]=3;
 $8;
-$9=_st(html)._input();
-_st($9)._type_("button");
-_st($9)._class_("btn");
-$ctx3.sendIdx["class:"]=5;
-_st($9)._value_("Persistent Mode");
-_st($9)._style_("width: 22%;");
-$ctx3.sendIdx["style:"]=4;
-$10=_st($9)._onClick_((function(){
-return smalltalk.withContext(function($ctx4) {
-return self._togglePersistentMode();
-}, function($ctx4) {$ctx4.fillBlock({},$ctx3,6)})}));
-self["@persistenceModeButton"]=$10;
-self["@persistenceModeButton"];
-$11=_st(html)._div();
-_st($11)._style_("margin-top: 10px; margin-bottom: 0px;");
-_st($11)._class_("alert");
-$12=_st($11)._hide();
-self["@transactionResultBox"]=$12;
+$9=_st(html)._div();
+_st($9)._style_("margin-top: 10px; margin-bottom: 0px;");
+_st($9)._class_("alert");
+$10=_st($9)._hide();
+self["@transactionResultBox"]=$10;
 return self["@transactionResultBox"];
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,2)})}));
 return $2;
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 $ctx1.sendIdx["with:"]=1;
-self._updatePersistentMode();
 return self}, function($ctx1) {$ctx1.fill(self,"renderControlPanelOn:",{html:html},globals.MaglevSystemClassWindow)})},
 args: ["html"],
-source: "renderControlPanelOn: html\x0a\x09html with:\x09[\x0a\x09\x09html div\x0a\x09\x09\x09class: 'well';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Abort Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 25%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self abortTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Commit Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 25%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self commitTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Continue Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 25%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self continueTransaction].\x0a\x09\x09\x09\x09persistenceModeButton := html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn';\x0a\x09\x09\x09\x09\x09value: 'Persistent Mode';\x0a\x09\x09\x09\x09\x09style: 'width: 22%;';\x0a\x09\x09\x09\x09\x09onClick: [self togglePersistentMode].\x0a\x09\x09\x09\x09transactionResultBox := html div\x0a\x09\x09\x09\x09\x09style: 'margin-top: 10px; margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09class: 'alert';\x0a\x09\x09\x09\x09\x09hide]].\x0a\x09self updatePersistentMode.",
-messageSends: ["with:", "class:", "div", "type:", "input", "value:", "style:", "onClick:", "abortTransaction", "commitTransaction", "continueTransaction", "togglePersistentMode", "hide", "updatePersistentMode"],
+source: "renderControlPanelOn: html\x0a\x09html with:\x09[\x0a\x09\x09html div\x0a\x09\x09\x09class: 'well';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Abort Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self abortTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Commit Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self commitTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Continue Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 33%;';\x0a\x09\x09\x09\x09\x09onClick: [self continueTransaction].\x0a\x09\x09\x09\x09transactionResultBox := html div\x0a\x09\x09\x09\x09\x09style: 'margin-top: 10px; margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09class: 'alert';\x0a\x09\x09\x09\x09\x09hide]].",
+messageSends: ["with:", "class:", "div", "type:", "input", "value:", "style:", "onClick:", "abortTransaction", "commitTransaction", "continueTransaction", "hide"],
 referencedClasses: []
 }),
 globals.MaglevSystemClassWindow);
@@ -7736,90 +7880,6 @@ args: [],
 source: "showTransactionWaitingBox\x0a\x09transactionResultBox\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error'.\x0a\x09transactionResultBox asJQuery empty.\x0a\x09transactionResultBox\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.",
 messageSends: ["addClass:", "removeClass:", "empty", "asJQuery", "with:", "wait", "show"],
 referencedClasses: ["MaglevIcon"]
-}),
-globals.MaglevSystemClassWindow);
-
-smalltalk.addMethod(
-smalltalk.method({
-selector: "togglePersistentMode",
-protocol: 'interactions',
-fn: function (){
-var self=this;
-return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3;
-self._showTransactionWaitingBox();
-_st(self["@object"])._evaluate_language_withCallback_("self.__DBETogglePersistenceMode","ruby",(function(success,resultObj){
-return smalltalk.withContext(function($ctx2) {
-$1=_st(self["@transactionResultBox"])._asJQuery();
-$ctx2.sendIdx["asJQuery"]=1;
-_st($1)._empty();
-_st(self["@transactionResultBox"])._removeClass_("alert-info");
-$ctx2.sendIdx["removeClass:"]=1;
-if(smalltalk.assert(success)){
-_st(self["@transactionResultBox"])._addClass_("alert-success");
-$ctx2.sendIdx["addClass:"]=1;
-$2=_st(_st(resultObj)._value()).__eq(true);
-if(smalltalk.assert($2)){
-$3=_st(self["@persistenceModeButton"])._asJQuery();
-$ctx2.sendIdx["asJQuery"]=2;
-_st($3)._addClass_("active");
-$ctx2.sendIdx["addClass:"]=2;
-} else {
-_st(_st(self["@persistenceModeButton"])._asJQuery())._removeClass_("active");
-};
-_st(self["@transactionResultBox"])._hide();
-} else {
-_st(self["@transactionResultBox"])._addClass_("alert-error");
-};
-return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewComponent());
-}, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
-return self}, function($ctx1) {$ctx1.fill(self,"togglePersistentMode",{},globals.MaglevSystemClassWindow)})},
-args: [],
-source: "togglePersistentMode\x0a\x09self showTransactionWaitingBox.\x0a\x09object\x0a\x09\x09evaluate: 'self.__DBETogglePersistenceMode'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [\x0a\x09\x09\x09\x09\x09transactionResultBox addClass: 'alert-success'.\x0a\x09\x09\x09\x09\x09resultObj value = true\x0a\x09\x09\x09\x09\x09\x09ifTrue: [persistenceModeButton asJQuery addClass: 'active']\x0a\x09\x09\x09\x09\x09\x09ifFalse: [persistenceModeButton asJQuery removeClass: 'active'].\x0a\x09\x09\x09\x09\x09transactionResultBox hide]\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
-messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "=", "value", "hide", "with:", "inlineViewComponent"],
-referencedClasses: []
-}),
-globals.MaglevSystemClassWindow);
-
-smalltalk.addMethod(
-smalltalk.method({
-selector: "updatePersistentMode",
-protocol: 'interactions',
-fn: function (){
-var self=this;
-return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3;
-self._showTransactionWaitingBox();
-_st(self["@object"])._evaluate_language_withCallback_("self.__DBEPersistenceMode","ruby",(function(success,resultObj){
-return smalltalk.withContext(function($ctx2) {
-$1=_st(self["@transactionResultBox"])._asJQuery();
-$ctx2.sendIdx["asJQuery"]=1;
-_st($1)._empty();
-_st(self["@transactionResultBox"])._removeClass_("alert-info");
-$ctx2.sendIdx["removeClass:"]=1;
-if(smalltalk.assert(success)){
-_st(self["@transactionResultBox"])._addClass_("alert-success");
-$ctx2.sendIdx["addClass:"]=1;
-$2=_st(_st(resultObj)._value()).__eq(true);
-if(smalltalk.assert($2)){
-$3=_st(self["@persistenceModeButton"])._asJQuery();
-$ctx2.sendIdx["asJQuery"]=2;
-_st($3)._addClass_("active");
-$ctx2.sendIdx["addClass:"]=2;
-} else {
-_st(_st(self["@persistenceModeButton"])._asJQuery())._removeClass_("active");
-};
-_st(self["@transactionResultBox"])._hide();
-} else {
-_st(self["@transactionResultBox"])._addClass_("alert-error");
-};
-return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewComponent());
-}, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
-return self}, function($ctx1) {$ctx1.fill(self,"updatePersistentMode",{},globals.MaglevSystemClassWindow)})},
-args: [],
-source: "updatePersistentMode\x0a\x09self showTransactionWaitingBox.\x0a\x09object\x0a\x09\x09evaluate: 'self.__DBEPersistenceMode'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [\x0a\x09\x09\x09\x09\x09transactionResultBox addClass: 'alert-success'.\x0a\x09\x09\x09\x09\x09resultObj value = true\x0a\x09\x09\x09\x09\x09\x09ifTrue: [persistenceModeButton asJQuery addClass: 'active']\x0a\x09\x09\x09\x09\x09\x09ifFalse: [persistenceModeButton asJQuery removeClass: 'active'].\x0a\x09\x09\x09\x09\x09transactionResultBox hide]\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
-messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "=", "value", "hide", "with:", "inlineViewComponent"],
-referencedClasses: []
 }),
 globals.MaglevSystemClassWindow);
 
@@ -7930,7 +7990,7 @@ return _st(_st(self["@commandBox"])._asJQuery())._val_("");
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj,class_:class_},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"handleEnter",{command:command,html:html},globals.MaglevRubyWorkspaceWindow)})},
 args: [],
-source: "handleEnter\x0a\x09|command html|\x0a\x09html := HTMLCanvas onJQuery: terminalBox asJQuery.\x0a\x09command := commandBox asJQuery val.\x0a\x09command := command replace: '''' with: ''''''.\x0a\x09commandBox asJQuery prop: 'disabled' value: true.\x0a\x09html\x0a\x09\x09with: command;\x0a\x09\x09with: html br.\x0a\x09object\x0a\x09\x09evaluate: 'self.evaluate(''', command, ''')'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj | |class|\x0a\x09\x09\x09(resultObj at: 1) value\x0a\x09\x09\x09\x09ifTrue: [class := 'alert alert-error']\x0a\x09\x09\x09\x09ifFalse: [class := 'alert alert-success'].\x0a\x09\x09\x09terminalBox with: [html div\x0a\x09\x09\x09\x09class: class;\x0a\x09\x09\x09\x09with: '=> ';\x0a\x09\x09\x09\x09with: (resultObj at: 2) inlineViewComponent;\x0a\x09\x09\x09\x09with: html br].\x0a\x09\x09\x09self scrollToBottom.\x0a\x09\x09\x09commandBox asJQuery prop: 'disabled' value: false.\x0a\x09\x09\x09commandBox asJQuery val: ''].",
+source: "handleEnter\x0a\x09|command html|\x0a\x09html := HTMLCanvas onJQuery: terminalBox asJQuery.\x0a\x09command := commandBox asJQuery val.\x0a\x09command := command replace: '''' with: ''''''.\x0a\x09commandBox asJQuery prop: 'disabled' value: true.\x0a\x09html\x0a\x09\x09with: command;\x0a\x09\x09with: html br.\x0a\x09object \x0a\x09\x09evaluate: 'self.evaluate(''', command, ''')'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj | |class|\x0a\x09\x09\x09(resultObj at: 1) value\x0a\x09\x09\x09\x09ifTrue: [class := 'alert alert-error']\x0a\x09\x09\x09\x09ifFalse: [class := 'alert alert-success'].\x0a\x09\x09\x09terminalBox with: [html div\x0a\x09\x09\x09\x09class: class;\x0a\x09\x09\x09\x09with: '=> ';\x0a\x09\x09\x09\x09with: (resultObj at: 2) inlineViewComponent;\x0a\x09\x09\x09\x09with: html br].\x0a\x09\x09\x09self scrollToBottom.\x0a\x09\x09\x09commandBox asJQuery prop: 'disabled' value: false.\x0a\x09\x09\x09commandBox asJQuery val: ''].",
 messageSends: ["onJQuery:", "asJQuery", "val", "replace:with:", "prop:value:", "with:", "br", "evaluate:language:withCallback:", ",", "ifTrue:ifFalse:", "value", "at:", "class:", "div", "inlineViewComponent", "scrollToBottom", "val:"],
 referencedClasses: ["HTMLCanvas"]
 }),
@@ -7980,7 +8040,7 @@ self["@commandBox"]=$2;
 self._mouseFix();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWorkspaceOn:",{html:html},globals.MaglevRubyWorkspaceWindow)})},
 args: ["html"],
-source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 350px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13\x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
+source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 350px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13 \x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
 messageSends: ["style:", "pre", "type:", "input", "onKeyPress:", "ifTrue:", "==", "keyCode", "handleEnter", "mouseFix"],
 referencedClasses: []
 }),
@@ -8094,7 +8154,7 @@ return false;
 catch(e) {if(e===$early)return e[0]; throw e}
 }, function($ctx1) {$ctx1.fill(self,"isMethodUnimportant:",{aString:aString,unimportant:unimportant},globals.MaglevThreadWindow)})},
 args: ["aString"],
-source: "isMethodUnimportant: aString\x0a\x09|unimportant|\x0a\x09unimportant := {'AbstractException >>'.  'AbstractException class'. 'GsProcess >>'. 'GsProcess class'.\x0a\x09\x09\x09'ProcessorScheduler >>'. 'ProcessorScheduler class'. 'CodeEvaluation class'. 'RubyCompiler >>'.\x0a\x09\x09\x09'RubyCompiler class'. 'onException:do:'. 'RubyProc >> callAndRescue:'. '_gsReturnToC'.\x0a\x09\x09\x09'>> onSynchronous:do:'. 'ExecBlock >> ensure:'. 'ExecBlock >> rubyEnsure:'}.\x0a\x09unimportant do: [:str |\x0a\x09\x09(aString includesSubString: str)\x0a\x09\x09\x09ifTrue: [^ true]].\x0a\x09^ false",
+source: "isMethodUnimportant: aString\x0a\x09|unimportant|\x0a\x09unimportant := {'AbstractException >>'.  'AbstractException class'. 'GsProcess >>'. 'GsProcess class'. \x0a\x09\x09\x09'ProcessorScheduler >>'. 'ProcessorScheduler class'. 'CodeEvaluation class'. 'RubyCompiler >>'. \x0a\x09\x09\x09'RubyCompiler class'. 'onException:do:'. 'RubyProc >> callAndRescue:'. '_gsReturnToC'. \x0a\x09\x09\x09'>> onSynchronous:do:'. 'ExecBlock >> ensure:'. 'ExecBlock >> rubyEnsure:'}.\x0a\x09unimportant do: [:str |\x0a\x09\x09(aString includesSubString: str) \x0a\x09\x09\x09ifTrue: [^ true]].\x0a\x09^ false",
 messageSends: ["do:", "ifTrue:", "includesSubString:"],
 referencedClasses: []
 }),
@@ -8122,7 +8182,7 @@ return _st(_st(threadReloaded)._windowViewComponentReplace_(self))._renderReplac
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"proceed",{},globals.MaglevThreadWindow)})},
 args: [],
-source: "proceed\x0a\x09object\x0a\x09\x09proceedWithCallback: [:obj |\x0a\x09\x09\x09object fullReloadWithCallback: [:threadReloaded |\x0a\x09\x09\x09\x09object isRailsThread\x0a\x09\x09\x09\x09\x09ifTrue: [self closeWindow]\x0a\x09\x09\x09\x09\x09ifFalse: [(threadReloaded windowViewComponentReplace: self) renderReplace]]].",
+source: "proceed\x0a\x09object \x0a\x09\x09proceedWithCallback: [:obj | \x0a\x09\x09\x09object fullReloadWithCallback: [:threadReloaded |\x0a\x09\x09\x09\x09object isRailsThread\x0a\x09\x09\x09\x09\x09ifTrue: [self closeWindow]\x0a\x09\x09\x09\x09\x09ifFalse: [(threadReloaded windowViewComponentReplace: self) renderReplace]]].",
 messageSends: ["proceedWithCallback:", "fullReloadWithCallback:", "ifTrue:ifFalse:", "isRailsThread", "closeWindow", "renderReplace", "windowViewComponentReplace:"],
 referencedClasses: []
 }),
@@ -8134,11 +8194,52 @@ selector: "reloadStackWithCallback:",
 protocol: 'interactions',
 fn: function (aBlock){
 var self=this;
-return self},
+var html;
+function $MaglevIconImage(){return globals.MaglevIconImage||(typeof MaglevIconImage=="undefined"?nil:MaglevIconImage)}
+return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$3,$4;
+_st(self["@waitForStackTrace"])._show();
+_st(self["@methodSelect"])._clear();
+_st(self["@object"])._stackTraceMethodsWithCallback_((function(obj){
+return smalltalk.withContext(function($ctx2) {
+_st(obj)._do_((function(method){
+var isUnimportant;
+return smalltalk.withContext(function($ctx3) {
+isUnimportant=self._isMethodUnimportant_(method);
+isUnimportant;
+return _st(self["@methodSelect"])._with_darker_((function(){
+return smalltalk.withContext(function($ctx4) {
+$1=_st(method)._includesSubString_("(envId 0)");
+$ctx4.sendIdx["includesSubString:"]=1;
+if(smalltalk.assert($1)){
+_st(html)._with_(_st($MaglevIconImage())._smalltalk());
+$ctx4.sendIdx["with:"]=1;
+};
+$2=_st(method)._includesSubString_("(envId 1)");
+$ctx4.sendIdx["includesSubString:"]=2;
+if(smalltalk.assert($2)){
+_st(html)._with_(_st($MaglevIconImage())._ruby());
+$ctx4.sendIdx["with:"]=2;
+};
+$3=_st(method)._includesSubString_("(envId 1b)");
+if(smalltalk.assert($3)){
+_st(html)._with_(_st($MaglevIconImage())._rubySmalltalkBridge());
+$ctx4.sendIdx["with:"]=3;
+};
+return _st(html)._with_(method);
+}, function($ctx4) {$ctx4.fillBlock({},$ctx3,3)})}),isUnimportant);
+}, function($ctx3) {$ctx3.fillBlock({method:method,isUnimportant:isUnimportant},$ctx2,2)})}));
+_st(self["@waitForStackTrace"])._hide();
+$4=_st(aBlock).__eq(nil);
+if(! smalltalk.assert($4)){
+return _st(aBlock)._value();
+};
+}, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
+return self}, function($ctx1) {$ctx1.fill(self,"reloadStackWithCallback:",{aBlock:aBlock,html:html},globals.MaglevThreadWindow)})},
 args: ["aBlock"],
-source: "reloadStackWithCallback: aBlock\x0a\x09\x22|html|\x0a\x09waitForStackTrace show.\x0a\x09methodSelect clear.\x0a\x09object stackTraceMethodsWithCallback: [:obj |\x0a\x09\x09obj do: [:method | |isUnimportant|\x0a\x09\x09\x09isUnimportant := self isMethodUnimportant: method.\x0a\x09\x09\x09methodSelect\x0a\x09\x09\x09\x09with: [:html |\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 0)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1b)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage rubySmalltalkBridge].\x0a\x09\x09\x09\x09\x09html with: method] darker: isUnimportant].\x0a\x09\x09waitForStackTrace hide.\x0a\x09\x09aBlock = nil\x0a\x09\x09\x09ifFalse: [aBlock value]].\x22",
-messageSends: [],
-referencedClasses: []
+source: "reloadStackWithCallback: aBlock\x0a\x09|html|\x0a\x09waitForStackTrace show.\x0a\x09methodSelect clear.\x0a\x09object stackTraceMethodsWithCallback: [:obj |\x0a\x09\x09obj do: [:method | |isUnimportant|\x0a\x09\x09\x09isUnimportant := self isMethodUnimportant: method.\x0a\x09\x09\x09methodSelect\x0a\x09\x09\x09\x09with: [ \x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 0)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1b)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage rubySmalltalkBridge].\x0a\x09\x09\x09\x09\x09html with: method] darker: isUnimportant].\x0a\x09\x09waitForStackTrace hide.\x0a\x09\x09aBlock = nil\x0a\x09\x09\x09ifFalse: [aBlock value]].",
+messageSends: ["show", "clear", "stackTraceMethodsWithCallback:", "do:", "isMethodUnimportant:", "with:darker:", "ifTrue:", "includesSubString:", "with:", "smalltalk", "ruby", "rubySmalltalkBridge", "hide", "ifFalse:", "=", "value"],
+referencedClasses: ["MaglevIconImage"]
 }),
 globals.MaglevThreadWindow);
 
@@ -8252,7 +8353,7 @@ _st(self["@waitingScreen"])._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderFrame:",{frameIndex:frameIndex},globals.MaglevThreadWindow)})},
 args: ["frameIndex"],
-source: "renderFrame: frameIndex\x0a\x09methodContainer asJQuery empty.\x0a\x09waitingScreen show.\x0a\x09frameIndex > 0\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09stackFrame: frameIndex\x0a\x09\x09\x09withCallback: [:obj |\x0a\x09\x09\x09\x09methodContainer asJQuery empty.\x0a\x09\x09\x09\x09methodContainer with: (MaglevGsNMethodDebugEditor for: obj).\x0a\x09\x09\x09\x09waitingScreen hide]]\x0a\x09\x09ifFalse: [waitingScreen hide].",
+source: "renderFrame: frameIndex\x0a\x09methodContainer asJQuery empty.\x0a\x09waitingScreen show.\x0a\x09frameIndex > 0\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09stackFrame: frameIndex \x0a\x09\x09\x09withCallback: [:obj |\x0a\x09\x09\x09\x09methodContainer asJQuery empty.\x0a\x09\x09\x09\x09methodContainer with: (MaglevGsNMethodDebugEditor for: obj).\x0a\x09\x09\x09\x09waitingScreen hide]]\x0a\x09\x09ifFalse: [waitingScreen hide].",
 messageSends: ["empty", "asJQuery", "show", "ifTrue:ifFalse:", ">", "stackFrame:withCallback:", "with:", "for:", "hide"],
 referencedClasses: ["MaglevGsNMethodDebugEditor"]
 }),
@@ -8338,11 +8439,14 @@ protocol: 'interactions',
 fn: function (anInteger){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-self._renderFrame_(anInteger);
+
+	self['@methodSelect']._asJQuery()[0].selectedIndex = anInteger - 1;
+	self._renderFrame();
+	;
 return self}, function($ctx1) {$ctx1.fill(self,"selectStackFrame:",{anInteger:anInteger},globals.MaglevThreadWindow)})},
 args: ["anInteger"],
-source: "selectStackFrame: anInteger\x0a\x09\x22< self['@methodSelect']._asJQuery()[0].selectedIndex = anInteger - 1; >.\x22\x0a\x09self renderFrame: anInteger.",
-messageSends: ["renderFrame:"],
+source: "selectStackFrame: anInteger\x0a\x09<\x0a\x09self['@methodSelect']._asJQuery()[0].selectedIndex = anInteger - 1;\x0a\x09self._renderFrame();\x0a\x09>\x0a\x09",
+messageSends: [],
 referencedClasses: []
 }),
 globals.MaglevThreadWindow);
@@ -8365,7 +8469,7 @@ return self._selectStackFrame_(frameIndex);
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"stepInto",{frameIndex:frameIndex},globals.MaglevThreadWindow)})},
 args: [],
-source: "stepInto\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object\x0a\x09\x09stepInto: frameIndex\x0a\x09\x09withCallback: [:obj |\x0a\x09\x09\x09self reloadStackWithCallback: [\x0a\x09\x09\x09\x09self selectStackFrame: frameIndex]].",
+source: "stepInto\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object \x0a\x09\x09stepInto: frameIndex\x0a\x09\x09withCallback: [:obj | \x0a\x09\x09\x09self reloadStackWithCallback: [\x0a\x09\x09\x09\x09self selectStackFrame: frameIndex]].",
 messageSends: ["frameIndex", "stepInto:withCallback:", "reloadStackWithCallback:", "selectStackFrame:"],
 referencedClasses: []
 }),
@@ -8389,7 +8493,7 @@ return self._selectStackFrame_(frameIndex);
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"stepOver",{frameIndex:frameIndex},globals.MaglevThreadWindow)})},
 args: [],
-source: "stepOver\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object\x0a\x09\x09stepOver: frameIndex\x0a\x09\x09withCallback: [:obj | self reloadStackWithCallback: [\x0a\x09\x09\x09self selectStackFrame: frameIndex]].",
+source: "stepOver\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object \x0a\x09\x09stepOver: frameIndex\x0a\x09\x09withCallback: [:obj | self reloadStackWithCallback: [\x0a\x09\x09\x09self selectStackFrame: frameIndex]].",
 messageSends: ["frameIndex", "stepOver:withCallback:", "reloadStackWithCallback:", "selectStackFrame:"],
 referencedClasses: []
 }),
@@ -8413,7 +8517,7 @@ return self._selectStackFrame_(frameIndex);
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"trimStack",{frameIndex:frameIndex},globals.MaglevThreadWindow)})},
 args: [],
-source: "trimStack\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object\x0a\x09\x09trimTo: frameIndex\x0a\x09\x09withCallback: [:obj | self reloadStackWithCallback: [\x0a\x09\x09\x09self selectStackFrame: frameIndex]].",
+source: "trimStack\x0a\x09|frameIndex|\x0a\x09frameIndex := self frameIndex.\x0a\x09object \x0a\x09\x09trimTo: frameIndex\x0a\x09\x09withCallback: [:obj | self reloadStackWithCallback: [\x0a\x09\x09\x09self selectStackFrame: frameIndex]].",
 messageSends: ["frameIndex", "trimTo:withCallback:", "reloadStackWithCallback:", "selectStackFrame:"],
 referencedClasses: []
 }),
@@ -8505,7 +8609,7 @@ return self._renderMethodObject_(obj);
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderClass",{listElement:listElement,cls:cls,selector:selector,envId:envId},globals.MaglevSearchWindow)})},
 args: [],
-source: "renderClass\x0a\x09|listElement cls selector envId|\x0a\x09waitingScreen show.\x0a\x09listElement := listContents at: self listIndex.\x0a\x09cls := (listElement at: 1) at:1.\x0a\x09envId :=  ((listElement at: 1) at:2) inspection asNumber.\x0a\x09selector := listElement at: 2.\x0a\x09envId = 0 ifTrue:[\x0a\x09\x09cls sourceCodeFor: selector language: 'smalltalk' withCallback: [:obj|\x0a\x09\x09\x09self renderMethodObject: obj.]\x09\x09\x09\x0a\x09]\x0a\x09ifFalse:[\x0a\x09\x09cls sourceCodeFor: selector language: 'ruby' withCallback: [:obj|\x0a\x09\x09\x09self renderMethodObject: obj]\x0a\x09]",
+source: "renderClass\x0a\x09|listElement cls selector envId|\x0a\x09waitingScreen show.\x0a\x09listElement := listContents at: self listIndex.\x0a\x09cls := (listElement at: 1) at:1.\x0a\x09envId :=  ((listElement at: 1) at:2) inspection asNumber.\x0a\x09selector := listElement at: 2.\x0a\x09envId = 0 ifTrue:[\x0a\x09\x09cls sourceCodeFor: selector language: 'smalltalk' withCallback: [:obj| \x0a\x09\x09\x09self renderMethodObject: obj.]\x09\x09\x09\x0a\x09]\x0a\x09ifFalse:[\x0a\x09\x09cls sourceCodeFor: selector language: 'ruby' withCallback: [:obj|\x0a\x09\x09\x09self renderMethodObject: obj]\x0a\x09]",
 messageSends: ["show", "at:", "listIndex", "asNumber", "inspection", "ifTrue:ifFalse:", "=", "sourceCodeFor:language:withCallback:", "renderMethodObject:"],
 referencedClasses: []
 }),
@@ -8557,7 +8661,7 @@ return _st(self["@waitForResult"])._hide();
 $ctx1.sendIdx["do:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderListOf:",{selectors:selectors,html:html},globals.MaglevSearchWindow)})},
 args: ["selectors"],
-source: "renderListOf: selectors\x0a\x09|html|\x0a\x09html := HTMLCanvas onJQuery: selectBox asJQuery.\x0a\x09selectBox asJQuery empty.\x0a\x09listContents := Array new.\x0a\x09selectors do:[:selector|\x0a\x09\x09self maglev implementersOf: selector withCallback:[:success :obj|\x0a\x09\x09\x09obj hasElements ifTrue:[\x0a\x09\x09\x09\x09selectBox\x0a\x09\x09\x09\x09with: [obj do: [:cls |\x0a\x09\x09\x09\x09\x09listContents add: {cls. selector}.\x0a\x09\x09\x09\x09\x09html option with: (cls at:1) inspection, '>>' , selector]];\x0a\x09\x09\x09\x09size: 10;\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09show\x0a\x09\x09\x09\x09\x22onChange: [self renderClass]\x22\x0a\x09\x09\x09].\x0a\x09\x09\x09waitForResult hide.\x0a\x09\x09]\x0a\x09]",
+source: "renderListOf: selectors\x0a\x09|html|\x0a\x09html := HTMLCanvas onJQuery: selectBox asJQuery.\x0a\x09selectBox asJQuery empty.\x0a\x09listContents := Array new.\x0a\x09selectors do:[:selector| \x0a\x09\x09self maglev implementersOf: selector withCallback:[:success :obj|\x0a\x09\x09\x09obj hasElements ifTrue:[\x0a\x09\x09\x09\x09selectBox\x0a\x09\x09\x09\x09with: [obj do: [:cls |\x0a\x09\x09\x09\x09\x09listContents add: {cls. selector}.\x0a\x09\x09\x09\x09\x09html option with: (cls at:1) inspection, '>>' , selector]];\x0a\x09\x09\x09\x09size: 10;\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09show\x0a\x09\x09\x09\x09\x22onChange: [self renderClass]\x22\x0a\x09\x09\x09].\x0a\x09\x09\x09waitForResult hide.\x0a\x09\x09]\x0a\x09]",
 messageSends: ["onJQuery:", "asJQuery", "empty", "new", "do:", "implementersOf:withCallback:", "maglev", "ifTrue:", "hasElements", "with:", "add:", "option", ",", "inspection", "at:", "size:", "style:", "show", "hide"],
 referencedClasses: ["HTMLCanvas", "Array"]
 }),
@@ -8654,7 +8758,7 @@ self["@waitingScreen"]=$13;
 self["@methodContainer"]=_st(html)._div();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowContentOn:",{html:html},globals.MaglevSearchWindow)})},
 args: ["html"],
-source: "renderWindowContentOn: html\x0a\x09html div\x0a\x09\x09class: 'maglev-search';\x0a\x09\x09with: [\x0a\x09\x09html form\x0a\x09\x09\x09class: 'search-form';\x0a\x09\x09\x09onSubmit: [:e|e preventDefault. self searchSelectorsAndClasses.];\x0a\x09\x09\x09with:[\x0a\x09\x09\x09html input\x0a\x09\x09\x09\x09class: 'search-input'\x0a\x09\x09\x09]\x0a\x09\x09].\x0a\x09selectBox := html select\x0a\x09\x09\x09size: 10;\x0a\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09onChange: [self renderClass];\x0a\x09\x09\x09hide.\x0a\x09waitForResult := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09hide.\x0a\x09waitingScreen := html div\x0a\x09\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09\x09hide.\x0a\x09methodContainer := html div.",
+source: "renderWindowContentOn: html\x0a\x09html div\x0a\x09\x09class: 'maglev-search'; \x0a\x09\x09with: [\x0a\x09\x09html form\x0a\x09\x09\x09class: 'search-form';\x0a\x09\x09\x09onSubmit: [:e|e preventDefault. self searchSelectorsAndClasses.]; \x0a\x09\x09\x09with:[\x0a\x09\x09\x09html input\x0a\x09\x09\x09\x09class: 'search-input'\x0a\x09\x09\x09]\x0a\x09\x09].\x0a\x09selectBox := html select\x0a\x09\x09\x09size: 10;\x0a\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09onChange: [self renderClass];\x0a\x09\x09\x09hide.\x0a\x09waitForResult := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09hide.\x0a\x09waitingScreen := html div\x0a\x09\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09\x09hide.\x0a\x09methodContainer := html div.",
 messageSends: ["class:", "div", "with:", "form", "onSubmit:", "preventDefault", "searchSelectorsAndClasses", "input", "size:", "select", "style:", "onChange:", "renderClass", "hide", "wait"],
 referencedClasses: ["MaglevIcon"]
 }),
@@ -8666,11 +8770,24 @@ selector: "searchSelectorsAndClasses",
 protocol: 'not yet classified',
 fn: function (){
 var self=this;
-return self},
+var input,selectors;
+function $Array(){return globals.Array||(typeof Array=="undefined"?nil:Array)}
+return smalltalk.withContext(function($ctx1) { 
+input=_st(".search-input"._asJQuery())._val();
+selectors=_st($Array())._new();
+_st(self["@waitForResult"])._show();
+_st(self._maglev())._findMethodNamesMatching_with_(input,(function(success,obj){
+return smalltalk.withContext(function($ctx2) {
+if(smalltalk.assert(success)){
+_st(selectors)._addAll_(_st(_st(obj)._string())._tokenize_(" "));
+return self._renderListOf_(selectors);
+};
+}, function($ctx2) {$ctx2.fillBlock({success:success,obj:obj},$ctx1,1)})}));
+return self}, function($ctx1) {$ctx1.fill(self,"searchSelectorsAndClasses",{input:input,selectors:selectors},globals.MaglevSearchWindow)})},
 args: [],
-source: "searchSelectorsAndClasses\x0a\x09\x22|input maglev selectors|\x0a\x09input := '.search-input' asJQuery val.\x0a\x09selectors := Array new.\x0a\x09waitForResult show.\x0a\x09self maglev findMethodNamesMatching: input with:[:success :obj|\x0a\x09\x09success ifTrue: [selectors addAll: (obj string tokenize: ' ').\x0a\x09\x09self renderListOf: selectors].\x0a\x09\x09\x0a\x09].\x22",
-messageSends: [],
-referencedClasses: []
+source: "searchSelectorsAndClasses\x0a\x09|input selectors|\x0a\x09input := '.search-input' asJQuery val.\x0a\x09selectors := Array new.\x0a\x09waitForResult show.\x0a\x09self maglev findMethodNamesMatching: input with:[:success :obj| \x0a\x09\x09success ifTrue: [selectors addAll: (obj string tokenize: ' ').\x0a\x09\x09self renderListOf: selectors]. \x0a\x09\x09\x0a\x09].",
+messageSends: ["val", "asJQuery", "new", "show", "findMethodNamesMatching:with:", "maglev", "ifTrue:", "addAll:", "tokenize:", "string", "renderListOf:"],
+referencedClasses: ["Array"]
 }),
 globals.MaglevSearchWindow);
 
@@ -8785,7 +8902,7 @@ iframeContainer=$11;
 _st(_st(iframeContainer)._asJQuery())._resizable();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowContentOn:",{html:html,iframeContainer:iframeContainer},globals.MaglevWebBrowserWindow)})},
 args: ["html"],
-source: "renderWindowContentOn: html\x0a\x09|iframeContainer|\x0a\x09html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'width: 100%; margin-top: 10px; box-sizing: border-box; padding-right: 51px; margin-bottom: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span\x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09with: 'URL'.\x0a\x09\x09\x09inputUrl := html input\x09\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onKeyPress: [:evt | evt which = 13\x0a\x09\x09\x09\x09\x09ifTrue: [self url: inputUrl asJQuery val]]].\x0a\x09iframeContainer := html div\x0a\x09\x09style: 'margin-bottom: 5px; margin-right: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09iframe := html iframe\x0a\x09\x09\x09\x09style: 'width: 100%; height: 100%; border: 1px solid #ccc;';\x0a\x09\x09\x09\x09frameborder: '0';\x0a\x09\x09\x09\x09src: 'about:blank'].\x0a\x09iframeContainer asJQuery resizable.",
+source: "renderWindowContentOn: html\x0a\x09|iframeContainer|\x0a\x09html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'width: 100%; margin-top: 10px; box-sizing: border-box; padding-right: 51px; margin-bottom: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09with: 'URL'.\x0a\x09\x09\x09inputUrl := html input\x09\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onKeyPress: [:evt | evt which = 13\x0a\x09\x09\x09\x09\x09ifTrue: [self url: inputUrl asJQuery val]]].\x0a\x09iframeContainer := html div \x0a\x09\x09style: 'margin-bottom: 5px; margin-right: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09iframe := html iframe\x0a\x09\x09\x09\x09style: 'width: 100%; height: 100%; border: 1px solid #ccc;';\x0a\x09\x09\x09\x09frameborder: '0';\x0a\x09\x09\x09\x09src: 'about:blank'].\x0a\x09iframeContainer asJQuery resizable.",
 messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onKeyPress:", "ifTrue:", "=", "which", "url:", "val", "asJQuery", "iframe", "frameborder:", "src:", "resizable"],
 referencedClasses: []
 }),

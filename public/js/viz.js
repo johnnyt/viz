@@ -8,8 +8,8 @@ require([
   'amber/deploy',
   'amber/lang',
   'viz/Maglev-Vendor',
-  //'viz/Maglev-Core',
-  //'viz/Maglev-Database-Explorer',
+  'viz/Maglev-Core',
+  'viz/Maglev-Database-Explorer',
   'bower_components/director/build/director',
   'bower_components/jsplumb/dist/js/jquery.jsPlumb-1.5.5',
   'bs3/js/bootstrap'
