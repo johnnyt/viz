@@ -8081,7 +8081,7 @@ fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
 var $1,$3,$2;
-self["@terminalBox"]=_st(_st(html)._pre())._style_("height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;");
+self["@terminalBox"]=_st(_st(html)._pre())._style_("height: 150px; overflow-y: scroll; overflow-x: hidden; color: #000000;");
 $ctx1.sendIdx["style:"]=1;
 $1=_st(html)._input();
 _st($1)._type_("text");
@@ -8097,7 +8097,7 @@ self["@commandBox"]=$2;
 self._mouseFix();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWorkspaceOn:",{html:html},globals.MaglevRubyWorkspaceWindow)})},
 args: ["html"],
-source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13 \x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
+source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 150px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13 \x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
 messageSends: ["style:", "pre", "type:", "input", "onKeyPress:", "ifTrue:", "==", "keyCode", "handleEnter", "mouseFix"],
 referencedClasses: []
 }),

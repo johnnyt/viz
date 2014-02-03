@@ -2709,7 +2709,7 @@ mouseFix
 
 renderWorkspaceOn: html
 	terminalBox := html pre
-		style: 'height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.
+		style: 'height: 150px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.
 	commandBox := html input
 		type: 'text';
 		style: 'width: 97%;';
