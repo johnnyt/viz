@@ -158,13 +158,22 @@ openWindow: anInteger
 !
 
 ready
-	self openWindow: self defaultWorkspaceId.
+	jQuery getJSON: '/ids' do: [ :data |
+		self persistentRootId: data persistentRootId;
+			maglevSystemId: data maglevSystemId;
+			defaultWorkspaceId: data defaultWorkspaceId;
+			evalObjectId: data evalObjectId.
+
+self openWindow: self defaultWorkspaceId.
+
+].
+	"self openWindow: self defaultWorkspaceId.
 	self openWindow: self persistentRootId.
 	self openWindow: self maglevSystemId.
 	MaglevObjectSpace instance 
 		evalObject: (MaglevObjectSpace instance reloadObject: self evalObjectId).
 	MaglevHaltedThreadListener start.
-	MaglevWebBrowserWindow showNew.
+	MaglevWebBrowserWindow showNew."
 ! !
 
 !Maglev class methodsFor: 'singleton'!

@@ -119,8 +119,7 @@ mouseFix
 
 commandSave
 	|selectedCategory|
-	errorBox hide.
-	errorBox asJQuery empty.
+	errorBox asJQuery hide; empty.
 	object environmentId = 1
 		ifTrue: [object
 			compileRubySourceCode: editor getValue 
@@ -158,17 +157,15 @@ renderEditorOn: html
 	html div style: 'clear: both;'.
 	errorBox := html div
 		class: 'alert alert-error';
-		style: 'margin-bottom: 0px;';
-		hide.
+		style: 'margin-bottom: 0px; display: none;'.
 	self initializeEditor.
 !
 
 renderMethodObject
 	|envId|
 	editor setValue: self sourceString. 
-	editorContainer show.
 	envId := self envId.
-	envIdContainer asJQuery empty.
+	envIdContainer asJQuery show; empty.
 	envIdContainer with: envId.
 	sourceLocationContainer empty.
 	envId = 1 
@@ -197,8 +194,8 @@ renderStatusBarOn: html
 		with: [html tbody with: [
 			html tr with: [
 				html td with: [
-					rubyIcon := MaglevIconImage ruby hide; yourself.
-					stIcon := MaglevIconImage smalltalk hide; yourself.
+					rubyIcon := MaglevIconImage ruby asJQuery hide; yourself.
+					stIcon := MaglevIconImage smalltalk asJQuery hide; yourself.
 					html with: rubyIcon.
 					html with: stIcon.
 					envIdContainer := html span with: 'Environment ID'];
@@ -387,8 +384,8 @@ refresh
 				(currentOops includes: oop)
 					ifFalse: [self removeObject: oop with: comp]].
 			renderedOops size = 0
-				ifTrue: [navbar hide]
-				ifFalse: [navbar show]]].
+				ifTrue: [navbar asJQuery hide]
+				ifFalse: [navbar asJQuery show]]].
 !
 
 removeObject: oop with: component
@@ -456,7 +453,7 @@ spin: aBoolean
 !MaglevIcon methodsFor: 'interactions'!
 
 hide
-	b hide.
+	b asJQuery hide.
 !
 
 show
@@ -618,7 +615,7 @@ src: aString
 
 hide
 	hidden := true.
-	image ifNotNil: [image hide].
+	image ifNotNil: [image asJQuery hide].
 !
 
 show
@@ -632,7 +629,7 @@ renderOn: html
 	image := html img
 		src: src;
 		class: cssClass.
-	self hidden ifTrue: [image hide].
+	self hidden ifTrue: [image asJQuery hide].
 ! !
 
 !MaglevIconImage class methodsFor: 'instance creation'!
@@ -751,7 +748,7 @@ hide
 !
 
 hideSearchBox
-	searchbox hide.
+	searchbox asJQuery hide.
 	self height: olHeightBeforeSearch.
 	list asJQuery focus.
 !
@@ -784,7 +781,7 @@ show
 !
 
 unselectAll
-	(list asJQuery find: 'li') removeClass: 'ui-selected'.
+	(list asJQuery find: 'li') asJQuery removeClass: 'ui-selected'.
 ! !
 
 !MaglevListBox methodsFor: 'rendering'!
@@ -816,7 +813,7 @@ renderOn: html
 renderSearchBoxOn: html
 	searchbox := html div
 		class: 'input-prepend';
-		style: 'margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';
+		style: 'display: none; margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';
 		with: [
 			html span 
 				class: 'add-on';
@@ -826,8 +823,7 @@ renderSearchBoxOn: html
 				class: 'span2';
 				style: 'width: 100%;';
 				onChange: [self filterResults];
-				onFocusOut: [self hideSearchBox]];
-		hide.
+				onFocusOut: [self hideSearchBox]]
 !
 
 with: content
@@ -921,11 +917,11 @@ evalPrintIt
 !
 
 executeWithCallback: aBlock
-	resultContainer
+	resultContainer asJQuery
 		addClass: 'alert-info';
 		removeClass: 'alert-success';
-		removeClass: 'alert-error'.
-	resultContainer asJQuery empty.
+		removeClass: 'alert-error';
+		empty.
 	resultContainer
 		with: MaglevIcon wait;
 		with: ' loading...';
@@ -935,10 +931,10 @@ executeWithCallback: aBlock
 		language: self language 
 		withCallback: [:success :resultObj |
 			resultContainer asJQuery empty.
-			resultContainer removeClass: 'alert-info'.
+			resultContainer asJQuery removeClass: 'alert-info'.
 			success
-				ifTrue: [resultContainer addClass: 'alert-success']
-				ifFalse: [resultContainer addClass: 'alert-error'].
+				ifTrue: [resultContainer asJQuery addClass: 'alert-success']
+				ifFalse: [resultContainer asJQuery addClass: 'alert-error'].
 			aBlock value: success value: resultObj]
 !
 
@@ -993,8 +989,8 @@ renderFormOn: html
 				class: 'pull-left code-area'.
 			html div style: 'clear: both;'.
 			resultContainer := html div
-				class: 'alert';
-				hide.
+				class: 'alert'.
+			resultContainer asJQuery hide.
 			html div
 				class: 'button-area';
 				with: [self renderButtonsOn: html]].
@@ -1907,8 +1903,8 @@ moveToFront
 prepareWindow
 	MaglevJsPlumb prepareObject: (container asJQuery).
 	container
-		onMouseEnter: [container removeClass: 'window-mouse-out'];
-		onMouseLeave: [container addClass: 'window-mouse-out'].
+		onMouseEnter: [container asJQuery removeClass: 'window-mouse-out'];
+		onMouseLeave: [container asJQuery addClass: 'window-mouse-out'].
 !
 
 replace: aWindow
@@ -2015,7 +2011,7 @@ highestZIndex
 ! !
 
 MaglevWindow subclass: #MaglevObjectWindow
-	instanceVariableNames: 'container object classObject tabs captions tabsContainer currentTab'
+	instanceVariableNames: 'object classObject tabs captions tabsContainer currentTab'
 	package: 'Maglev-Database-Explorer'!
 
 !MaglevObjectWindow methodsFor: 'accessing'!
@@ -2091,11 +2087,11 @@ showTab: caption
 		caption = tabCaption
 			ifTrue: [
 				currentTab := tab.
-				tab show.
-				capEl addClass: 'active']
+				tab asJQuery show.
+				capEl asJQuery addClass: 'active']
 			ifFalse: [
-				tab hide.
-				capEl removeClass: 'active']].
+				tab asJQuery hide.
+				capEl asJQuery removeClass: 'active']].
 	"return false to avoid scrolling to the top"
 	^ false
 ! !
@@ -2291,7 +2287,7 @@ MaglevObjectWindow subclass: #MaglevModuleWindow
 
 !MaglevModuleWindow methodsFor: 'initialization'!
 
-initialize
+initializeTree
 < container.jstree({
   plugins: ['crrm', 'html_data', 'themes'],
   core: {
@@ -2382,9 +2378,9 @@ renderCodeTabOn: html
 	self object allSelectorsWithCallback: [:obj |
 		selectors := obj.
 		self renderSelectorCategories.
-		waitingScreen hide.
-		categoryNamesSelect show.
-		selectorsSelect show].
+		waitingScreen asJQuery hide.
+		categoryNamesSelect asJQuery show.
+		selectorsSelect asJQuery show].
 !
 
 renderConstantsOn: html
@@ -2418,7 +2414,7 @@ renderHierarchyOn: htmlIn
 							with: [lastUl := html ul]]]].
 		self initializeTree: hierarchyContainer asJQuery.
 		hcContainer asJQuery resizable.
-		waitingBox hide].
+		waitingBox asJQuery hide].
 !
 
 renderIncludedModulesOn: html
@@ -2430,18 +2426,18 @@ renderInlineViewFor: oop inside: htmlElement
 	html := HTMLCanvas onJQuery: htmlElement.
 	waitIcon := MaglevIcon wait.
 	html with: waitIcon.
-	waitIcon hide.
+	waitIcon asJQuery hide.
 	subclassesButton := MaglevIcon codeFork.
 	html with: [html a with: subclassesButton].
 	subclassesButton onClick: [ |obj|
 		subclassesButton hide.
-		waitIcon show.
+		waitIcon asJQuery show.
 		obj := MaglevObjectSpace instance at: oop.
 		obj ensureSubclassesLoadedWithCallback: [
 			obj subclasses do: [:cls |
 				self renderHierarchySubclass: cls for: oop].
 			self replaceHierarchySubclasses.
-			waitIcon hide]].
+			waitIcon asJQuery hide]].
 	(MaglevObjectSpace instance at: oop) inlineViewComponentFull renderOn: html.
 !
 
@@ -2451,20 +2447,20 @@ renderListsOn: html
 	categoryNamesSelect
 		changedCallback: [:cat :index | self renderSelectors: cat];
 		height: 250;
-		style: 'float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;';
-		hide.
+		style: 'float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;'.
+	categoryNamesSelect asJQuery hide.
 	selectorsSelect := MaglevListBox new.
 	html with: selectorsSelect.
 	selectorsSelect
 		changedCallback: [:sel :index | self renderSourceCode: sel];
 		height: 250;
-		style: 'display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;';
-		hide.
+		style: 'display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;'.
+	selectorsSelect asJQuery hide.
 !
 
 renderMethodObject: obj
 	methodContainer with: (MaglevGsNMethodEditor for: obj).
-	waitingScreen hide.
+	waitingScreen asJQuery hide.
 !
 
 renderRubySourceCodeFor: selectorString
@@ -2552,10 +2548,10 @@ abortTransaction
 		language: 'ruby'
 		withCallback: [:success :resultObj |
 			transactionResultBox asJQuery empty.
-			transactionResultBox removeClass: 'alert-info'.
+			transactionResultBox asJQuery removeClass: 'alert-info'.
 			success
-				ifTrue: [transactionResultBox addClass: 'alert-success']
-				ifFalse: [transactionResultBox addClass: 'alert-error'].
+				ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']
+				ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].
 			transactionResultBox with: resultObj inlineViewComponent].
 !
 
@@ -2566,10 +2562,10 @@ commitTransaction
 		language: 'ruby'
 		withCallback: [:success :resultObj |
 			transactionResultBox asJQuery empty.
-			transactionResultBox removeClass: 'alert-info'.
+			transactionResultBox asJQuery removeClass: 'alert-info'.
 			success
-				ifTrue: [transactionResultBox addClass: 'alert-success']
-				ifFalse: [transactionResultBox addClass: 'alert-error'].
+				ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']
+				ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].
 			transactionResultBox with: resultObj inlineViewComponent].
 !
 
@@ -2580,10 +2576,10 @@ continueTransaction
 		language: 'ruby'
 		withCallback: [:success :resultObj |
 			transactionResultBox asJQuery empty.
-			transactionResultBox removeClass: 'alert-info'.
+			transactionResultBox asJQuery removeClass: 'alert-info'.
 			success
-				ifTrue: [transactionResultBox addClass: 'alert-success']
-				ifFalse: [transactionResultBox addClass: 'alert-error'].
+				ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']
+				ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].
 			transactionResultBox with: resultObj inlineViewComponent].
 !
 
@@ -2626,9 +2622,8 @@ renderControlPanelOn: html
 					style: 'width: 33%;';
 					onClick: [self continueTransaction].
 				transactionResultBox := html div
-					style: 'margin-top: 10px; margin-bottom: 0px;';
-					class: 'alert';
-					hide]].
+					style: 'display: none; margin-top: 10px; margin-bottom: 0px;';
+					class: 'alert']].
 !
 
 renderGemVersionReportOn: html
@@ -2640,11 +2635,11 @@ renderStoneVersionReportOn: html
 !
 
 showTransactionWaitingBox
-	transactionResultBox
+	transactionResultBox asJQuery
 		addClass: 'alert-info';
 		removeClass: 'alert-success';
-		removeClass: 'alert-error'.
-	transactionResultBox asJQuery empty.
+		removeClass: 'alert-error';
+		empty.
 	transactionResultBox
 		with: MaglevIcon wait;
 		with: ' loading...';
@@ -2714,7 +2709,7 @@ mouseFix
 
 renderWorkspaceOn: html
 	terminalBox := html pre
-		style: 'height: 350px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.
+		style: 'height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.
 	commandBox := html input
 		type: 'text';
 		style: 'width: 97%;';
@@ -2770,7 +2765,7 @@ proceed
 
 reloadStackWithCallback: aBlock
 	|html|
-	waitForStackTrace show.
+	waitForStackTrace asJQuery show.
 	methodSelect clear.
 	object stackTraceMethodsWithCallback: [:obj |
 		obj do: [:method | |isUnimportant|
@@ -2784,7 +2779,7 @@ reloadStackWithCallback: aBlock
 					(method includesSubString: '(envId 1b)')
 						ifTrue: [html with: MaglevIconImage rubySmalltalkBridge].
 					html with: method] darker: isUnimportant].
-		waitForStackTrace hide.
+		waitForStackTrace asJQuery hide.
 		aBlock = nil
 			ifFalse: [aBlock value]].
 !
@@ -2867,15 +2862,15 @@ renderButtonsOn: html
 
 renderFrame: frameIndex
 	methodContainer asJQuery empty.
-	waitingScreen show.
+	waitingScreen asJQuery show.
 	frameIndex > 0
 		ifTrue: [object
 			stackFrame: frameIndex 
 			withCallback: [:obj |
 				methodContainer asJQuery empty.
 				methodContainer with: (MaglevGsNMethodDebugEditor for: obj).
-				waitingScreen hide]]
-		ifFalse: [waitingScreen hide].
+				waitingScreen asJQuery hide]]
+		ifFalse: [waitingScreen asJQuery hide].
 !
 
 renderLocalStorageOn: html
@@ -2897,8 +2892,8 @@ renderStackTraceOn: html
 	waitingScreen := html div
 		with: [html
 			with: MaglevIcon wait;
-			with: ' loading...'];
-		hide.
+			with: ' loading...'].
+	waitingScreen asJQuery hide.
 	methodContainer := html div.
 	self reloadStackWithCallback: nil.
 ! !
@@ -2948,8 +2943,8 @@ renderListOf: selectors
 					listContents add: {cls. selector}.
 					html option with: (cls at:1) inspection, '>>' , selector]];
 				size: 10;
-				style: 'width: 100%;';
-				show
+				style: 'width: 100%;'
+				"show"
 				"onChange: [self renderClass]"
 			].
 			waitForResult hide.
@@ -2960,7 +2955,7 @@ renderListOf: selectors
 renderMethodObject: obj
 	methodContainer asJQuery empty.
 	methodContainer with: (MaglevGsNMethodEditor for: obj).
-	waitingScreen hide.
+	waitingScreen asJQuery hide.
 !
 
 renderWindowContentOn: html
@@ -2977,19 +2972,18 @@ renderWindowContentOn: html
 		].
 	selectBox := html select
 			size: 10;
-			style: 'width: 100%;';
-			onChange: [self renderClass];
-			hide.
+			style: 'display:none; width: 100%;';
+			onChange: [self renderClass].
 	waitForResult := html div
+		style: 'display:none;';
 		with: [html
 				with: MaglevIcon wait;
-				with: ' loading...'];
-		hide.
+				with: ' loading...'].
 	waitingScreen := html div
-			with: [html
+		style: 'display:none;';
+		with: [html
 				with: MaglevIcon wait;
-				with: ' loading...'];
-			hide.
+				with: ' loading...'].
 	methodContainer := html div.
 !
 
@@ -3063,7 +3057,7 @@ renderWindowContentOn: html
 		with: [
 			iframe := html iframe
 				style: 'width: 100%; height: 100%; border: 1px solid #ccc;';
-				frameborder: '0';
+				at: 'frameborder' put: '0';
 				src: 'about:blank'].
 	iframeContainer asJQuery resizable.
 !
@@ -3092,6 +3086,16 @@ showNew
 
 b
 	^ self tag: 'b'
+! !
+
+!Number methodsFor: '*Maglev-Database-Explorer'!
+
+asHexString
+	< return self.toString(16); >
+!
+
+ceiled
+	< return Math.ceil(self); >
 ! !
 
 !TagBrush methodsFor: '*Maglev-Database-Explorer'!

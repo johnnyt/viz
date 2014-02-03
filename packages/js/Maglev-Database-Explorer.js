@@ -113,19 +113,20 @@ fn: function (){
 var self=this;
 var selectedCategory;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4,$5;
-_st(self["@errorBox"])._hide();
-_st(_st(self["@errorBox"])._asJQuery())._empty();
-$1=_st(_st(self["@object"])._environmentId()).__eq((1));
-if(smalltalk.assert($1)){
-$2=self["@object"];
-$3=_st(self["@editor"])._getValue();
+var $1,$2,$3,$4,$5,$6,$7;
+$1=_st(self["@errorBox"])._asJQuery();
+_st($1)._hide();
+$2=_st($1)._empty();
+$3=_st(_st(self["@object"])._environmentId()).__eq((1));
+if(smalltalk.assert($3)){
+$4=self["@object"];
+$5=_st(self["@editor"])._getValue();
 $ctx1.sendIdx["getValue"]=1;
-_st($2)._compileRubySourceCode_withCallback_($3,(function(success,obj){
+_st($4)._compileRubySourceCode_withCallback_($5,(function(success,obj){
 return smalltalk.withContext(function($ctx2) {
-$4=_st(obj)._isException();
+$6=_st(obj)._isException();
 $ctx2.sendIdx["isException"]=1;
-if(smalltalk.assert($4)){
+if(smalltalk.assert($6)){
 return self._signalFailure_(obj);
 $ctx2.sendIdx["signalFailure:"]=1;
 } else {
@@ -136,8 +137,8 @@ $ctx2.sendIdx["signalSuccess"]=1;
 } else {
 _st(self["@object"])._compileSmalltalkSourceCode_withCallback_(_st(self["@editor"])._getValue(),(function(success,obj){
 return smalltalk.withContext(function($ctx2) {
-$5=_st(obj)._isException();
-if(smalltalk.assert($5)){
+$7=_st(obj)._isException();
+if(smalltalk.assert($7)){
 return self._signalFailure_(obj);
 } else {
 return self._signalSuccess();
@@ -146,8 +147,8 @@ return self._signalSuccess();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"commandSave",{selectedCategory:selectedCategory},globals.MaglevGsNMethodEditor)})},
 args: [],
-source: "commandSave\x0a\x09|selectedCategory|\x0a\x09errorBox hide.\x0a\x09errorBox asJQuery empty.\x0a\x09object environmentId = 1\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09compileRubySourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]]\x0a\x09\x09ifFalse: [object \x0a\x09\x09\x09compileSmalltalkSourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]].",
-messageSends: ["hide", "empty", "asJQuery", "ifTrue:ifFalse:", "=", "environmentId", "compileRubySourceCode:withCallback:", "getValue", "isException", "signalFailure:", "signalSuccess", "compileSmalltalkSourceCode:withCallback:"],
+source: "commandSave\x0a\x09|selectedCategory|\x0a\x09errorBox asJQuery hide; empty.\x0a\x09object environmentId = 1\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09compileRubySourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]]\x0a\x09\x09ifFalse: [object \x0a\x09\x09\x09compileSmalltalkSourceCode: editor getValue \x0a\x09\x09\x09withCallback: [:success :obj |\x0a\x09\x09\x09\x09obj isException\x0a\x09\x09\x09\x09\x09ifTrue: [self signalFailure: obj]\x0a\x09\x09\x09\x09\x09ifFalse: [self signalSuccess]]].",
+messageSends: ["hide", "asJQuery", "empty", "ifTrue:ifFalse:", "=", "environmentId", "compileRubySourceCode:withCallback:", "getValue", "isException", "signalFailure:", "signalSuccess", "compileSmalltalkSourceCode:withCallback:"],
 referencedClasses: []
 }),
 globals.MaglevGsNMethodEditor);
@@ -358,14 +359,13 @@ _st($1)._style_("clear: both;");
 $ctx1.sendIdx["style:"]=1;
 $2=_st(html)._div();
 _st($2)._class_("alert alert-error");
-_st($2)._style_("margin-bottom: 0px;");
-$3=_st($2)._hide();
+$3=_st($2)._style_("margin-bottom: 0px; display: none;");
 self["@errorBox"]=$3;
 self._initializeEditor();
 return self}, function($ctx1) {$ctx1.fill(self,"renderEditorOn:",{html:html},globals.MaglevGsNMethodEditor)})},
 args: ["html"],
-source: "renderEditorOn: html\x0a\x09editorContainer := html span\x0a\x09\x09class: 'pull-left code-area'.\x0a\x09html div style: 'clear: both;'.\x0a\x09errorBox := html div\x0a\x09\x09class: 'alert alert-error';\x0a\x09\x09style: 'margin-bottom: 0px;';\x0a\x09\x09hide.\x0a\x09self initializeEditor.",
-messageSends: ["class:", "span", "style:", "div", "hide", "initializeEditor"],
+source: "renderEditorOn: html\x0a\x09editorContainer := html span\x0a\x09\x09class: 'pull-left code-area'.\x0a\x09html div style: 'clear: both;'.\x0a\x09errorBox := html div\x0a\x09\x09class: 'alert alert-error';\x0a\x09\x09style: 'margin-bottom: 0px; display: none;'.\x0a\x09self initializeEditor.",
+messageSends: ["class:", "span", "style:", "div", "initializeEditor"],
 referencedClasses: []
 }),
 globals.MaglevGsNMethodEditor);
@@ -378,19 +378,20 @@ fn: function (){
 var self=this;
 var envId;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3;
+var $1,$2,$3,$4,$5;
 _st(self["@editor"])._setValue_(self._sourceString());
-_st(self["@editorContainer"])._show();
-$ctx1.sendIdx["show"]=1;
 envId=self._envId();
-_st(_st(self["@envIdContainer"])._asJQuery())._empty();
+$1=_st(self["@envIdContainer"])._asJQuery();
+_st($1)._show();
+$ctx1.sendIdx["show"]=1;
+$2=_st($1)._empty();
 $ctx1.sendIdx["empty"]=1;
 _st(self["@envIdContainer"])._with_(envId);
 $ctx1.sendIdx["with:"]=1;
 _st(self["@sourceLocationContainer"])._empty();
-$1=_st(envId).__eq((1));
+$3=_st(envId).__eq((1));
 $ctx1.sendIdx["="]=1;
-if(smalltalk.assert($1)){
+if(smalltalk.assert($3)){
 _st(self["@sourceLocationContainer"])._with_(self._filename());
 $ctx1.sendIdx["with:"]=2;
 _st(self["@stIcon"])._hide();
@@ -402,23 +403,23 @@ $ctx1.sendIdx["setOption:data:"]=1;
 } else {
 _st(self["@sourceLocationContainer"])._with_("n/a");
 };
-$2=_st(envId).__eq((0));
-if(smalltalk.assert($2)){
+$4=_st(envId).__eq((0));
+if(smalltalk.assert($4)){
 _st(self["@stIcon"])._show();
 _st(self["@rubyIcon"])._hide();
 $ctx1.sendIdx["hide"]=2;
 _st(self["@editor"])._setOption_data_("mode","text/x-stsrc");
 };
-$3=_st(envId).__gt((1));
-if(smalltalk.assert($3)){
+$5=_st(envId).__gt((1));
+if(smalltalk.assert($5)){
 _st(self["@stIcon"])._hide();
 $ctx1.sendIdx["hide"]=3;
 _st(self["@rubyIcon"])._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject",{envId:envId},globals.MaglevGsNMethodEditor)})},
 args: [],
-source: "renderMethodObject\x0a\x09|envId|\x0a\x09editor setValue: self sourceString. \x0a\x09editorContainer show.\x0a\x09envId := self envId.\x0a\x09envIdContainer asJQuery empty.\x0a\x09envIdContainer with: envId.\x0a\x09sourceLocationContainer empty.\x0a\x09envId = 1 \x0a\x09\x09ifTrue: [\x0a\x09\x09\x09sourceLocationContainer with: self filename.\x0a\x09\x09\x09stIcon hide. rubyIcon show.\x0a\x09\x09\x09editor setOption: 'mode' data: 'text/x-ruby'.]\x0a\x09\x09ifFalse: [sourceLocationContainer with: 'n/a'].\x0a\x09envId = 0 ifTrue: [\x0a\x09\x09stIcon show. rubyIcon hide.\x0a\x09\x09editor setOption: 'mode' data: 'text/x-stsrc'].\x0a\x09envId > 1\x0a\x09\x09ifTrue: [stIcon hide. rubyIcon hide].",
-messageSends: ["setValue:", "sourceString", "show", "envId", "empty", "asJQuery", "with:", "ifTrue:ifFalse:", "=", "filename", "hide", "setOption:data:", "ifTrue:", ">"],
+source: "renderMethodObject\x0a\x09|envId|\x0a\x09editor setValue: self sourceString. \x0a\x09envId := self envId.\x0a\x09envIdContainer asJQuery show; empty.\x0a\x09envIdContainer with: envId.\x0a\x09sourceLocationContainer empty.\x0a\x09envId = 1 \x0a\x09\x09ifTrue: [\x0a\x09\x09\x09sourceLocationContainer with: self filename.\x0a\x09\x09\x09stIcon hide. rubyIcon show.\x0a\x09\x09\x09editor setOption: 'mode' data: 'text/x-ruby'.]\x0a\x09\x09ifFalse: [sourceLocationContainer with: 'n/a'].\x0a\x09envId = 0 ifTrue: [\x0a\x09\x09stIcon show. rubyIcon hide.\x0a\x09\x09editor setOption: 'mode' data: 'text/x-stsrc'].\x0a\x09envId > 1\x0a\x09\x09ifTrue: [stIcon hide. rubyIcon hide].",
+messageSends: ["setValue:", "sourceString", "envId", "show", "asJQuery", "empty", "with:", "ifTrue:ifFalse:", "=", "filename", "hide", "setOption:data:", "ifTrue:", ">"],
 referencedClasses: []
 }),
 globals.MaglevGsNMethodEditor);
@@ -464,14 +465,15 @@ $3=_st(html)._td();
 $ctx4.sendIdx["td"]=1;
 _st($3)._with_((function(){
 return smalltalk.withContext(function($ctx5) {
-$4=_st($MaglevIconImage())._ruby();
+$4=_st(_st($MaglevIconImage())._ruby())._asJQuery();
+$ctx5.sendIdx["asJQuery"]=1;
 _st($4)._hide();
 $ctx5.sendIdx["hide"]=1;
 $5=_st($4)._yourself();
 $ctx5.sendIdx["yourself"]=1;
 self["@rubyIcon"]=$5;
 self["@rubyIcon"];
-$6=_st($MaglevIconImage())._smalltalk();
+$6=_st(_st($MaglevIconImage())._smalltalk())._asJQuery();
 _st($6)._hide();
 $7=_st($6)._yourself();
 self["@stIcon"]=$7;
@@ -503,8 +505,8 @@ $ctx2.sendIdx["with:"]=2;
 $ctx1.sendIdx["with:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderStatusBarOn:",{html:html},globals.MaglevGsNMethodEditor)})},
 args: ["html"],
-source: "renderStatusBarOn: html\x0a\x09html table\x0a\x09\x09class: 'table-bordered';\x0a\x09\x09style: 'margin-top: 5px; width: 100%;';\x0a\x09\x09with: [html tbody with: [\x0a\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09rubyIcon := MaglevIconImage ruby hide; yourself.\x0a\x09\x09\x09\x09\x09stIcon := MaglevIconImage smalltalk hide; yourself.\x0a\x09\x09\x09\x09\x09html with: rubyIcon.\x0a\x09\x09\x09\x09\x09html with: stIcon.\x0a\x09\x09\x09\x09\x09envIdContainer := html span with: 'Environment ID'];\x0a\x09\x09\x09\x09\x09style: 'width: 1px;'.\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09sourceLocationContainer := html span with: 'Source location']]]].",
-messageSends: ["class:", "table", "style:", "with:", "tbody", "tr", "td", "hide", "ruby", "yourself", "smalltalk", "span"],
+source: "renderStatusBarOn: html\x0a\x09html table\x0a\x09\x09class: 'table-bordered';\x0a\x09\x09style: 'margin-top: 5px; width: 100%;';\x0a\x09\x09with: [html tbody with: [\x0a\x09\x09\x09html tr with: [\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09rubyIcon := MaglevIconImage ruby asJQuery hide; yourself.\x0a\x09\x09\x09\x09\x09stIcon := MaglevIconImage smalltalk asJQuery hide; yourself.\x0a\x09\x09\x09\x09\x09html with: rubyIcon.\x0a\x09\x09\x09\x09\x09html with: stIcon.\x0a\x09\x09\x09\x09\x09envIdContainer := html span with: 'Environment ID'];\x0a\x09\x09\x09\x09\x09style: 'width: 1px;'.\x0a\x09\x09\x09\x09html td with: [\x0a\x09\x09\x09\x09\x09sourceLocationContainer := html span with: 'Source location']]]].",
+messageSends: ["class:", "table", "style:", "with:", "tbody", "tr", "td", "hide", "asJQuery", "ruby", "yourself", "smalltalk", "span"],
 referencedClasses: ["MaglevIconImage"]
 }),
 globals.MaglevGsNMethodEditor);
@@ -1016,7 +1018,7 @@ function $Dictionary(){return globals.Dictionary||(typeof Dictionary=="undefined
 function $MaglevObjectSpace(){return globals.MaglevObjectSpace||(typeof MaglevObjectSpace=="undefined"?nil:MaglevObjectSpace)}
 function $Set(){return globals.Set||(typeof Set=="undefined"?nil:Set)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$4,$5,$3,$6,$7,$8;
+var $1,$2,$4,$5,$3,$6,$7,$8,$9;
 $1=_st($Dictionary())._new();
 $ctx1.sendIdx["new"]=1;
 _st($1)._at_put_("allElements",true);
@@ -1052,16 +1054,18 @@ return self._removeObject_with_(oop,comp);
 }, function($ctx3) {$ctx3.fillBlock({oop:oop,comp:comp},$ctx2,5)})}));
 $8=_st(_st(self["@renderedOops"])._size()).__eq((0));
 if(smalltalk.assert($8)){
-return _st(self["@navbar"])._hide();
+$9=_st(self["@navbar"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+return _st($9)._hide();
 } else {
-return _st(self["@navbar"])._show();
+return _st(_st(self["@navbar"])._asJQuery())._show();
 };
 };
 }, function($ctx2) {$ctx2.fillBlock({success:success,obj:obj,currentOops:currentOops},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"refresh",{params:params},globals.MaglevHaltedThreadListener)})},
 args: [],
-source: "refresh\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'allElements' put: true;\x0a\x09\x09at: 'noBehavior' put: true;\x0a\x09\x09yourself.\x0a\x09MaglevObjectSpace instance evalObject \x0a\x09\x09evaluateWithoutUpdate: 'MaglevDatabaseExplorer.halted_threads' \x0a\x09\x09language: 'ruby'\x0a\x09\x09with: params \x0a\x09\x09withCallback: [:success :obj | |currentOops|\x0a\x09\x09\x09success ifTrue:[\x0a\x09\x09\x09currentOops := Set new.\x0a\x09\x09\x09obj do: [:el | \x0a\x09\x09\x09\x09(renderedOops includesKey: el oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self renderObject: el oop with: el inlineViewComponent].\x0a\x09\x09\x09\x09currentOops add: el oop].\x0a\x09\x09\x09renderedOops keysAndValuesDo: [:oop :comp |\x0a\x09\x09\x09\x09(currentOops includes: oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self removeObject: oop with: comp]].\x0a\x09\x09\x09renderedOops size = 0\x0a\x09\x09\x09\x09ifTrue: [navbar hide]\x0a\x09\x09\x09\x09ifFalse: [navbar show]]].",
-messageSends: ["at:put:", "new", "yourself", "evaluateWithoutUpdate:language:with:withCallback:", "evalObject", "instance", "ifTrue:", "do:", "ifFalse:", "includesKey:", "oop", "renderObject:with:", "inlineViewComponent", "add:", "keysAndValuesDo:", "includes:", "removeObject:with:", "ifTrue:ifFalse:", "=", "size", "hide", "show"],
+source: "refresh\x0a\x09|params|\x0a\x09params := Dictionary new\x0a\x09\x09at: 'allElements' put: true;\x0a\x09\x09at: 'noBehavior' put: true;\x0a\x09\x09yourself.\x0a\x09MaglevObjectSpace instance evalObject \x0a\x09\x09evaluateWithoutUpdate: 'MaglevDatabaseExplorer.halted_threads' \x0a\x09\x09language: 'ruby'\x0a\x09\x09with: params \x0a\x09\x09withCallback: [:success :obj | |currentOops|\x0a\x09\x09\x09success ifTrue:[\x0a\x09\x09\x09currentOops := Set new.\x0a\x09\x09\x09obj do: [:el | \x0a\x09\x09\x09\x09(renderedOops includesKey: el oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self renderObject: el oop with: el inlineViewComponent].\x0a\x09\x09\x09\x09currentOops add: el oop].\x0a\x09\x09\x09renderedOops keysAndValuesDo: [:oop :comp |\x0a\x09\x09\x09\x09(currentOops includes: oop)\x0a\x09\x09\x09\x09\x09ifFalse: [self removeObject: oop with: comp]].\x0a\x09\x09\x09renderedOops size = 0\x0a\x09\x09\x09\x09ifTrue: [navbar asJQuery hide]\x0a\x09\x09\x09\x09ifFalse: [navbar asJQuery show]]].",
+messageSends: ["at:put:", "new", "yourself", "evaluateWithoutUpdate:language:with:withCallback:", "evalObject", "instance", "ifTrue:", "do:", "ifFalse:", "includesKey:", "oop", "renderObject:with:", "inlineViewComponent", "add:", "keysAndValuesDo:", "includes:", "removeObject:with:", "ifTrue:ifFalse:", "=", "size", "hide", "asJQuery", "show"],
 referencedClasses: ["Dictionary", "MaglevObjectSpace", "Set"]
 }),
 globals.MaglevHaltedThreadListener);
@@ -1221,11 +1225,11 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-_st(self["@b"])._hide();
+_st(_st(self["@b"])._asJQuery())._hide();
 return self}, function($ctx1) {$ctx1.fill(self,"hide",{},globals.MaglevIcon)})},
 args: [],
-source: "hide\x0a\x09b hide.",
-messageSends: ["hide"],
+source: "hide\x0a\x09b asJQuery hide.",
+messageSends: ["hide", "asJQuery"],
 referencedClasses: []
 }),
 globals.MaglevIcon);
@@ -1825,12 +1829,12 @@ $1=self["@image"];
 if(($receiver = $1) == nil || $receiver == null){
 $1;
 } else {
-_st(self["@image"])._hide();
+_st(_st(self["@image"])._asJQuery())._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"hide",{},globals.MaglevIconImage)})},
 args: [],
-source: "hide\x0a\x09hidden := true.\x0a\x09image ifNotNil: [image hide].",
-messageSends: ["ifNotNil:", "hide"],
+source: "hide\x0a\x09hidden := true.\x0a\x09image ifNotNil: [image asJQuery hide].",
+messageSends: ["ifNotNil:", "hide", "asJQuery"],
 referencedClasses: []
 }),
 globals.MaglevIconImage);
@@ -1849,12 +1853,12 @@ $2=_st($1)._class_(self["@cssClass"]);
 self["@image"]=$2;
 $3=self._hidden();
 if(smalltalk.assert($3)){
-_st(self["@image"])._hide();
+_st(_st(self["@image"])._asJQuery())._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderOn:",{html:html},globals.MaglevIconImage)})},
 args: ["html"],
-source: "renderOn: html\x0a\x09image := html img\x0a\x09\x09src: src;\x0a\x09\x09class: cssClass.\x0a\x09self hidden ifTrue: [image hide].",
-messageSends: ["src:", "img", "class:", "ifTrue:", "hidden", "hide"],
+source: "renderOn: html\x0a\x09image := html img\x0a\x09\x09src: src;\x0a\x09\x09class: cssClass.\x0a\x09self hidden ifTrue: [image asJQuery hide].",
+messageSends: ["src:", "img", "class:", "ifTrue:", "hidden", "hide", "asJQuery"],
 referencedClasses: []
 }),
 globals.MaglevIconImage);
@@ -2178,13 +2182,16 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-_st(self["@searchbox"])._hide();
+var $1;
+$1=_st(self["@searchbox"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._hide();
 self._height_(self["@olHeightBeforeSearch"]);
 _st(_st(self["@list"])._asJQuery())._focus();
 return self}, function($ctx1) {$ctx1.fill(self,"hideSearchBox",{},globals.MaglevListBox)})},
 args: [],
-source: "hideSearchBox\x0a\x09searchbox hide.\x0a\x09self height: olHeightBeforeSearch.\x0a\x09list asJQuery focus.",
-messageSends: ["hide", "height:", "focus", "asJQuery"],
+source: "hideSearchBox\x0a\x09searchbox asJQuery hide.\x0a\x09self height: olHeightBeforeSearch.\x0a\x09list asJQuery focus.",
+messageSends: ["hide", "asJQuery", "height:", "focus"],
 referencedClasses: []
 }),
 globals.MaglevListBox);
@@ -2344,41 +2351,40 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4,$5,$6;
+var $1,$3,$4,$5,$6,$2;
 $1=_st(html)._div();
 _st($1)._class_("input-prepend");
 $ctx1.sendIdx["class:"]=1;
-_st($1)._style_("margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;");
+_st($1)._style_("display: none; margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;");
 $ctx1.sendIdx["style:"]=1;
-_st($1)._with_((function(){
+$2=_st($1)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
-$2=_st(html)._span();
-_st($2)._class_("add-on");
+$3=_st(html)._span();
+_st($3)._class_("add-on");
 $ctx2.sendIdx["class:"]=2;
-$3=_st($2)._with_("find");
-$3;
-$4=_st(html)._input();
-_st($4)._type_("text");
-_st($4)._class_("span2");
-_st($4)._style_("width: 100%;");
-_st($4)._onChange_((function(){
+$4=_st($3)._with_("find");
+$4;
+$5=_st(html)._input();
+_st($5)._type_("text");
+_st($5)._class_("span2");
+_st($5)._style_("width: 100%;");
+_st($5)._onChange_((function(){
 return smalltalk.withContext(function($ctx3) {
 return self._filterResults();
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,2)})}));
-$5=_st($4)._onFocusOut_((function(){
+$6=_st($5)._onFocusOut_((function(){
 return smalltalk.withContext(function($ctx3) {
 return self._hideSearchBox();
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,3)})}));
-self["@searchInput"]=$5;
+self["@searchInput"]=$6;
 return self["@searchInput"];
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 $ctx1.sendIdx["with:"]=1;
-$6=_st($1)._hide();
-self["@searchbox"]=$6;
+self["@searchbox"]=$2;
 return self}, function($ctx1) {$ctx1.fill(self,"renderSearchBoxOn:",{html:html},globals.MaglevListBox)})},
 args: ["html"],
-source: "renderSearchBoxOn: html\x0a\x09searchbox := html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09 with: 'find'.\x0a\x09\x09\x09searchInput := html input\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09class: 'span2';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onChange: [self filterResults];\x0a\x09\x09\x09\x09onFocusOut: [self hideSearchBox]];\x0a\x09\x09hide.",
-messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onChange:", "filterResults", "onFocusOut:", "hideSearchBox", "hide"],
+source: "renderSearchBoxOn: html\x0a\x09searchbox := html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'display: none; margin-bottom: 2px; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 52px; width: 100%;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09 with: 'find'.\x0a\x09\x09\x09searchInput := html input\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09class: 'span2';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onChange: [self filterResults];\x0a\x09\x09\x09\x09onFocusOut: [self hideSearchBox]]",
+messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onChange:", "filterResults", "onFocusOut:", "hideSearchBox"],
 referencedClasses: []
 }),
 globals.MaglevListBox);
@@ -2534,11 +2540,14 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-_st(_st(_st(self["@list"])._asJQuery())._find_("li"))._removeClass_("ui-selected");
+var $1;
+$1=_st(_st(_st(self["@list"])._asJQuery())._find_("li"))._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._removeClass_("ui-selected");
 return self}, function($ctx1) {$ctx1.fill(self,"unselectAll",{},globals.MaglevListBox)})},
 args: [],
-source: "unselectAll\x0a\x09(list asJQuery find: 'li') removeClass: 'ui-selected'.",
-messageSends: ["removeClass:", "find:", "asJQuery"],
+source: "unselectAll\x0a\x09(list asJQuery find: 'li') asJQuery removeClass: 'ui-selected'.",
+messageSends: ["removeClass:", "asJQuery", "find:"],
 referencedClasses: []
 }),
 globals.MaglevListBox);
@@ -2741,39 +2750,44 @@ fn: function (aBlock){
 var self=this;
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4,$5;
-$1=self["@resultContainer"];
+var $1,$2,$3,$4,$5,$6,$7;
+$1=_st(self["@resultContainer"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
 _st($1)._addClass_("alert-info");
 $ctx1.sendIdx["addClass:"]=1;
 _st($1)._removeClass_("alert-success");
 $ctx1.sendIdx["removeClass:"]=1;
-$2=_st($1)._removeClass_("alert-error");
+_st($1)._removeClass_("alert-error");
 $ctx1.sendIdx["removeClass:"]=2;
-$3=_st(self["@resultContainer"])._asJQuery();
-$ctx1.sendIdx["asJQuery"]=1;
-_st($3)._empty();
+$2=_st($1)._empty();
 $ctx1.sendIdx["empty"]=1;
-$4=self["@resultContainer"];
-_st($4)._with_(_st($MaglevIcon())._wait());
+$3=self["@resultContainer"];
+_st($3)._with_(_st($MaglevIcon())._wait());
 $ctx1.sendIdx["with:"]=1;
-_st($4)._with_(" loading...");
-$5=_st($4)._show();
+_st($3)._with_(" loading...");
+$4=_st($3)._show();
 _st(self["@object"])._evaluate_language_withCallback_(self._code(),self._language(),(function(success,resultObj){
 return smalltalk.withContext(function($ctx2) {
-_st(_st(self["@resultContainer"])._asJQuery())._empty();
-_st(self["@resultContainer"])._removeClass_("alert-info");
+$5=_st(self["@resultContainer"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($5)._empty();
+$6=_st(self["@resultContainer"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($6)._removeClass_("alert-info");
 if(smalltalk.assert(success)){
-_st(self["@resultContainer"])._addClass_("alert-success");
+$7=_st(self["@resultContainer"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=4;
+_st($7)._addClass_("alert-success");
 $ctx2.sendIdx["addClass:"]=2;
 } else {
-_st(self["@resultContainer"])._addClass_("alert-error");
+_st(_st(self["@resultContainer"])._asJQuery())._addClass_("alert-error");
 };
 return _st(aBlock)._value_value_(success,resultObj);
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"executeWithCallback:",{aBlock:aBlock},globals.MaglevObjectDropdown)})},
 args: ["aBlock"],
-source: "executeWithCallback: aBlock\x0a\x09resultContainer\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error'.\x0a\x09resultContainer asJQuery empty.\x0a\x09resultContainer\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.\x0a\x09object \x0a\x09\x09evaluate: self code \x0a\x09\x09language: self language \x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09resultContainer asJQuery empty.\x0a\x09\x09\x09resultContainer removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [resultContainer addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [resultContainer addClass: 'alert-error'].\x0a\x09\x09\x09aBlock value: success value: resultObj]",
-messageSends: ["addClass:", "removeClass:", "empty", "asJQuery", "with:", "wait", "show", "evaluate:language:withCallback:", "code", "language", "ifTrue:ifFalse:", "value:value:"],
+source: "executeWithCallback: aBlock\x0a\x09resultContainer asJQuery\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error';\x0a\x09\x09empty.\x0a\x09resultContainer\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.\x0a\x09object \x0a\x09\x09evaluate: self code \x0a\x09\x09language: self language \x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09resultContainer asJQuery empty.\x0a\x09\x09\x09resultContainer asJQuery removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [resultContainer asJQuery addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [resultContainer asJQuery addClass: 'alert-error'].\x0a\x09\x09\x09aBlock value: success value: resultObj]",
+messageSends: ["addClass:", "asJQuery", "removeClass:", "empty", "with:", "wait", "show", "evaluate:language:withCallback:", "code", "language", "ifTrue:ifFalse:", "value:value:"],
 referencedClasses: ["MaglevIcon"]
 }),
 globals.MaglevObjectDropdown);
@@ -3016,7 +3030,7 @@ protocol: 'rendering',
 fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
-var $1,$3,$4,$5,$6,$7,$8,$2;
+var $1,$3,$4,$5,$6,$7,$2;
 $1=_st(html)._form();
 _st($1)._style_("margin: 0px;");
 $ctx1.sendIdx["style:"]=1;
@@ -3032,24 +3046,23 @@ $ctx2.sendIdx["div"]=2;
 _st($4)._style_("clear: both;");
 $5=_st(html)._div();
 $ctx2.sendIdx["div"]=3;
-_st($5)._class_("alert");
+self["@resultContainer"]=_st($5)._class_("alert");
 $ctx2.sendIdx["class:"]=2;
-$6=_st($5)._hide();
-self["@resultContainer"]=$6;
 self["@resultContainer"];
-$7=_st(html)._div();
-_st($7)._class_("button-area");
-$8=_st($7)._with_((function(){
+_st(_st(self["@resultContainer"])._asJQuery())._hide();
+$6=_st(html)._div();
+_st($6)._class_("button-area");
+$7=_st($6)._with_((function(){
 return smalltalk.withContext(function($ctx3) {
 return self._renderButtonsOn_(html);
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,2)})}));
-return $8;
+return $7;
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 $ctx1.sendIdx["with:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderFormOn:",{html:html},globals.MaglevObjectDropdown)})},
 args: ["html"],
-source: "renderFormOn: html\x0a\x09html form\x0a\x09\x09style: 'margin: 0px;';\x0a\x09\x09with: [\x0a\x09\x09\x09editorElement := html div\x0a\x09\x09\x09\x09class: 'pull-left code-area'.\x0a\x09\x09\x09html div style: 'clear: both;'.\x0a\x09\x09\x09resultContainer := html div\x0a\x09\x09\x09\x09class: 'alert';\x0a\x09\x09\x09\x09hide.\x0a\x09\x09\x09html div\x0a\x09\x09\x09\x09class: 'button-area';\x0a\x09\x09\x09\x09with: [self renderButtonsOn: html]].",
-messageSends: ["style:", "form", "with:", "class:", "div", "hide", "renderButtonsOn:"],
+source: "renderFormOn: html\x0a\x09html form\x0a\x09\x09style: 'margin: 0px;';\x0a\x09\x09with: [\x0a\x09\x09\x09editorElement := html div\x0a\x09\x09\x09\x09class: 'pull-left code-area'.\x0a\x09\x09\x09html div style: 'clear: both;'.\x0a\x09\x09\x09resultContainer := html div\x0a\x09\x09\x09\x09class: 'alert'.\x0a\x09\x09\x09resultContainer asJQuery hide.\x0a\x09\x09\x09html div\x0a\x09\x09\x09\x09class: 'button-area';\x0a\x09\x09\x09\x09with: [self renderButtonsOn: html]].",
+messageSends: ["style:", "form", "with:", "class:", "div", "hide", "asJQuery", "renderButtonsOn:"],
 referencedClasses: []
 }),
 globals.MaglevObjectDropdown);
@@ -5809,20 +5822,24 @@ fn: function (){
 var self=this;
 function $MaglevJsPlumb(){return globals.MaglevJsPlumb||(typeof MaglevJsPlumb=="undefined"?nil:MaglevJsPlumb)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2;
-_st($MaglevJsPlumb())._prepareObject_(_st(self["@container"])._asJQuery());
-$1=self["@container"];
-_st($1)._onMouseEnter_((function(){
+var $1,$2,$3,$4;
+$1=_st(self["@container"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($MaglevJsPlumb())._prepareObject_($1);
+$2=self["@container"];
+_st($2)._onMouseEnter_((function(){
 return smalltalk.withContext(function($ctx2) {
-return _st(self["@container"])._removeClass_("window-mouse-out");
+$3=_st(self["@container"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+return _st($3)._removeClass_("window-mouse-out");
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
-$2=_st($1)._onMouseLeave_((function(){
+$4=_st($2)._onMouseLeave_((function(){
 return smalltalk.withContext(function($ctx2) {
-return _st(self["@container"])._addClass_("window-mouse-out");
+return _st(_st(self["@container"])._asJQuery())._addClass_("window-mouse-out");
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,2)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"prepareWindow",{},globals.MaglevWindow)})},
 args: [],
-source: "prepareWindow\x0a\x09MaglevJsPlumb prepareObject: (container asJQuery).\x0a\x09container\x0a\x09\x09onMouseEnter: [container removeClass: 'window-mouse-out'];\x0a\x09\x09onMouseLeave: [container addClass: 'window-mouse-out'].",
+source: "prepareWindow\x0a\x09MaglevJsPlumb prepareObject: (container asJQuery).\x0a\x09container\x0a\x09\x09onMouseEnter: [container asJQuery removeClass: 'window-mouse-out'];\x0a\x09\x09onMouseLeave: [container asJQuery addClass: 'window-mouse-out'].",
 messageSends: ["prepareObject:", "asJQuery", "onMouseEnter:", "removeClass:", "onMouseLeave:", "addClass:"],
 referencedClasses: ["MaglevJsPlumb"]
 }),
@@ -6124,7 +6141,7 @@ referencedClasses: []
 globals.MaglevWindow.klass);
 
 
-smalltalk.addClass('MaglevObjectWindow', globals.MaglevWindow, ['container', 'object', 'classObject', 'tabs', 'captions', 'tabsContainer', 'currentTab'], 'Maglev-Database-Explorer');
+smalltalk.addClass('MaglevObjectWindow', globals.MaglevWindow, ['object', 'classObject', 'tabs', 'captions', 'tabsContainer', 'currentTab'], 'Maglev-Database-Explorer');
 smalltalk.addMethod(
 smalltalk.method({
 selector: "captions",
@@ -6602,7 +6619,7 @@ var self=this;
 var allTabs;
 function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
 return smalltalk.withContext(function($ctx1) { 
-var $4,$3,$2,$1,$5,$6,$7,$8;
+var $4,$3,$2,$1,$5,$6,$7,$8,$9,$10,$11,$12;
 allTabs=self._contentTabs();
 $4=self._tabs();
 $ctx1.sendIdx["tabs"]=1;
@@ -6615,45 +6632,53 @@ return _st(allTabs)._includesKey_(caption);
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,1)})}));
 if(smalltalk.assert($1)){
 var tab,html;
-html=_st($HTMLCanvas())._onJQuery_(_st(self["@tabsContainer"])._asJQuery());
+$5=_st(self["@tabsContainer"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+html=_st($HTMLCanvas())._onJQuery_($5);
 html;
-$5=_st(html)._div();
+$6=_st(html)._div();
 $ctx1.sendIdx["div"]=1;
-tab=_st($5)._with_((function(){
+tab=_st($6)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
 return _st(_st(html)._div())._with_((function(){
 return smalltalk.withContext(function($ctx3) {
-$6=_st(allTabs)._at_(caption);
+$7=_st(allTabs)._at_(caption);
 $ctx3.sendIdx["at:"]=1;
-return self._perform_withArguments_($6,[html]);
+return self._perform_withArguments_($7,[html]);
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,4)})}));
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,3)})}));
 $ctx1.sendIdx["with:"]=1;
 tab;
-$7=self._tabs();
+$8=self._tabs();
 $ctx1.sendIdx["tabs"]=2;
-_st($7)._at_put_(caption,tab);
+_st($8)._at_put_(caption,tab);
 };
 _st(self._tabs())._keysAndValuesDo_((function(tabCaption,tab){
 var capEl;
 return smalltalk.withContext(function($ctx2) {
 capEl=_st(self._captions())._at_(tabCaption);
 capEl;
-$8=_st(caption).__eq(tabCaption);
-if(smalltalk.assert($8)){
+$9=_st(caption).__eq(tabCaption);
+if(smalltalk.assert($9)){
 self["@currentTab"]=tab;
 self["@currentTab"];
-_st(tab)._show();
-return _st(capEl)._addClass_("active");
+$10=_st(tab)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($10)._show();
+$11=_st(capEl)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+return _st($11)._addClass_("active");
 } else {
-_st(tab)._hide();
-return _st(capEl)._removeClass_("active");
+$12=_st(tab)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=4;
+_st($12)._hide();
+return _st(_st(capEl)._asJQuery())._removeClass_("active");
 };
 }, function($ctx2) {$ctx2.fillBlock({tabCaption:tabCaption,tab:tab,capEl:capEl},$ctx1,5)})}));
 return false;
 }, function($ctx1) {$ctx1.fill(self,"showTab:",{caption:caption,allTabs:allTabs},globals.MaglevObjectWindow)})},
 args: ["caption"],
-source: "showTab: caption\x0a\x09|allTabs|\x0a\x09allTabs := self contentTabs.\x0a\x09\x22Lazy generate new tabs.\x22\x0a\x09((self tabs includesKey: caption) not and: [allTabs includesKey: caption])\x0a\x09\x09ifTrue: [ |tab html|\x0a\x09\x09\x09html := HTMLCanvas onJQuery: tabsContainer asJQuery.\x0a\x09\x09\x09tab := html div\x0a\x09\x09\x09\x09with: [\x0a\x09\x09\x09\x09\x09html div\x0a\x09\x09\x09\x09\x09\x09with: [self perform: (allTabs at: caption) withArguments: {html}]].\x0a\x09\x09\x09self tabs at: caption put: tab].\x0a\x09self tabs keysAndValuesDo: [:tabCaption :tab | |capEl|\x0a\x09\x09capEl := self captions at: tabCaption.\x0a\x09\x09caption = tabCaption\x0a\x09\x09\x09ifTrue: [\x0a\x09\x09\x09\x09currentTab := tab.\x0a\x09\x09\x09\x09tab show.\x0a\x09\x09\x09\x09capEl addClass: 'active']\x0a\x09\x09\x09ifFalse: [\x0a\x09\x09\x09\x09tab hide.\x0a\x09\x09\x09\x09capEl removeClass: 'active']].\x0a\x09\x22return false to avoid scrolling to the top\x22\x0a\x09^ false",
+source: "showTab: caption\x0a\x09|allTabs|\x0a\x09allTabs := self contentTabs.\x0a\x09\x22Lazy generate new tabs.\x22\x0a\x09((self tabs includesKey: caption) not and: [allTabs includesKey: caption])\x0a\x09\x09ifTrue: [ |tab html|\x0a\x09\x09\x09html := HTMLCanvas onJQuery: tabsContainer asJQuery.\x0a\x09\x09\x09tab := html div\x0a\x09\x09\x09\x09with: [\x0a\x09\x09\x09\x09\x09html div\x0a\x09\x09\x09\x09\x09\x09with: [self perform: (allTabs at: caption) withArguments: {html}]].\x0a\x09\x09\x09self tabs at: caption put: tab].\x0a\x09self tabs keysAndValuesDo: [:tabCaption :tab | |capEl|\x0a\x09\x09capEl := self captions at: tabCaption.\x0a\x09\x09caption = tabCaption\x0a\x09\x09\x09ifTrue: [\x0a\x09\x09\x09\x09currentTab := tab.\x0a\x09\x09\x09\x09tab asJQuery show.\x0a\x09\x09\x09\x09capEl asJQuery addClass: 'active']\x0a\x09\x09\x09ifFalse: [\x0a\x09\x09\x09\x09tab asJQuery hide.\x0a\x09\x09\x09\x09capEl asJQuery removeClass: 'active']].\x0a\x09\x22return false to avoid scrolling to the top\x22\x0a\x09^ false",
 messageSends: ["contentTabs", "ifTrue:", "and:", "not", "includesKey:", "tabs", "onJQuery:", "asJQuery", "with:", "div", "perform:withArguments:", "at:", "at:put:", "keysAndValuesDo:", "captions", "ifTrue:ifFalse:", "=", "show", "addClass:", "hide", "removeClass:"],
 referencedClasses: ["HTMLCanvas"]
 }),
@@ -6992,7 +7017,7 @@ globals.MaglevModuleWindow);
 
 smalltalk.addMethod(
 smalltalk.method({
-selector: "initialize",
+selector: "initializeTree",
 protocol: 'initialization',
 fn: function (){
 var self=this;
@@ -7009,9 +7034,9 @@ setTimeout(function(){
     self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);
     jqEl.removeClass('treeview-replace-me');
   });}, 0); ;
-return self}, function($ctx1) {$ctx1.fill(self,"initialize",{},globals.MaglevModuleWindow)})},
+return self}, function($ctx1) {$ctx1.fill(self,"initializeTree",{},globals.MaglevModuleWindow)})},
 args: [],
-source: "initialize\x0a< container.jstree({\x0a  plugins: ['crrm', 'html_data', 'themes'],\x0a  core: {\x0a    animation: 0,\x0a    open_parents: true}});\x0a// setTimout: jstree fix\x0asetTimeout(function(){\x0a  container.find('.treeview-replace-me').each(function(index, el) {\x0a    var jqEl = $(el);\x0a    self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);\x0a    jqEl.removeClass('treeview-replace-me');\x0a  });}, 0); >",
+source: "initializeTree\x0a< container.jstree({\x0a  plugins: ['crrm', 'html_data', 'themes'],\x0a  core: {\x0a    animation: 0,\x0a    open_parents: true}});\x0a// setTimout: jstree fix\x0asetTimeout(function(){\x0a  container.find('.treeview-replace-me').each(function(index, el) {\x0a    var jqEl = $(el);\x0a    self._renderInlineViewFor_inside_(jqEl.data('oop'), jqEl);\x0a    jqEl.removeClass('treeview-replace-me');\x0a  });}, 0); >",
 messageSends: [],
 referencedClasses: []
 }),
@@ -7025,7 +7050,7 @@ fn: function (html){
 var self=this;
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2;
+var $1,$2,$3,$4;
 _st(_st(html)._root())._style_("width: 100%;");
 $ctx1.sendIdx["style:"]=1;
 self._renderListsOn_(html);
@@ -7045,15 +7070,19 @@ return smalltalk.withContext(function($ctx2) {
 self["@selectors"]=obj;
 self["@selectors"];
 self._renderSelectorCategories();
-_st(self["@waitingScreen"])._hide();
-_st(self["@categoryNamesSelect"])._show();
+$3=_st(self["@waitingScreen"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+_st($3)._hide();
+$4=_st(self["@categoryNamesSelect"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($4)._show();
 $ctx2.sendIdx["show"]=1;
-return _st(self["@selectorsSelect"])._show();
+return _st(_st(self["@selectorsSelect"])._asJQuery())._show();
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,2)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderCodeTabOn:",{html:html},globals.MaglevModuleWindow)})},
 args: ["html"],
-source: "renderCodeTabOn: html\x0a\x09html root\x0a\x09\x09style: 'width: 100%;'.\x0a\x09self renderListsOn: html.\x0a\x09waitingScreen := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09methodContainer := html div\x0a\x09\x09style: 'margin-top: 10px;'.\x0a\x09self object allSelectorsWithCallback: [:obj |\x0a\x09\x09selectors := obj.\x0a\x09\x09self renderSelectorCategories.\x0a\x09\x09waitingScreen hide.\x0a\x09\x09categoryNamesSelect show.\x0a\x09\x09selectorsSelect show].",
-messageSends: ["style:", "root", "renderListsOn:", "with:", "div", "wait", "allSelectorsWithCallback:", "object", "renderSelectorCategories", "hide", "show"],
+source: "renderCodeTabOn: html\x0a\x09html root\x0a\x09\x09style: 'width: 100%;'.\x0a\x09self renderListsOn: html.\x0a\x09waitingScreen := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09methodContainer := html div\x0a\x09\x09style: 'margin-top: 10px;'.\x0a\x09self object allSelectorsWithCallback: [:obj |\x0a\x09\x09selectors := obj.\x0a\x09\x09self renderSelectorCategories.\x0a\x09\x09waitingScreen asJQuery hide.\x0a\x09\x09categoryNamesSelect asJQuery show.\x0a\x09\x09selectorsSelect asJQuery show].",
+messageSends: ["style:", "root", "renderListsOn:", "with:", "div", "wait", "allSelectorsWithCallback:", "object", "renderSelectorCategories", "hide", "asJQuery", "show"],
 referencedClasses: ["MaglevIcon"]
 }),
 globals.MaglevModuleWindow);
@@ -7086,7 +7115,7 @@ function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined
 function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined"?nil:HTMLCanvas)}
 function $Array(){return globals.Array||(typeof Array=="undefined"?nil:Array)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4,$5,$7,$8,$10,$9,$11,$12,$13,$6,$14;
+var $1,$2,$3,$4,$5,$7,$8,$10,$9,$11,$12,$13,$6,$14,$15;
 $1=_st(htmlIn)._div();
 $ctx1.sendIdx["div"]=1;
 hcContainer=_st($1)._style_("height: 300px; overflow: hidden;");
@@ -7158,12 +7187,14 @@ self["@hierarchyContainer"];
 $14=_st(self["@hierarchyContainer"])._asJQuery();
 $ctx2.sendIdx["asJQuery"]=2;
 self._initializeTree_($14);
-_st(_st(hcContainer)._asJQuery())._resizable();
-return _st(waitingBox)._hide();
+$15=_st(hcContainer)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($15)._resizable();
+return _st(_st(waitingBox)._asJQuery())._hide();
 }, function($ctx2) {$ctx2.fillBlock({renderedInlines:renderedInlines,html:html},$ctx1,2)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"renderHierarchyOn:",{htmlIn:htmlIn,waitingBox:waitingBox,hcContainer:hcContainer},globals.MaglevModuleWindow)})},
 args: ["htmlIn"],
-source: "renderHierarchyOn: htmlIn\x0a\x09|waitingBox hcContainer|\x0a\x09hcContainer := htmlIn div\x0a\x09\x09style: 'height: 300px; overflow: hidden;'.\x0a\x09waitingBox := htmlIn div with: [\x0a\x09\x09htmlIn \x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09object ensureSuperListLoadedWithCallback: [ |renderedInlines html|\x0a\x09\x09html := HTMLCanvas onJQuery: hcContainer asJQuery.\x0a\x09\x09renderedInlines := Array new.\x0a\x09\x09hierarchyContainer := html div \x0a\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto;';\x0a\x09\x09\x09with: [ |lastUl|\x0a\x09\x09\x09\x09lastUl := html ul.\x0a\x09\x09\x09\x09object superList do: [:cls | \x22render superclasses\x22\x0a\x09\x09\x09\x09\x09lastUl with: [\x0a\x09\x09\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09with: [|cont|\x0a\x09\x09\x09\x09\x09\x09\x09\x09cont := html span \x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09class: 'treeview-replace-me'.\x0a\x09\x09\x09\x09\x09\x09\x09\x09renderedInlines add: cont];\x0a\x09\x09\x09\x09\x09\x09\x09with: [lastUl := html ul]]]].\x0a\x09\x09self initializeTree: hierarchyContainer asJQuery.\x0a\x09\x09hcContainer asJQuery resizable.\x0a\x09\x09waitingBox hide].",
+source: "renderHierarchyOn: htmlIn\x0a\x09|waitingBox hcContainer|\x0a\x09hcContainer := htmlIn div\x0a\x09\x09style: 'height: 300px; overflow: hidden;'.\x0a\x09waitingBox := htmlIn div with: [\x0a\x09\x09htmlIn \x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09object ensureSuperListLoadedWithCallback: [ |renderedInlines html|\x0a\x09\x09html := HTMLCanvas onJQuery: hcContainer asJQuery.\x0a\x09\x09renderedInlines := Array new.\x0a\x09\x09hierarchyContainer := html div \x0a\x09\x09\x09style: 'width: 100%; height: 100%; overflow: auto;';\x0a\x09\x09\x09with: [ |lastUl|\x0a\x09\x09\x09\x09lastUl := html ul.\x0a\x09\x09\x09\x09object superList do: [:cls | \x22render superclasses\x22\x0a\x09\x09\x09\x09\x09lastUl with: [\x0a\x09\x09\x09\x09\x09\x09html li\x0a\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09with: [|cont|\x0a\x09\x09\x09\x09\x09\x09\x09\x09cont := html span \x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09data: 'oop' with: cls oop asString;\x0a\x09\x09\x09\x09\x09\x09\x09\x09\x09class: 'treeview-replace-me'.\x0a\x09\x09\x09\x09\x09\x09\x09\x09renderedInlines add: cont];\x0a\x09\x09\x09\x09\x09\x09\x09with: [lastUl := html ul]]]].\x0a\x09\x09self initializeTree: hierarchyContainer asJQuery.\x0a\x09\x09hcContainer asJQuery resizable.\x0a\x09\x09waitingBox asJQuery hide].",
 messageSends: ["style:", "div", "with:", "wait", "ensureSuperListLoadedWithCallback:", "onJQuery:", "asJQuery", "new", "ul", "do:", "superList", "data:with:", "li", "asString", "oop", "span", "class:", "add:", "initializeTree:", "resizable", "hide"],
 referencedClasses: ["MaglevIcon", "HTMLCanvas", "Array"]
 }),
@@ -7216,12 +7247,14 @@ function $HTMLCanvas(){return globals.HTMLCanvas||(typeof HTMLCanvas=="undefined
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 function $MaglevObjectSpace(){return globals.MaglevObjectSpace||(typeof MaglevObjectSpace=="undefined"?nil:MaglevObjectSpace)}
 return smalltalk.withContext(function($ctx1) { 
-var $1;
+var $1,$2,$3;
 html=_st($HTMLCanvas())._onJQuery_(htmlElement);
 waitIcon=_st($MaglevIcon())._wait();
 _st(html)._with_(waitIcon);
 $ctx1.sendIdx["with:"]=1;
-_st(waitIcon)._hide();
+$1=_st(waitIcon)._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._hide();
 $ctx1.sendIdx["hide"]=1;
 subclassesButton=_st($MaglevIcon())._codeFork();
 _st(html)._with_((function(){
@@ -7234,10 +7267,12 @@ var obj;
 return smalltalk.withContext(function($ctx2) {
 _st(subclassesButton)._hide();
 $ctx2.sendIdx["hide"]=2;
-_st(waitIcon)._show();
-$1=_st($MaglevObjectSpace())._instance();
+$2=_st(waitIcon)._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($2)._show();
+$3=_st($MaglevObjectSpace())._instance();
 $ctx2.sendIdx["instance"]=1;
-obj=_st($1)._at_(oop);
+obj=_st($3)._at_(oop);
 $ctx2.sendIdx["at:"]=1;
 obj;
 return _st(obj)._ensureSubclassesLoadedWithCallback_((function(){
@@ -7247,14 +7282,14 @@ return smalltalk.withContext(function($ctx4) {
 return self._renderHierarchySubclass_for_(cls,oop);
 }, function($ctx4) {$ctx4.fillBlock({cls:cls},$ctx3,4)})}));
 self._replaceHierarchySubclasses();
-return _st(waitIcon)._hide();
+return _st(_st(waitIcon)._asJQuery())._hide();
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,3)})}));
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,2)})}));
 _st(_st(_st(_st($MaglevObjectSpace())._instance())._at_(oop))._inlineViewComponentFull())._renderOn_(html);
 return self}, function($ctx1) {$ctx1.fill(self,"renderInlineViewFor:inside:",{oop:oop,htmlElement:htmlElement,html:html,subclassesButton:subclassesButton,waitIcon:waitIcon},globals.MaglevModuleWindow)})},
 args: ["oop", "htmlElement"],
-source: "renderInlineViewFor: oop inside: htmlElement\x0a\x09|html subclassesButton waitIcon|\x0a\x09html := HTMLCanvas onJQuery: htmlElement.\x0a\x09waitIcon := MaglevIcon wait.\x0a\x09html with: waitIcon.\x0a\x09waitIcon hide.\x0a\x09subclassesButton := MaglevIcon codeFork.\x0a\x09html with: [html a with: subclassesButton].\x0a\x09subclassesButton onClick: [ |obj|\x0a\x09\x09subclassesButton hide.\x0a\x09\x09waitIcon show.\x0a\x09\x09obj := MaglevObjectSpace instance at: oop.\x0a\x09\x09obj ensureSubclassesLoadedWithCallback: [\x0a\x09\x09\x09obj subclasses do: [:cls |\x0a\x09\x09\x09\x09self renderHierarchySubclass: cls for: oop].\x0a\x09\x09\x09self replaceHierarchySubclasses.\x0a\x09\x09\x09waitIcon hide]].\x0a\x09(MaglevObjectSpace instance at: oop) inlineViewComponentFull renderOn: html.",
-messageSends: ["onJQuery:", "wait", "with:", "hide", "codeFork", "a", "onClick:", "show", "at:", "instance", "ensureSubclassesLoadedWithCallback:", "do:", "subclasses", "renderHierarchySubclass:for:", "replaceHierarchySubclasses", "renderOn:", "inlineViewComponentFull"],
+source: "renderInlineViewFor: oop inside: htmlElement\x0a\x09|html subclassesButton waitIcon|\x0a\x09html := HTMLCanvas onJQuery: htmlElement.\x0a\x09waitIcon := MaglevIcon wait.\x0a\x09html with: waitIcon.\x0a\x09waitIcon asJQuery hide.\x0a\x09subclassesButton := MaglevIcon codeFork.\x0a\x09html with: [html a with: subclassesButton].\x0a\x09subclassesButton onClick: [ |obj|\x0a\x09\x09subclassesButton hide.\x0a\x09\x09waitIcon asJQuery show.\x0a\x09\x09obj := MaglevObjectSpace instance at: oop.\x0a\x09\x09obj ensureSubclassesLoadedWithCallback: [\x0a\x09\x09\x09obj subclasses do: [:cls |\x0a\x09\x09\x09\x09self renderHierarchySubclass: cls for: oop].\x0a\x09\x09\x09self replaceHierarchySubclasses.\x0a\x09\x09\x09waitIcon asJQuery hide]].\x0a\x09(MaglevObjectSpace instance at: oop) inlineViewComponentFull renderOn: html.",
+messageSends: ["onJQuery:", "wait", "with:", "hide", "asJQuery", "codeFork", "a", "onClick:", "show", "at:", "instance", "ensureSubclassesLoadedWithCallback:", "do:", "subclasses", "renderHierarchySubclass:for:", "replaceHierarchySubclasses", "renderOn:", "inlineViewComponentFull"],
 referencedClasses: ["HTMLCanvas", "MaglevIcon", "MaglevObjectSpace"]
 }),
 globals.MaglevModuleWindow);
@@ -7267,7 +7302,7 @@ fn: function (html){
 var self=this;
 function $MaglevListBox(){return globals.MaglevListBox||(typeof MaglevListBox=="undefined"?nil:MaglevListBox)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4;
+var $1,$2,$3,$4,$5;
 self["@categoryNamesSelect"]=_st($MaglevListBox())._new();
 $ctx1.sendIdx["new"]=1;
 _st(html)._with_(self["@categoryNamesSelect"]);
@@ -7280,24 +7315,26 @@ return self._renderSelectors_(cat);
 $ctx1.sendIdx["changedCallback:"]=1;
 _st($1)._height_((250));
 $ctx1.sendIdx["height:"]=1;
-_st($1)._style_("float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;");
+$2=_st($1)._style_("float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;");
 $ctx1.sendIdx["style:"]=1;
-$2=_st($1)._hide();
+$3=_st(self["@categoryNamesSelect"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($3)._hide();
 $ctx1.sendIdx["hide"]=1;
 self["@selectorsSelect"]=_st($MaglevListBox())._new();
 _st(html)._with_(self["@selectorsSelect"]);
-$3=self["@selectorsSelect"];
-_st($3)._changedCallback_((function(sel,index){
+$4=self["@selectorsSelect"];
+_st($4)._changedCallback_((function(sel,index){
 return smalltalk.withContext(function($ctx2) {
 return self._renderSourceCode_(sel);
 }, function($ctx2) {$ctx2.fillBlock({sel:sel,index:index},$ctx1,2)})}));
-_st($3)._height_((250));
-_st($3)._style_("display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;");
-$4=_st($3)._hide();
+_st($4)._height_((250));
+$5=_st($4)._style_("display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;");
+_st(_st(self["@selectorsSelect"])._asJQuery())._hide();
 return self}, function($ctx1) {$ctx1.fill(self,"renderListsOn:",{html:html},globals.MaglevModuleWindow)})},
 args: ["html"],
-source: "renderListsOn: html\x0a\x09categoryNamesSelect := MaglevListBox new.\x0a\x09html with: categoryNamesSelect.\x0a\x09categoryNamesSelect\x0a\x09\x09changedCallback: [:cat :index | self renderSelectors: cat];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;';\x0a\x09\x09hide.\x0a\x09selectorsSelect := MaglevListBox new.\x0a\x09html with: selectorsSelect.\x0a\x09selectorsSelect\x0a\x09\x09changedCallback: [:sel :index | self renderSourceCode: sel];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;';\x0a\x09\x09hide.",
-messageSends: ["new", "with:", "changedCallback:", "renderSelectors:", "height:", "style:", "hide", "renderSourceCode:"],
+source: "renderListsOn: html\x0a\x09categoryNamesSelect := MaglevListBox new.\x0a\x09html with: categoryNamesSelect.\x0a\x09categoryNamesSelect\x0a\x09\x09changedCallback: [:cat :index | self renderSelectors: cat];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'float: left; width: 50%; margin-right: 10px; margin-left: 0px; display: inline-block;'.\x0a\x09categoryNamesSelect asJQuery hide.\x0a\x09selectorsSelect := MaglevListBox new.\x0a\x09html with: selectorsSelect.\x0a\x09selectorsSelect\x0a\x09\x09changedCallback: [:sel :index | self renderSourceCode: sel];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'display: inline-block; width: 50%; box-sizing: border-box; -webkit-box-sizing: border-box; padding-right: 10px;'.\x0a\x09selectorsSelect asJQuery hide.",
+messageSends: ["new", "with:", "changedCallback:", "renderSelectors:", "height:", "style:", "hide", "asJQuery", "renderSourceCode:"],
 referencedClasses: ["MaglevListBox"]
 }),
 globals.MaglevModuleWindow);
@@ -7311,11 +7348,11 @@ var self=this;
 function $MaglevGsNMethodEditor(){return globals.MaglevGsNMethodEditor||(typeof MaglevGsNMethodEditor=="undefined"?nil:MaglevGsNMethodEditor)}
 return smalltalk.withContext(function($ctx1) { 
 _st(self["@methodContainer"])._with_(_st($MaglevGsNMethodEditor())._for_(obj));
-_st(self["@waitingScreen"])._hide();
+_st(_st(self["@waitingScreen"])._asJQuery())._hide();
 return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject:",{obj:obj},globals.MaglevModuleWindow)})},
 args: ["obj"],
-source: "renderMethodObject: obj\x0a\x09methodContainer with: (MaglevGsNMethodEditor for: obj).\x0a\x09waitingScreen hide.",
-messageSends: ["with:", "for:", "hide"],
+source: "renderMethodObject: obj\x0a\x09methodContainer with: (MaglevGsNMethodEditor for: obj).\x0a\x09waitingScreen asJQuery hide.",
+messageSends: ["with:", "for:", "hide", "asJQuery"],
 referencedClasses: ["MaglevGsNMethodEditor"]
 }),
 globals.MaglevModuleWindow);
@@ -7626,22 +7663,29 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$3;
 self._showTransactionWaitingBox();
 _st(self["@object"])._evaluate_language_withCallback_("self.__DBEAbortTransaction","ruby",(function(success,resultObj){
 return smalltalk.withContext(function($ctx2) {
-_st(_st(self["@transactionResultBox"])._asJQuery())._empty();
-_st(self["@transactionResultBox"])._removeClass_("alert-info");
+$1=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+_st($1)._empty();
+$2=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($2)._removeClass_("alert-info");
 if(smalltalk.assert(success)){
-_st(self["@transactionResultBox"])._addClass_("alert-success");
+$3=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($3)._addClass_("alert-success");
 $ctx2.sendIdx["addClass:"]=1;
 } else {
-_st(self["@transactionResultBox"])._addClass_("alert-error");
+_st(_st(self["@transactionResultBox"])._asJQuery())._addClass_("alert-error");
 };
 return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewComponent());
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"abortTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "abortTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEAbortTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "abortTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEAbortTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox asJQuery removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7654,22 +7698,29 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$3;
 self._showTransactionWaitingBox();
 _st(self["@object"])._evaluate_language_withCallback_("self.__DBECommitTransaction","ruby",(function(success,resultObj){
 return smalltalk.withContext(function($ctx2) {
-_st(_st(self["@transactionResultBox"])._asJQuery())._empty();
-_st(self["@transactionResultBox"])._removeClass_("alert-info");
+$1=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+_st($1)._empty();
+$2=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($2)._removeClass_("alert-info");
 if(smalltalk.assert(success)){
-_st(self["@transactionResultBox"])._addClass_("alert-success");
+$3=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($3)._addClass_("alert-success");
 $ctx2.sendIdx["addClass:"]=1;
 } else {
-_st(self["@transactionResultBox"])._addClass_("alert-error");
+_st(_st(self["@transactionResultBox"])._asJQuery())._addClass_("alert-error");
 };
 return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewComponent());
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"commitTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "commitTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBECommitTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "commitTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBECommitTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox asJQuery removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7707,22 +7758,29 @@ protocol: 'interactions',
 fn: function (){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
+var $1,$2,$3;
 self._showTransactionWaitingBox();
 _st(self["@object"])._evaluate_language_withCallback_("self.__DBEContinueTransaction","ruby",(function(success,resultObj){
 return smalltalk.withContext(function($ctx2) {
-_st(_st(self["@transactionResultBox"])._asJQuery())._empty();
-_st(self["@transactionResultBox"])._removeClass_("alert-info");
+$1=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=1;
+_st($1)._empty();
+$2=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=2;
+_st($2)._removeClass_("alert-info");
 if(smalltalk.assert(success)){
-_st(self["@transactionResultBox"])._addClass_("alert-success");
+$3=_st(self["@transactionResultBox"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($3)._addClass_("alert-success");
 $ctx2.sendIdx["addClass:"]=1;
 } else {
-_st(self["@transactionResultBox"])._addClass_("alert-error");
+_st(_st(self["@transactionResultBox"])._asJQuery())._addClass_("alert-error");
 };
 return _st(self["@transactionResultBox"])._with_(_st(resultObj)._inlineViewComponent());
 }, function($ctx2) {$ctx2.fillBlock({success:success,resultObj:resultObj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"continueTransaction",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "continueTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEContinueTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
+source: "continueTransaction\x0a\x09self showTransactionWaitingBox.\x0a\x09object \x0a\x09\x09evaluate: 'self.__DBEContinueTransaction'\x0a\x09\x09language: 'ruby'\x0a\x09\x09withCallback: [:success :resultObj |\x0a\x09\x09\x09transactionResultBox asJQuery empty.\x0a\x09\x09\x09transactionResultBox asJQuery removeClass: 'alert-info'.\x0a\x09\x09\x09success\x0a\x09\x09\x09\x09ifTrue: [transactionResultBox asJQuery addClass: 'alert-success']\x0a\x09\x09\x09\x09ifFalse: [transactionResultBox asJQuery addClass: 'alert-error'].\x0a\x09\x09\x09transactionResultBox with: resultObj inlineViewComponent].",
 messageSends: ["showTransactionWaitingBox", "evaluate:language:withCallback:", "empty", "asJQuery", "removeClass:", "ifTrue:ifFalse:", "addClass:", "with:", "inlineViewComponent"],
 referencedClasses: []
 }),
@@ -7804,9 +7862,8 @@ return self._continueTransaction();
 }, function($ctx4) {$ctx4.fillBlock({},$ctx3,5)})}));
 $8;
 $9=_st(html)._div();
-_st($9)._style_("margin-top: 10px; margin-bottom: 0px;");
-_st($9)._class_("alert");
-$10=_st($9)._hide();
+_st($9)._style_("display: none; margin-top: 10px; margin-bottom: 0px;");
+$10=_st($9)._class_("alert");
 self["@transactionResultBox"]=$10;
 return self["@transactionResultBox"];
 }, function($ctx3) {$ctx3.fillBlock({},$ctx2,2)})}));
@@ -7815,8 +7872,8 @@ return $2;
 $ctx1.sendIdx["with:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderControlPanelOn:",{html:html},globals.MaglevSystemClassWindow)})},
 args: ["html"],
-source: "renderControlPanelOn: html\x0a\x09html with:\x09[\x0a\x09\x09html div\x0a\x09\x09\x09class: 'well';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Abort Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self abortTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Commit Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self commitTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Continue Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 33%;';\x0a\x09\x09\x09\x09\x09onClick: [self continueTransaction].\x0a\x09\x09\x09\x09transactionResultBox := html div\x0a\x09\x09\x09\x09\x09style: 'margin-top: 10px; margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09class: 'alert';\x0a\x09\x09\x09\x09\x09hide]].",
-messageSends: ["with:", "class:", "div", "type:", "input", "value:", "style:", "onClick:", "abortTransaction", "commitTransaction", "continueTransaction", "hide"],
+source: "renderControlPanelOn: html\x0a\x09html with:\x09[\x0a\x09\x09html div\x0a\x09\x09\x09class: 'well';\x0a\x09\x09\x09with: [\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Abort Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self abortTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Commit Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 32%; margin-right: 1%;';\x0a\x09\x09\x09\x09\x09onClick: [self commitTransaction].\x0a\x09\x09\x09\x09html input\x0a\x09\x09\x09\x09\x09type: 'button';\x0a\x09\x09\x09\x09\x09class: 'btn btn-warning';\x0a\x09\x09\x09\x09\x09value: 'Continue Transaction';\x0a\x09\x09\x09\x09\x09style: 'width: 33%;';\x0a\x09\x09\x09\x09\x09onClick: [self continueTransaction].\x0a\x09\x09\x09\x09transactionResultBox := html div\x0a\x09\x09\x09\x09\x09style: 'display: none; margin-top: 10px; margin-bottom: 0px;';\x0a\x09\x09\x09\x09\x09class: 'alert']].",
+messageSends: ["with:", "class:", "div", "type:", "input", "value:", "style:", "onClick:", "abortTransaction", "commitTransaction", "continueTransaction"],
 referencedClasses: []
 }),
 globals.MaglevSystemClassWindow);
@@ -7864,12 +7921,12 @@ var self=this;
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 return smalltalk.withContext(function($ctx1) { 
 var $1,$2,$3,$4;
-$1=self["@transactionResultBox"];
+$1=_st(self["@transactionResultBox"])._asJQuery();
 _st($1)._addClass_("alert-info");
 _st($1)._removeClass_("alert-success");
 $ctx1.sendIdx["removeClass:"]=1;
-$2=_st($1)._removeClass_("alert-error");
-_st(_st(self["@transactionResultBox"])._asJQuery())._empty();
+_st($1)._removeClass_("alert-error");
+$2=_st($1)._empty();
 $3=self["@transactionResultBox"];
 _st($3)._with_(_st($MaglevIcon())._wait());
 $ctx1.sendIdx["with:"]=1;
@@ -7877,8 +7934,8 @@ _st($3)._with_(" loading...");
 $4=_st($3)._show();
 return self}, function($ctx1) {$ctx1.fill(self,"showTransactionWaitingBox",{},globals.MaglevSystemClassWindow)})},
 args: [],
-source: "showTransactionWaitingBox\x0a\x09transactionResultBox\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error'.\x0a\x09transactionResultBox asJQuery empty.\x0a\x09transactionResultBox\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.",
-messageSends: ["addClass:", "removeClass:", "empty", "asJQuery", "with:", "wait", "show"],
+source: "showTransactionWaitingBox\x0a\x09transactionResultBox asJQuery\x0a\x09\x09addClass: 'alert-info';\x0a\x09\x09removeClass: 'alert-success';\x0a\x09\x09removeClass: 'alert-error';\x0a\x09\x09empty.\x0a\x09transactionResultBox\x0a\x09\x09with: MaglevIcon wait;\x0a\x09\x09with: ' loading...';\x0a\x09\x09show.",
+messageSends: ["addClass:", "asJQuery", "removeClass:", "empty", "with:", "wait", "show"],
 referencedClasses: ["MaglevIcon"]
 }),
 globals.MaglevSystemClassWindow);
@@ -8024,7 +8081,7 @@ fn: function (html){
 var self=this;
 return smalltalk.withContext(function($ctx1) { 
 var $1,$3,$2;
-self["@terminalBox"]=_st(_st(html)._pre())._style_("height: 350px; overflow-y: scroll; overflow-x: hidden; color: #000000;");
+self["@terminalBox"]=_st(_st(html)._pre())._style_("height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;");
 $ctx1.sendIdx["style:"]=1;
 $1=_st(html)._input();
 _st($1)._type_("text");
@@ -8040,7 +8097,7 @@ self["@commandBox"]=$2;
 self._mouseFix();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWorkspaceOn:",{html:html},globals.MaglevRubyWorkspaceWindow)})},
 args: ["html"],
-source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 350px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13 \x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
+source: "renderWorkspaceOn: html\x0a\x09terminalBox := html pre\x0a\x09\x09style: 'height: 250px; overflow-y: scroll; overflow-x: hidden; color: #000000;'.\x0a\x09commandBox := html input\x0a\x09\x09type: 'text';\x0a\x09\x09style: 'width: 97%;';\x0a\x09\x09onKeyPress: [:evt | evt keyCode == 13 \x0a\x09\x09\x09ifTrue: [self handleEnter]].\x0a\x09self mouseFix.",
 messageSends: ["style:", "pre", "type:", "input", "onKeyPress:", "ifTrue:", "==", "keyCode", "handleEnter", "mouseFix"],
 referencedClasses: []
 }),
@@ -8197,8 +8254,10 @@ var self=this;
 var html;
 function $MaglevIconImage(){return globals.MaglevIconImage||(typeof MaglevIconImage=="undefined"?nil:MaglevIconImage)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4;
-_st(self["@waitForStackTrace"])._show();
+var $1,$2,$3,$4,$5;
+$1=_st(self["@waitForStackTrace"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._show();
 _st(self["@methodSelect"])._clear();
 _st(self["@object"])._stackTraceMethodsWithCallback_((function(obj){
 return smalltalk.withContext(function($ctx2) {
@@ -8209,36 +8268,36 @@ isUnimportant=self._isMethodUnimportant_(method);
 isUnimportant;
 return _st(self["@methodSelect"])._with_darker_((function(){
 return smalltalk.withContext(function($ctx4) {
-$1=_st(method)._includesSubString_("(envId 0)");
+$2=_st(method)._includesSubString_("(envId 0)");
 $ctx4.sendIdx["includesSubString:"]=1;
-if(smalltalk.assert($1)){
+if(smalltalk.assert($2)){
 _st(html)._with_(_st($MaglevIconImage())._smalltalk());
 $ctx4.sendIdx["with:"]=1;
 };
-$2=_st(method)._includesSubString_("(envId 1)");
+$3=_st(method)._includesSubString_("(envId 1)");
 $ctx4.sendIdx["includesSubString:"]=2;
-if(smalltalk.assert($2)){
+if(smalltalk.assert($3)){
 _st(html)._with_(_st($MaglevIconImage())._ruby());
 $ctx4.sendIdx["with:"]=2;
 };
-$3=_st(method)._includesSubString_("(envId 1b)");
-if(smalltalk.assert($3)){
+$4=_st(method)._includesSubString_("(envId 1b)");
+if(smalltalk.assert($4)){
 _st(html)._with_(_st($MaglevIconImage())._rubySmalltalkBridge());
 $ctx4.sendIdx["with:"]=3;
 };
 return _st(html)._with_(method);
 }, function($ctx4) {$ctx4.fillBlock({},$ctx3,3)})}),isUnimportant);
 }, function($ctx3) {$ctx3.fillBlock({method:method,isUnimportant:isUnimportant},$ctx2,2)})}));
-_st(self["@waitForStackTrace"])._hide();
-$4=_st(aBlock).__eq(nil);
-if(! smalltalk.assert($4)){
+_st(_st(self["@waitForStackTrace"])._asJQuery())._hide();
+$5=_st(aBlock).__eq(nil);
+if(! smalltalk.assert($5)){
 return _st(aBlock)._value();
 };
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"reloadStackWithCallback:",{aBlock:aBlock,html:html},globals.MaglevThreadWindow)})},
 args: ["aBlock"],
-source: "reloadStackWithCallback: aBlock\x0a\x09|html|\x0a\x09waitForStackTrace show.\x0a\x09methodSelect clear.\x0a\x09object stackTraceMethodsWithCallback: [:obj |\x0a\x09\x09obj do: [:method | |isUnimportant|\x0a\x09\x09\x09isUnimportant := self isMethodUnimportant: method.\x0a\x09\x09\x09methodSelect\x0a\x09\x09\x09\x09with: [ \x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 0)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1b)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage rubySmalltalkBridge].\x0a\x09\x09\x09\x09\x09html with: method] darker: isUnimportant].\x0a\x09\x09waitForStackTrace hide.\x0a\x09\x09aBlock = nil\x0a\x09\x09\x09ifFalse: [aBlock value]].",
-messageSends: ["show", "clear", "stackTraceMethodsWithCallback:", "do:", "isMethodUnimportant:", "with:darker:", "ifTrue:", "includesSubString:", "with:", "smalltalk", "ruby", "rubySmalltalkBridge", "hide", "ifFalse:", "=", "value"],
+source: "reloadStackWithCallback: aBlock\x0a\x09|html|\x0a\x09waitForStackTrace asJQuery show.\x0a\x09methodSelect clear.\x0a\x09object stackTraceMethodsWithCallback: [:obj |\x0a\x09\x09obj do: [:method | |isUnimportant|\x0a\x09\x09\x09isUnimportant := self isMethodUnimportant: method.\x0a\x09\x09\x09methodSelect\x0a\x09\x09\x09\x09with: [ \x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 0)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage smalltalk].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage ruby].\x0a\x09\x09\x09\x09\x09(method includesSubString: '(envId 1b)')\x0a\x09\x09\x09\x09\x09\x09ifTrue: [html with: MaglevIconImage rubySmalltalkBridge].\x0a\x09\x09\x09\x09\x09html with: method] darker: isUnimportant].\x0a\x09\x09waitForStackTrace asJQuery hide.\x0a\x09\x09aBlock = nil\x0a\x09\x09\x09ifFalse: [aBlock value]].",
+messageSends: ["show", "asJQuery", "clear", "stackTraceMethodsWithCallback:", "do:", "isMethodUnimportant:", "with:darker:", "ifTrue:", "includesSubString:", "with:", "smalltalk", "ruby", "rubySmalltalkBridge", "hide", "ifFalse:", "=", "value"],
 referencedClasses: ["MaglevIconImage"]
 }),
 globals.MaglevThreadWindow);
@@ -8333,27 +8392,33 @@ fn: function (frameIndex){
 var self=this;
 function $MaglevGsNMethodDebugEditor(){return globals.MaglevGsNMethodDebugEditor||(typeof MaglevGsNMethodDebugEditor=="undefined"?nil:MaglevGsNMethodDebugEditor)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2;
+var $1,$2,$3,$4,$5;
 $1=_st(self["@methodContainer"])._asJQuery();
 $ctx1.sendIdx["asJQuery"]=1;
 _st($1)._empty();
 $ctx1.sendIdx["empty"]=1;
-_st(self["@waitingScreen"])._show();
-$2=_st(frameIndex).__gt((0));
-if(smalltalk.assert($2)){
+$2=_st(self["@waitingScreen"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=2;
+_st($2)._show();
+$3=_st(frameIndex).__gt((0));
+if(smalltalk.assert($3)){
 _st(self["@object"])._stackFrame_withCallback_(frameIndex,(function(obj){
 return smalltalk.withContext(function($ctx2) {
-_st(_st(self["@methodContainer"])._asJQuery())._empty();
+$4=_st(self["@methodContainer"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=3;
+_st($4)._empty();
 _st(self["@methodContainer"])._with_(_st($MaglevGsNMethodDebugEditor())._for_(obj));
-return _st(self["@waitingScreen"])._hide();
+$5=_st(self["@waitingScreen"])._asJQuery();
+$ctx2.sendIdx["asJQuery"]=4;
+return _st($5)._hide();
 $ctx2.sendIdx["hide"]=1;
 }, function($ctx2) {$ctx2.fillBlock({obj:obj},$ctx1,2)})}));
 } else {
-_st(self["@waitingScreen"])._hide();
+_st(_st(self["@waitingScreen"])._asJQuery())._hide();
 };
 return self}, function($ctx1) {$ctx1.fill(self,"renderFrame:",{frameIndex:frameIndex},globals.MaglevThreadWindow)})},
 args: ["frameIndex"],
-source: "renderFrame: frameIndex\x0a\x09methodContainer asJQuery empty.\x0a\x09waitingScreen show.\x0a\x09frameIndex > 0\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09stackFrame: frameIndex \x0a\x09\x09\x09withCallback: [:obj |\x0a\x09\x09\x09\x09methodContainer asJQuery empty.\x0a\x09\x09\x09\x09methodContainer with: (MaglevGsNMethodDebugEditor for: obj).\x0a\x09\x09\x09\x09waitingScreen hide]]\x0a\x09\x09ifFalse: [waitingScreen hide].",
+source: "renderFrame: frameIndex\x0a\x09methodContainer asJQuery empty.\x0a\x09waitingScreen asJQuery show.\x0a\x09frameIndex > 0\x0a\x09\x09ifTrue: [object\x0a\x09\x09\x09stackFrame: frameIndex \x0a\x09\x09\x09withCallback: [:obj |\x0a\x09\x09\x09\x09methodContainer asJQuery empty.\x0a\x09\x09\x09\x09methodContainer with: (MaglevGsNMethodDebugEditor for: obj).\x0a\x09\x09\x09\x09waitingScreen asJQuery hide]]\x0a\x09\x09ifFalse: [waitingScreen asJQuery hide].",
 messageSends: ["empty", "asJQuery", "show", "ifTrue:ifFalse:", ">", "stackFrame:withCallback:", "with:", "for:", "hide"],
 referencedClasses: ["MaglevGsNMethodDebugEditor"]
 }),
@@ -8385,7 +8450,7 @@ var self=this;
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 function $MaglevListBox(){return globals.MaglevListBox||(typeof MaglevListBox=="undefined"?nil:MaglevListBox)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$2,$3,$4,$5,$6,$7,$8;
+var $1,$2,$3,$4,$5,$6,$7;
 $1=_st(html)._div();
 $ctx1.sendIdx["div"]=1;
 self["@waitForStackTrace"]=_st($1)._with_((function(){
@@ -8412,7 +8477,7 @@ $5=_st($4)._style_("width: 100%;");
 self._renderButtonsOn_(html);
 $6=_st(html)._div();
 $ctx1.sendIdx["div"]=2;
-_st($6)._with_((function(){
+self["@waitingScreen"]=_st($6)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
 _st(html)._with_(_st($MaglevIcon())._wait());
 $ctx2.sendIdx["with:"]=6;
@@ -8420,14 +8485,13 @@ $7=_st(html)._with_(" loading...");
 return $7;
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,3)})}));
 $ctx1.sendIdx["with:"]=5;
-$8=_st($6)._hide();
-self["@waitingScreen"]=$8;
+_st(_st(self["@waitingScreen"])._asJQuery())._hide();
 self["@methodContainer"]=_st(html)._div();
 self._reloadStackWithCallback_(nil);
 return self}, function($ctx1) {$ctx1.fill(self,"renderStackTraceOn:",{html:html},globals.MaglevThreadWindow)})},
 args: ["html"],
-source: "renderStackTraceOn: html\x0a\x09waitForStackTrace := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'].\x0a\x09methodSelect := MaglevListBox new.\x0a\x09html with: methodSelect.\x0a\x09methodSelect\x0a\x09\x09changedCallback: [:text :index | self renderFrame: index];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'width: 100%;'.\x0a\x09self renderButtonsOn: html.\x0a\x09waitingScreen := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'];\x0a\x09\x09hide.\x0a\x09methodContainer := html div.\x0a\x09self reloadStackWithCallback: nil.",
-messageSends: ["with:", "div", "wait", "new", "changedCallback:", "renderFrame:", "height:", "style:", "renderButtonsOn:", "hide", "reloadStackWithCallback:"],
+source: "renderStackTraceOn: html\x0a\x09waitForStackTrace := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'].\x0a\x09methodSelect := MaglevListBox new.\x0a\x09html with: methodSelect.\x0a\x09methodSelect\x0a\x09\x09changedCallback: [:text :index | self renderFrame: index];\x0a\x09\x09height: 250;\x0a\x09\x09style: 'width: 100%;'.\x0a\x09self renderButtonsOn: html.\x0a\x09waitingScreen := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09with: ' loading...'].\x0a\x09waitingScreen asJQuery hide.\x0a\x09methodContainer := html div.\x0a\x09self reloadStackWithCallback: nil.",
+messageSends: ["with:", "div", "wait", "new", "changedCallback:", "renderFrame:", "height:", "style:", "renderButtonsOn:", "hide", "asJQuery", "reloadStackWithCallback:"],
 referencedClasses: ["MaglevIcon", "MaglevListBox"]
 }),
 globals.MaglevThreadWindow);
@@ -8651,8 +8715,7 @@ return _st($4)._with_($5);
 }, function($ctx4) {$ctx4.fillBlock({},$ctx3,4)})}));
 $ctx3.sendIdx["with:"]=1;
 _st($3)._size_((10));
-_st($3)._style_("width: 100%;");
-$6=_st($3)._show();
+$6=_st($3)._style_("width: 100%;");
 $6;
 };
 return _st(self["@waitForResult"])._hide();
@@ -8661,8 +8724,8 @@ return _st(self["@waitForResult"])._hide();
 $ctx1.sendIdx["do:"]=1;
 return self}, function($ctx1) {$ctx1.fill(self,"renderListOf:",{selectors:selectors,html:html},globals.MaglevSearchWindow)})},
 args: ["selectors"],
-source: "renderListOf: selectors\x0a\x09|html|\x0a\x09html := HTMLCanvas onJQuery: selectBox asJQuery.\x0a\x09selectBox asJQuery empty.\x0a\x09listContents := Array new.\x0a\x09selectors do:[:selector| \x0a\x09\x09self maglev implementersOf: selector withCallback:[:success :obj|\x0a\x09\x09\x09obj hasElements ifTrue:[\x0a\x09\x09\x09\x09selectBox\x0a\x09\x09\x09\x09with: [obj do: [:cls |\x0a\x09\x09\x09\x09\x09listContents add: {cls. selector}.\x0a\x09\x09\x09\x09\x09html option with: (cls at:1) inspection, '>>' , selector]];\x0a\x09\x09\x09\x09size: 10;\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09show\x0a\x09\x09\x09\x09\x22onChange: [self renderClass]\x22\x0a\x09\x09\x09].\x0a\x09\x09\x09waitForResult hide.\x0a\x09\x09]\x0a\x09]",
-messageSends: ["onJQuery:", "asJQuery", "empty", "new", "do:", "implementersOf:withCallback:", "maglev", "ifTrue:", "hasElements", "with:", "add:", "option", ",", "inspection", "at:", "size:", "style:", "show", "hide"],
+source: "renderListOf: selectors\x0a\x09|html|\x0a\x09html := HTMLCanvas onJQuery: selectBox asJQuery.\x0a\x09selectBox asJQuery empty.\x0a\x09listContents := Array new.\x0a\x09selectors do:[:selector| \x0a\x09\x09self maglev implementersOf: selector withCallback:[:success :obj|\x0a\x09\x09\x09obj hasElements ifTrue:[\x0a\x09\x09\x09\x09selectBox\x0a\x09\x09\x09\x09with: [obj do: [:cls |\x0a\x09\x09\x09\x09\x09listContents add: {cls. selector}.\x0a\x09\x09\x09\x09\x09html option with: (cls at:1) inspection, '>>' , selector]];\x0a\x09\x09\x09\x09size: 10;\x0a\x09\x09\x09\x09style: 'width: 100%;'\x0a\x09\x09\x09\x09\x22show\x22\x0a\x09\x09\x09\x09\x22onChange: [self renderClass]\x22\x0a\x09\x09\x09].\x0a\x09\x09\x09waitForResult hide.\x0a\x09\x09]\x0a\x09]",
+messageSends: ["onJQuery:", "asJQuery", "empty", "new", "do:", "implementersOf:withCallback:", "maglev", "ifTrue:", "hasElements", "with:", "add:", "option", ",", "inspection", "at:", "size:", "style:", "hide"],
 referencedClasses: ["HTMLCanvas", "Array"]
 }),
 globals.MaglevSearchWindow);
@@ -8675,12 +8738,15 @@ fn: function (obj){
 var self=this;
 function $MaglevGsNMethodEditor(){return globals.MaglevGsNMethodEditor||(typeof MaglevGsNMethodEditor=="undefined"?nil:MaglevGsNMethodEditor)}
 return smalltalk.withContext(function($ctx1) { 
-_st(_st(self["@methodContainer"])._asJQuery())._empty();
+var $1;
+$1=_st(self["@methodContainer"])._asJQuery();
+$ctx1.sendIdx["asJQuery"]=1;
+_st($1)._empty();
 _st(self["@methodContainer"])._with_(_st($MaglevGsNMethodEditor())._for_(obj));
-_st(self["@waitingScreen"])._hide();
+_st(_st(self["@waitingScreen"])._asJQuery())._hide();
 return self}, function($ctx1) {$ctx1.fill(self,"renderMethodObject:",{obj:obj},globals.MaglevSearchWindow)})},
 args: ["obj"],
-source: "renderMethodObject: obj\x0a\x09methodContainer asJQuery empty.\x0a\x09methodContainer with: (MaglevGsNMethodEditor for: obj).\x0a\x09waitingScreen hide.",
+source: "renderMethodObject: obj\x0a\x09methodContainer asJQuery empty.\x0a\x09methodContainer with: (MaglevGsNMethodEditor for: obj).\x0a\x09waitingScreen asJQuery hide.",
 messageSends: ["empty", "asJQuery", "with:", "for:", "hide"],
 referencedClasses: ["MaglevGsNMethodEditor"]
 }),
@@ -8694,7 +8760,7 @@ fn: function (html){
 var self=this;
 function $MaglevIcon(){return globals.MaglevIcon||(typeof MaglevIcon=="undefined"?nil:MaglevIcon)}
 return smalltalk.withContext(function($ctx1) { 
-var $1,$3,$4,$2,$5,$6,$7,$8,$9,$10,$11,$12,$13;
+var $1,$3,$4,$2,$5,$6,$7,$9,$10,$8,$11,$13,$12;
 $1=_st(html)._div();
 $ctx1.sendIdx["div"]=1;
 _st($1)._class_("maglev-search");
@@ -8719,47 +8785,46 @@ return $4;
 $ctx1.sendIdx["with:"]=1;
 $5=_st(html)._select();
 _st($5)._size_((10));
-_st($5)._style_("width: 100%;");
-_st($5)._onChange_((function(){
+_st($5)._style_("display:none; width: 100%;");
+$ctx1.sendIdx["style:"]=1;
+$6=_st($5)._onChange_((function(){
 return smalltalk.withContext(function($ctx2) {
 return self._renderClass();
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,4)})}));
-$6=_st($5)._hide();
-$ctx1.sendIdx["hide"]=1;
 self["@selectBox"]=$6;
 $7=_st(html)._div();
 $ctx1.sendIdx["div"]=2;
-_st($7)._with_((function(){
+_st($7)._style_("display:none;");
+$ctx1.sendIdx["style:"]=2;
+$8=_st($7)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
-$8=_st($MaglevIcon())._wait();
+$9=_st($MaglevIcon())._wait();
 $ctx2.sendIdx["wait"]=1;
-_st(html)._with_($8);
+_st(html)._with_($9);
 $ctx2.sendIdx["with:"]=4;
-$9=_st(html)._with_(" loading...");
+$10=_st(html)._with_(" loading...");
 $ctx2.sendIdx["with:"]=5;
-return $9;
+return $10;
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,5)})}));
 $ctx1.sendIdx["with:"]=3;
-$10=_st($7)._hide();
-$ctx1.sendIdx["hide"]=2;
-self["@waitForResult"]=$10;
+self["@waitForResult"]=$8;
 $11=_st(html)._div();
 $ctx1.sendIdx["div"]=3;
-_st($11)._with_((function(){
+_st($11)._style_("display:none;");
+$12=_st($11)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
 _st(html)._with_(_st($MaglevIcon())._wait());
 $ctx2.sendIdx["with:"]=7;
-$12=_st(html)._with_(" loading...");
-return $12;
+$13=_st(html)._with_(" loading...");
+return $13;
 }, function($ctx2) {$ctx2.fillBlock({},$ctx1,6)})}));
 $ctx1.sendIdx["with:"]=6;
-$13=_st($11)._hide();
-self["@waitingScreen"]=$13;
+self["@waitingScreen"]=$12;
 self["@methodContainer"]=_st(html)._div();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowContentOn:",{html:html},globals.MaglevSearchWindow)})},
 args: ["html"],
-source: "renderWindowContentOn: html\x0a\x09html div\x0a\x09\x09class: 'maglev-search'; \x0a\x09\x09with: [\x0a\x09\x09html form\x0a\x09\x09\x09class: 'search-form';\x0a\x09\x09\x09onSubmit: [:e|e preventDefault. self searchSelectorsAndClasses.]; \x0a\x09\x09\x09with:[\x0a\x09\x09\x09html input\x0a\x09\x09\x09\x09class: 'search-input'\x0a\x09\x09\x09]\x0a\x09\x09].\x0a\x09selectBox := html select\x0a\x09\x09\x09size: 10;\x0a\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09onChange: [self renderClass];\x0a\x09\x09\x09hide.\x0a\x09waitForResult := html div\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09hide.\x0a\x09waitingScreen := html div\x0a\x09\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'];\x0a\x09\x09\x09hide.\x0a\x09methodContainer := html div.",
-messageSends: ["class:", "div", "with:", "form", "onSubmit:", "preventDefault", "searchSelectorsAndClasses", "input", "size:", "select", "style:", "onChange:", "renderClass", "hide", "wait"],
+source: "renderWindowContentOn: html\x0a\x09html div\x0a\x09\x09class: 'maglev-search'; \x0a\x09\x09with: [\x0a\x09\x09html form\x0a\x09\x09\x09class: 'search-form';\x0a\x09\x09\x09onSubmit: [:e|e preventDefault. self searchSelectorsAndClasses.]; \x0a\x09\x09\x09with:[\x0a\x09\x09\x09html input\x0a\x09\x09\x09\x09class: 'search-input'\x0a\x09\x09\x09]\x0a\x09\x09].\x0a\x09selectBox := html select\x0a\x09\x09\x09size: 10;\x0a\x09\x09\x09style: 'display:none; width: 100%;';\x0a\x09\x09\x09onChange: [self renderClass].\x0a\x09waitForResult := html div\x0a\x09\x09style: 'display:none;';\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'].\x0a\x09waitingScreen := html div\x0a\x09\x09style: 'display:none;';\x0a\x09\x09with: [html\x0a\x09\x09\x09\x09with: MaglevIcon wait;\x0a\x09\x09\x09\x09with: ' loading...'].\x0a\x09methodContainer := html div.",
+messageSends: ["class:", "div", "with:", "form", "onSubmit:", "preventDefault", "searchSelectorsAndClasses", "input", "size:", "select", "style:", "onChange:", "renderClass", "wait"],
 referencedClasses: ["MaglevIcon"]
 }),
 globals.MaglevSearchWindow);
@@ -8893,7 +8958,7 @@ $11=_st($10)._with_((function(){
 return smalltalk.withContext(function($ctx2) {
 $12=_st(html)._iframe();
 _st($12)._style_("width: 100%; height: 100%; border: 1px solid #ccc;");
-_st($12)._frameborder_("0");
+_st($12)._at_put_("frameborder","0");
 $13=_st($12)._src_("about:blank");
 self["@iframe"]=$13;
 return self["@iframe"];
@@ -8902,8 +8967,8 @@ iframeContainer=$11;
 _st(_st(iframeContainer)._asJQuery())._resizable();
 return self}, function($ctx1) {$ctx1.fill(self,"renderWindowContentOn:",{html:html,iframeContainer:iframeContainer},globals.MaglevWebBrowserWindow)})},
 args: ["html"],
-source: "renderWindowContentOn: html\x0a\x09|iframeContainer|\x0a\x09html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'width: 100%; margin-top: 10px; box-sizing: border-box; padding-right: 51px; margin-bottom: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09with: 'URL'.\x0a\x09\x09\x09inputUrl := html input\x09\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onKeyPress: [:evt | evt which = 13\x0a\x09\x09\x09\x09\x09ifTrue: [self url: inputUrl asJQuery val]]].\x0a\x09iframeContainer := html div \x0a\x09\x09style: 'margin-bottom: 5px; margin-right: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09iframe := html iframe\x0a\x09\x09\x09\x09style: 'width: 100%; height: 100%; border: 1px solid #ccc;';\x0a\x09\x09\x09\x09frameborder: '0';\x0a\x09\x09\x09\x09src: 'about:blank'].\x0a\x09iframeContainer asJQuery resizable.",
-messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onKeyPress:", "ifTrue:", "=", "which", "url:", "val", "asJQuery", "iframe", "frameborder:", "src:", "resizable"],
+source: "renderWindowContentOn: html\x0a\x09|iframeContainer|\x0a\x09html div\x0a\x09\x09class: 'input-prepend';\x0a\x09\x09style: 'width: 100%; margin-top: 10px; box-sizing: border-box; padding-right: 51px; margin-bottom: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09html span \x0a\x09\x09\x09\x09class: 'add-on';\x0a\x09\x09\x09\x09with: 'URL'.\x0a\x09\x09\x09inputUrl := html input\x09\x0a\x09\x09\x09\x09type: 'text';\x0a\x09\x09\x09\x09style: 'width: 100%;';\x0a\x09\x09\x09\x09onKeyPress: [:evt | evt which = 13\x0a\x09\x09\x09\x09\x09ifTrue: [self url: inputUrl asJQuery val]]].\x0a\x09iframeContainer := html div \x0a\x09\x09style: 'margin-bottom: 5px; margin-right: 5px;';\x0a\x09\x09with: [\x0a\x09\x09\x09iframe := html iframe\x0a\x09\x09\x09\x09style: 'width: 100%; height: 100%; border: 1px solid #ccc;';\x0a\x09\x09\x09\x09at: 'frameborder' put: '0';\x0a\x09\x09\x09\x09src: 'about:blank'].\x0a\x09iframeContainer asJQuery resizable.",
+messageSends: ["class:", "div", "style:", "with:", "span", "type:", "input", "onKeyPress:", "ifTrue:", "=", "which", "url:", "val", "asJQuery", "iframe", "at:put:", "src:", "resizable"],
 referencedClasses: []
 }),
 globals.MaglevWebBrowserWindow);
@@ -9024,6 +9089,38 @@ messageSends: ["tag:"],
 referencedClasses: []
 }),
 globals.HTMLCanvas);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "asHexString",
+protocol: '*Maglev-Database-Explorer',
+fn: function (){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+ return self.toString(16); ;
+return self}, function($ctx1) {$ctx1.fill(self,"asHexString",{},globals.Number)})},
+args: [],
+source: "asHexString\x0a\x09< return self.toString(16); >",
+messageSends: [],
+referencedClasses: []
+}),
+globals.Number);
+
+smalltalk.addMethod(
+smalltalk.method({
+selector: "ceiled",
+protocol: '*Maglev-Database-Explorer',
+fn: function (){
+var self=this;
+return smalltalk.withContext(function($ctx1) { 
+ return Math.ceil(self); ;
+return self}, function($ctx1) {$ctx1.fill(self,"ceiled",{},globals.Number)})},
+args: [],
+source: "ceiled\x0a\x09< return Math.ceil(self); >",
+messageSends: [],
+referencedClasses: []
+}),
+globals.Number);
 
 smalltalk.addMethod(
 smalltalk.method({

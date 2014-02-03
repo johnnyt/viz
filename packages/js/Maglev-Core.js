@@ -487,26 +487,24 @@ selector: "ready",
 protocol: 'initializing',
 fn: function (){
 var self=this;
-function $MaglevObjectSpace(){return globals.MaglevObjectSpace||(typeof MaglevObjectSpace=="undefined"?nil:MaglevObjectSpace)}
-function $MaglevHaltedThreadListener(){return globals.MaglevHaltedThreadListener||(typeof MaglevHaltedThreadListener=="undefined"?nil:MaglevHaltedThreadListener)}
-function $MaglevWebBrowserWindow(){return globals.MaglevWebBrowserWindow||(typeof MaglevWebBrowserWindow=="undefined"?nil:MaglevWebBrowserWindow)}
 return smalltalk.withContext(function($ctx1) { 
-var $1;
-self._openWindow_(self._defaultWorkspaceId());
-$ctx1.sendIdx["openWindow:"]=1;
-self._openWindow_(self._persistentRootId());
-$ctx1.sendIdx["openWindow:"]=2;
-self._openWindow_(self._maglevSystemId());
-$1=_st($MaglevObjectSpace())._instance();
-$ctx1.sendIdx["instance"]=1;
-_st($1)._evalObject_(_st(_st($MaglevObjectSpace())._instance())._reloadObject_(self._evalObjectId()));
-_st($MaglevHaltedThreadListener())._start();
-_st($MaglevWebBrowserWindow())._showNew();
+var $1,$2;
+_st(jQuery)._getJSON_do_("/ids",(function(data){
+return smalltalk.withContext(function($ctx2) {
+self._persistentRootId_(_st(data)._persistentRootId());
+self._maglevSystemId_(_st(data)._maglevSystemId());
+$1=_st(data)._defaultWorkspaceId();
+$ctx2.sendIdx["defaultWorkspaceId"]=1;
+self._defaultWorkspaceId_($1);
+$2=self._evalObjectId_(_st(data)._evalObjectId());
+$2;
+return self._openWindow_(self._defaultWorkspaceId());
+}, function($ctx2) {$ctx2.fillBlock({data:data},$ctx1,1)})}));
 return self}, function($ctx1) {$ctx1.fill(self,"ready",{},globals.Maglev.klass)})},
 args: [],
-source: "ready\x0a\x09self openWindow: self defaultWorkspaceId.\x0a\x09self openWindow: self persistentRootId.\x0a\x09self openWindow: self maglevSystemId.\x0a\x09MaglevObjectSpace instance \x0a\x09\x09evalObject: (MaglevObjectSpace instance reloadObject: self evalObjectId).\x0a\x09MaglevHaltedThreadListener start.\x0a\x09MaglevWebBrowserWindow showNew.",
-messageSends: ["openWindow:", "defaultWorkspaceId", "persistentRootId", "maglevSystemId", "evalObject:", "instance", "reloadObject:", "evalObjectId", "start", "showNew"],
-referencedClasses: ["MaglevObjectSpace", "MaglevHaltedThreadListener", "MaglevWebBrowserWindow"]
+source: "ready\x0a\x09jQuery getJSON: '/ids' do: [ :data |\x0a\x09\x09self persistentRootId: data persistentRootId;\x0a\x09\x09\x09maglevSystemId: data maglevSystemId;\x0a\x09\x09\x09defaultWorkspaceId: data defaultWorkspaceId;\x0a\x09\x09\x09evalObjectId: data evalObjectId.\x0a\x0aself openWindow: self defaultWorkspaceId.\x0a\x0a].\x0a\x09\x22self openWindow: self defaultWorkspaceId.\x0a\x09self openWindow: self persistentRootId.\x0a\x09self openWindow: self maglevSystemId.\x0a\x09MaglevObjectSpace instance \x0a\x09\x09evalObject: (MaglevObjectSpace instance reloadObject: self evalObjectId).\x0a\x09MaglevHaltedThreadListener start.\x0a\x09MaglevWebBrowserWindow showNew.\x22\x0a\x09",
+messageSends: ["getJSON:do:", "persistentRootId:", "persistentRootId", "maglevSystemId:", "maglevSystemId", "defaultWorkspaceId:", "defaultWorkspaceId", "evalObjectId:", "evalObjectId", "openWindow:"],
+referencedClasses: []
 }),
 globals.Maglev.klass);
 
