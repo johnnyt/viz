@@ -1,9 +1,8 @@
 # Viz
 [![Version][Version image]][Version]
 [![Build][Build image]][Build]
-[![Coverage][Coverage image]][Coverage]
 
-A Sinatra app to vizualize a MagLev environment.
+A Sinatra app to vizualize a MagLev environment - taken from [Maglev Database Explorer][mdbe].
 
 
 ### Contributing
@@ -19,10 +18,12 @@ To see what has changed in recent versions, see the [CHANGELOG.md](CHANGELOG.md)
 
 ### License
 
-Copyright 2014 JohnnyT
+Copyright 2013-2014 Matthias Springer, Kirstin Heidler, Stefan Bunk,
+Dimitri Korsch, Nicco Kunzmann, JohnnyT
 
 Licensed under the MIT License
 
+[mdbe]: https://github.com/matthias-springer/maglev-database-explorer-gem
 
 [Version]: https://rubygems.org/gems/viz
 [Build]: https://travis-ci.org/johnnyt/viz
